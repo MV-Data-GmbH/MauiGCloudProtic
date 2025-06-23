@@ -1,12 +1,13 @@
-﻿using GCloudShared.Repository;
-using GCloudShared.Shared;
-using System.Diagnostics;
-using CommunityToolkit.Maui.Views;
-using System.Collections.ObjectModel;
+﻿using CommunityToolkit.Maui.Views;
 using GCloudPhone.Services;
-using GCloudShared.Service;
 using GCloudPhone.ViewModels;
 using GCloudPhone.Views.Shop.OrderProccess;
+using GCloudShared.Repository;
+using GCloudShared.Service;
+using GCloudShared.Shared;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Text.Json;
 
 namespace GCloudPhone.Views.Shop.Checkout
 {
@@ -67,7 +68,6 @@ namespace GCloudPhone.Views.Shop.Checkout
         {
             base.OnAppearing();
             SetPaymentMethods();
-            
 
             // 3) Odmah učitaj time‐slotove za izabrani datum
             try
@@ -83,7 +83,6 @@ namespace GCloudPhone.Views.Shop.Checkout
             // Hide payment and tip sections if total price is 0
             PaymentMethodSection.IsVisible = viewModel.TotalPrice > 0;
             TipSection.IsVisible = viewModel.TotalPrice > 0;
-
         }
 
         private void SetPaymentMethods()
@@ -131,6 +130,7 @@ namespace GCloudPhone.Views.Shop.Checkout
                 ((DatePicker)sender).Date = DateTime.Now;
                 return;
             }
+
             currentOrder.SelectedDate = e.NewDate;
             viewModel.SelectedDate = e.NewDate;
             await viewModel.LoadTimeSlotsAsync(e.NewDate);
@@ -145,7 +145,7 @@ namespace GCloudPhone.Views.Shop.Checkout
             {
                 button.Style = (Style)Resources["UnselectedButtonStyle"];
                 viewModel.Tip = 0;
-                currentOrder.Tip = 0; // Osigurava da se postavi na 0
+                currentOrder.Tip = 0;
                 selectedButton = null;
             }
             else
@@ -169,31 +169,24 @@ namespace GCloudPhone.Views.Shop.Checkout
             if (result is decimal customTipAmount)
             {
                 viewModel.Tip = customTipAmount;
-                currentOrder.Tip = customTipAmount; // Osigurava da se ažurira i u order modelu
+                currentOrder.Tip = customTipAmount;
                 selectedButton = null;
                 UpdateTotalPrice();
             }
         }
 
-        private void OnSwipedRight(object sender, SwipedEventArgs e)
-        {
-            Navigation.PopAsync();
-        }
-
+       
         private async void ConfirmButtonClicked(object sender, EventArgs e)
         {
             var btn = (Button)sender;
             btn.IsEnabled = false;
 
-            // Posle 10 sekundi ponovo omogućimo dugme
             Device.StartTimer(TimeSpan.FromSeconds(10), () =>
             {
                 btn.IsEnabled = true;
-                return false; // timer se izvršava samo jednom
+                return false;
             });
 
-            // ————————————————
-            // Ostatak tvog koda bez izmena:
             string selectedTimeSlot = viewModel.SelectedTimeSlot;
 
             if (string.IsNullOrEmpty(selectedTimeSlot))
@@ -232,14 +225,10 @@ namespace GCloudPhone.Views.Shop.Checkout
             }
             else
             {
-                Debug.WriteLine($"[Checkout] cashRegisterName = '{cashRegisterName}'");
-                Debug.WriteLine($"[Checkout] OnlineUsers = [{string.Join(", ", App.SignalR.OnlineUsers)}]");
                 await DisplayAlert("Zahlung fehlgeschlagen", "Ihre Zahlung war nicht erfolgreich. Bitte versuchen Sie es erneut.", "OK");
             }
         }
 
-
-        // Privatna metoda za proračun bodova - 1 bod za svaki puni euro
         private int CalculatePoints(decimal totalPrice)
         {
             return (int)totalPrice;
@@ -247,7 +236,6 @@ namespace GCloudPhone.Views.Shop.Checkout
 
         private async Task ProcessOrder(string selectedTimeSlot)
         {
-            // Dobavljanje trenutnog korisnika i ostalih parametara
             UserRepository ur = new UserRepository(DbBootstraper.Connection);
             var user = ur.GetCurrentUser();
             string firstName = user.FirstName;
@@ -256,18 +244,12 @@ namespace GCloudPhone.Views.Shop.Checkout
             string storeId = Preferences.Get("SelectedStoreId", string.Empty);
             var selectedDate = currentOrder.SelectedDate.Date;
 
-            // Dodatni parametri za detalje dostave
-            var storeName = Preferences.Get("SelectedStoreName", "Unbekannte Filiale");
-            var storeAddress = Preferences.Get("SelectedStoreAddress", string.Empty);
-
-            // Provjera da li je izabrani datum u prošlosti
             if (selectedDate < DateTime.Now.Date)
             {
                 await DisplayAlert("Warnung", "Das gewählte Datum liegt in der Vergangenheit.", "OK");
                 return;
             }
 
-            // Kreiranje narudžbine sa svim detaljima
             var order = new Orders
             {
                 OrderID = _orderId,
@@ -276,8 +258,8 @@ namespace GCloudPhone.Views.Shop.Checkout
                 OrderDate = DateTime.Now,
                 DeliveryDate = selectedDate,
                 DeliveryTime = selectedTimeSlot,
-                DeliveryAddress = "Abholung " + storeAddress,
-                DeliveryCity = "Abholung " + storeName,
+                DeliveryAddress = "Abholung " + Preferences.Get("SelectedStoreAddress", ""),
+                DeliveryCity = "Abholung " + Preferences.Get("SelectedStoreName", ""),
                 DeliveryZip = "Abholung",
                 DeliveryCountry = "Austria",
                 DeliveryPhone = "123456789",
@@ -296,7 +278,6 @@ namespace GCloudPhone.Views.Shop.Checkout
 
             await SQL.SaveItemAsync(order);
 
-            // Kreiranje liste stavki narudžbine iz stavki u korpi
             var orderItems = new List<OrderItems>();
             foreach (var item in Cart.Instance.GetItems())
             {
@@ -315,8 +296,11 @@ namespace GCloudPhone.Views.Shop.Checkout
                 await SQL.SaveItemAsync(orderItem);
                 orderItems.Add(orderItem);
             }
-
-            // Slanje narudžbine ka kasi
+            var payload = JsonSerializer.Serialize(
+    new { order, orderItems },
+    new JsonSerializerOptions { WriteIndented = true }
+);
+            Debug.WriteLine("[DEBUG PAYLOAD]\n" + payload);
             bool orderSent = await _orderCommunicationService.SendOrderToServerAsync(order, orderItems);
             if (!orderSent)
             {
@@ -324,7 +308,6 @@ namespace GCloudPhone.Views.Shop.Checkout
                 return;
             }
 
-            // Obrada bodova: smanjenje iskorištenih bodova ako ih je korisnik koristio
             int usedPoints = Preferences.Get("UsedPoints", 0);
             if (usedPoints > 0)
             {
@@ -340,7 +323,6 @@ namespace GCloudPhone.Views.Shop.Checkout
                 }
             }
 
-            // Čišćenje korpe i priprema modela za prikaz detalja narudžbine
             Cart.Instance.ClearCart();
             var orderWithItemsViewModel = new OrderWithItemsViewModel
             {
@@ -348,19 +330,13 @@ namespace GCloudPhone.Views.Shop.Checkout
                 OrderItems = orderItems
             };
 
-            // Ažuriranje bodova nakon kupovine (obračun bodova se izvršava samo ovde)
             int pointsEarned = CalculatePoints(currentOrder.TotalPrice);
             var updatePointsResult = await _userPointsService.UpdateUserPointsAfterPurchase(pointsEarned, storeId, user.UserId);
             if (updatePointsResult is string message && message.Contains("User points updated successfully") && pointsEarned > 0)
             {
                 await DisplayAlert("Glückwunsch!", $"Mit diesem Kauf haben Sie {pointsEarned} Punkte erhalten.", "OK");
             }
-            else
-            {
-                Debug.WriteLine("Error updating user points: " + (updatePointsResult?.ToString() ?? "Unknown error"));
-            }
 
-            // Prelazak na stranicu sa detaljima narudžbine
             await Navigation.PushAsync(new OrderDetailsPage(orderWithItemsViewModel));
         }
 
@@ -378,7 +354,7 @@ namespace GCloudPhone.Views.Shop.Checkout
         {
             viewModel.ItemsTotal = Cart.Instance.GetItems().Sum(item => item.Amount * (item.Quantity ?? 0)) ?? 0;
             viewModel.TotalPrice = viewModel.ItemsTotal + viewModel.VAT + (viewModel.Tip ?? 0m);
-            currentOrder.TotalPrice = viewModel.TotalPrice; // Osigurava da i order model bude ažuriran
+            currentOrder.TotalPrice = viewModel.TotalPrice;
         }
 
         private async void On_PageLoaded(object sender, EventArgs e)

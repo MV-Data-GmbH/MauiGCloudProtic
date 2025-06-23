@@ -7,98 +7,60 @@
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
 		<ApplicationTitle>Schnitzel und Mehr</ApplicationTitle>
-		<!-- Globalno više NE definišeš ApplicationId ovde -->
 		<ApplicationDisplayVersion>1.1</ApplicationDisplayVersion>
 		<ApplicationVersion>2</ApplicationVersion>
+
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+
 		<UseHotReload>false</UseHotReload>
 		<UseXamlHotReload>false</UseXamlHotReload>
-		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
 	<!-- Android-specific ApplicationId -->
-	<PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-android34.0'">
+	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-android34.0'">
 		<ApplicationId>at.mv_data.jetstore.mobile.proticV3</ApplicationId>
 	</PropertyGroup>
 
-	<!-- iOS-specific ApplicationId (bundle identifier) -->
-	<PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-ios'">
-		<ApplicationId>com.mvdata.gcloudschnitzelweltV6</ApplicationId>
-	</PropertyGroup>
-
+	<!-- iOS-specific ApplicationId + signing -->
 	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
+		<ApplicationId>at.mv-data.jetstore.mobile.proticV3</ApplicationId>
 		<ProvisioningType>manual</ProvisioningType>
-		<CodesignKey>iPhone Distribution</CodesignKey>
-		<CodesignProvision>SuM dist</CodesignProvision>
-		
+		<CodesignKey>iPhone Developer</CodesignKey>
+		<CodesignProvision>SuM dev</CodesignProvision>
 	</PropertyGroup>
-	<ItemGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
-		<!-- Forward-slash u putanji, samo jedan MauiIcon -->
-		<MauiIcon Include="Resources/AppIcon/appicon.png" />
+	<PropertyGroup>
+		<!-- prisiljava bundler (Resizetizer, XAML Compile, itd.) na dotnet build -->
+		<RunMauiBundlerOnBuild>true</RunMauiBundlerOnBuild>
+	</PropertyGroup>
+	<!-- MAUI asset pipeline -->
+	<ItemGroup>
+		<!-- App icon -->
+		<MauiIcon Include="Resources\AppIcon\appicon.png" BaseSize="32,42" />
+		<!-- Splash screen -->
+		<MauiSplashScreen Include="Resources\Splash\logo.png" Color="#FF6A00" />
+		<!-- Sve ostale slike -->
+		<MauiImage Include="Resources\Images\*" />
+		
 	</ItemGroup>
 
-	<!-- Splash screen za sve targete -->
 	<ItemGroup>
-		<MauiSplashScreen Include="Resources/Splash/logo.png" Color="#FF6A00" />
-	</ItemGroup>
-
-	<!-- Ostali PNG/JPG asseti, ali NE uključi appicon.png -->
-	<ItemGroup>
-		<!-- Uključi samo ono što ti stvarno treba -->
-		<MauiImage Include="Resources/Splash/*.png;Resources/Images/*.png;Resources/Images/*.jpg" />
-		<!-- Izuzmi iz glob-a baš appicon.png -->
-		<MauiImage Remove="Resources/AppIcon/appicon.png" />
-	</ItemGroup>
-
-	<!-- Fonts i raw assets ostaju nepromenjeni -->
-	<ItemGroup>
+		<!-- Fontovi i raw assets -->
 		<MauiFont Include="Resources/Fonts/*" />
-		<MauiAsset Include="Resources/Raw/**"
-				   LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+		<MauiAsset Include="Resources/Raw/**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
-	<!-- Paket koji .NET MAUI koristi za generisanje ikona (ne treba SkiaSharp.Svg) -->
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Resizetizer" Version="8.0.100" />
+
+
+	<!-- iOS-specific resources -->
+	<ItemGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
+		<BundleResource Include="Platforms/iOS/GoogleService-Info.plist" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<MauiImage Remove="Resources\Images\dotnet_bot.svg" />
-		<MauiImage Remove="Resources\Images\header.png" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<GoogleServicesJson Include="Platforms\Android\google-services.json" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<BundleResource Include="Platforms\iOS\GoogleService-Info.plist" Link="GoogleService-Info.plist" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Remove="Platforms\iOS\GoogleService-Info-v6.plist" />
-		<None Remove="Platforms\iOS\GoogleService-Info.plist" />
-		
-		<None Remove="Resources\Images\aktionen_rot32.png" />
-		<None Remove="Resources\Images\appimage.svg" />
-		<None Remove="Resources\Images\arrowup.png" />
-		<None Remove="Resources\Images\edit2.png" />
-		<None Remove="Resources\Images\hintergrund_aktionen.jpg" />
-		<None Remove="Resources\Images\hintergrund_aktionen_res.jpg" />
-		<None Remove="Resources\Images\other.png" />
-		<None Remove="Resources\Images\schnitzelwelt.png" />
-		<None Remove="Resources\Images\Sonstiges_grau.png" />
-		<None Remove="Resources\Images\sonstiges_grau32.png" />
-		<None Remove="Resources\Images\sonstiges_header_res.jpg" />
-		<None Remove="Resources\Images\Sonstiges_rot.png" />
-		<None Remove="Resources\Images\sonstiges_rot32.png" />
-		<None Remove="Resources\Images\trash.png" />
-		<None Remove="Resources\Images\work2.png" />
-		
-	</ItemGroup>
-
+	<!-- NuGet paketi -->
 	<ItemGroup>
 		<PackageReference Include="Camera.MAUI" Version="1.5.1" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="8.0.0" />
@@ -112,7 +74,7 @@
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="8.0.92" />
-		<PackageReference Include="Microsoft.Maui.Resizetizer" Version="8.0.100" />
+		<!-- Resizetizer i Controls dolaze iz workload-a, ne ručno -->
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Optional" Version="4.0.0" />
 		<PackageReference Include="Plugin.NFC" Version="0.1.26" />
@@ -127,57 +89,43 @@
 		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.7" />
 		<PackageReference Include="System.Drawing.Common" Version="8.0.17" />
 		<PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.100" />
-		<PackageReference Include="Xamarin.Essentials" Version="1.8.1" />
 		<PackageReference Include="ZXing.Net.Maui" Version="0.4.0" />
 		<PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-android34.0'">
-		<GoogleServicesJson Include="Platforms\Android\google-services.json" />
-		<PackageReference Include="Xamarin.Firebase.Messaging">
-			<Version>124.1.1.2</Version>
-		</PackageReference>
-		<PackageReference Include="Xamarin.Google.Dagger">
-			<Version>2.56.2.2</Version>
-		</PackageReference>
+	<!-- Android-specific NuGet paketi -->
+	<ItemGroup Condition="'$(TargetFramework)'=='net8.0-android34.0'">
+		<PackageReference Include="Xamarin.Firebase.Messaging" Version="124.1.1.2" />
+		<PackageReference Include="Xamarin.Google.Dagger" Version="2.56.2.2" />
 	</ItemGroup>
 
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net8.0' ">
-		<ProjectReference Include="..\GCloudShop\GCloudShop.csproj" />
-	</ItemGroup>
+	<!-- Reference na druge projekte -->
+	<Import Project="..\GCloudShared\GCloudShared.projitems" Label="Shared" />
 
-	<ItemGroup>
-		<ProjectReference Include="..\GCloud.Shared\GCloud.Shared.csproj" />
-	</ItemGroup>
-
-
-
-	<!-- Onemogućavanje trimming & AOT za Release net8.0-android34.0 -->
+	<!-- Release konfiguracija za Android -->
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android34.0|AnyCPU'">
 		<RunAOTCompilation>false</RunAOTCompilation>
-		<AndroidKeyStore>False</AndroidKeyStore>
+		<AndroidKeyStore>false</AndroidKeyStore>
 		<AndroidPackageFormat>aab</AndroidPackageFormat>
-		<AndroidUseAapt2>True</AndroidUseAapt2>
-		<AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+		<AndroidUseAapt2>true</AndroidUseAapt2>
+		<AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
 		<AndroidSigningKeyStore>C:\Users\Administrator\Desktop\drugi novi\mauigcloud\myapp.keystore</AndroidSigningKeyStore>
 		<AndroidSigningStorePass>Kassa1234!</AndroidSigningStorePass>
 		<AndroidSigningKeyAlias>myapp</AndroidSigningKeyAlias>
 		<AndroidSigningKeyPass>Kassa1234!</AndroidSigningKeyPass>
-		<PublishTrimmed>False</PublishTrimmed>
+		<PublishTrimmed>false</PublishTrimmed>
 		<AndroidAotMode>None</AndroidAotMode>
 	</PropertyGroup>
 
-	<!-- Preskoči problematični DLL pri AOT -->
+	<!-- Preskakanje problema pri AOT -->
 	<ItemGroup>
 		<AndroidSkipAotCompile Include="**\Microsoft.Windows.ApplicationModel.Resources.Projection.dll" />
 	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\GCloud.Shared\GCloud.Shared.csproj" />
+	</ItemGroup>
 
-
-
-	<Import Project="..\GCloudShared\GCloudShared.projitems" Label="Shared" />
-
-	<!-- iOS Release signing & archive -->
+	<!-- iOS Release konfiguracija -->
 	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios' and '$(Configuration)'=='Release'">
 		<RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
 		<CodesignKey>Apple Distribution: MV Data Datenverarbeitung GmbH (DHYSM7B46R)</CodesignKey>
@@ -188,46 +136,45 @@
 		<ServerUser>misalukic</ServerUser>
 		<ServerPassword>Kassa1234!</ServerPassword>
 		<_DotNetRootRemoteDirectory>/Users/misalukic/Library/Caches/Xamarin/XMA/SDKs/dotnet/</_DotNetRootRemoteDirectory>
-	
+
+		<!-- Dodato za debug u Release modu i isključenje linkera -->
+		<MtouchLink>None</MtouchLink>
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>embedded</DebugType>
 	</PropertyGroup>
 
-	<!-- Debug Android signing for development -->
+	<!-- Debug Android potpisivanje -->
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android34.0|AnyCPU'">
-		<AndroidKeyStore>False</AndroidKeyStore>
+		<AndroidKeyStore>false</AndroidKeyStore>
 		<AndroidSigningKeyStore>C:\Users\Administrator\Desktop\drugi novi\mauigcloud\myapp.keystore</AndroidSigningKeyStore>
 		<AndroidSigningStorePass>Kassa1234!</AndroidSigningStorePass>
 		<AndroidSigningKeyAlias>myapp</AndroidSigningKeyAlias>
 		<AndroidSigningKeyPass>Kassa1234!</AndroidSigningKeyPass>
 	</PropertyGroup>
 
-	<!-- iOS Debug settings -->
+	<!-- Debug iOS -->
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
-		<BuildIpa>False</BuildIpa>
+		<BuildIpa>false</BuildIpa>
 		<MtouchLink>SdkOnly</MtouchLink>
-		<CodesignResourceRules></CodesignResourceRules>
+		<MtouchUseLlvm>True</MtouchUseLlvm>
 	</PropertyGroup>
-	
-	
 
 	<!-- iOS Release interpreter/AOT -->
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
 		<CodesignEntitlements></CodesignEntitlements>
-		<MtouchUseLlvm>True</MtouchUseLlvm>
-		<BuildIpa>True</BuildIpa>
-		<AotAssemblies>True</AotAssemblies>
+		<MtouchUseLlvm>False</MtouchUseLlvm>
+		<BuildIpa>true</BuildIpa>
+		<AotAssemblies>true</AotAssemblies>
 		<UseInterpreter>true</UseInterpreter>
 		<MtouchLink>SdkOnly</MtouchLink>
 		<AdditionalArgs>--interpreter</AdditionalArgs>
 	</PropertyGroup>
-	
 
-
-
-
-	<ProjectExtensions>
-		<VisualStudio>
-			<UserProperties XamarinHotReloadDebuggerTimeoutExceptionGCloudPhoneHideInfoBar="True" XamarinHotReloadGenericExceptionInfoBarGCloudPhoneHideInfoBar="True" />
-		</VisualStudio>
-	</ProjectExtensions>
+	<!-- Remove duplirane KTX JAR-ove -->
+	<Target Name="RemoveCollectionKtxJars" AfterTargets="PrepareProjectForAndroid">
+		<ItemGroup>
+			<AndroidJavaLibrary Remove="**/androidx.collection.collection-ktx.jar" />
+		</ItemGroup>
+	</Target>
 
 </Project>

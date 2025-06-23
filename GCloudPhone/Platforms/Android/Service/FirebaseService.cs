@@ -74,7 +74,7 @@ namespace GCloudPhone.Platforms.Android.Service
 
             var notificationBuilder = new NotificationCompat.Builder(this, MainActivity.Channel_ID)
                 .SetContentTitle(title)
-                .SetSmallIcon(Resource.Drawable.appicon)
+                .SetSmallIcon(Resource.Mipmap.appicon)
                 .SetContentText(messageBody)
                 .SetChannelId(MainActivity.Channel_ID)
                 .SetContentIntent(pendingIntent)

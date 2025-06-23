@@ -18,7 +18,7 @@
             
             <Label x:Name="InstructionLabel" Text="Bitte halten Sie Ihr Telefon in die Nähe eines NFC-Tags."
                    HorizontalOptions="Center"
-                   VerticalOptions="CenterAndExpand" 
+                 
                    HorizontalTextAlignment="Center" FontSize="Large"/>
             
             <Image Source="nfc.jpg" Style="{StaticResource CenteredImages}"/>

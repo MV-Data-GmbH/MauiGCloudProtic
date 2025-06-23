@@ -5,9 +5,9 @@
 	<key>CFBundleDisplayName</key>
 	<string>Schnitzel und mehr</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.mvdata.gcloudschnitzelweltV6</string>
-	<key>CFBundleIconName</key>
-	<string>AppIcon</string>
+	<string>at.mv-data.jetstore.mobile.proticV3</string>
+	<key>XSAppIconAssets</key>
+	<string>Assets.xcassets/appicon.appiconset</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIRequiresFullScreen</key>
@@ -87,8 +87,8 @@
 	<key>NSApplePayMerchantIdentifier</key>
 	<string>merchant.com.companyname.gcloudshop</string>
 	<key>CFBundleShortVersionString</key>
-	<string>13</string>
+	<string>5</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>3</string>
 </dict>
 </plist>

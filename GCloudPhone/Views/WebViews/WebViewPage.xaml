@@ -10,11 +10,7 @@
             <RowDefinition Height="95*"></RowDefinition>
         </Grid.RowDefinitions>
         
-        <Grid.GestureRecognizers>
-            <SwipeGestureRecognizer Direction="Right" 
-                                   Swiped="OnSwipedRight"/>
-        </Grid.GestureRecognizers>
-
+        
         <templates:BackButtonControl/>
         
         <WebView x:Name="MyWebView"

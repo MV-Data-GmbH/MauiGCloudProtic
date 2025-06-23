@@ -5,7 +5,8 @@
     x:Class="GCloudPhone.Views.SplashScreenPage"
     NavigationPage.HasNavigationBar="False"
     Shell.NavBarIsVisible="False"
-    BackgroundColor="#FF6A00">
+    Background="{StaticResource AccentOrange}"
+    >
 
     <Grid RowDefinitions="Auto,Auto"
           VerticalOptions="Center"
@@ -15,8 +16,8 @@
         <Image
             x:Name="LogoImage"
             Grid.Row="0"
-            Source="logo.png"
-            Opacity="0"
+            Source="appstore.png"
+            Opacity="1"
             Scale="0.25"                     
             WidthRequest="150"
         
@@ -31,7 +32,7 @@
             Grid.Row="1"
             Text="Wird geladen..."
             FontFamily="Quicksand-Bold"
-            FontSize="25"
+            FontSize="30"
             TextColor="White"
             Opacity="0"
             HorizontalOptions="Center"

@@ -68,8 +68,4 @@
     <Compile Include="$(MSBuildThisFileDirectory)WebShopDto\RegisterResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WebShopDto\WebError.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)ErrorsException\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Validation\" />
-  </ItemGroup>
 </Project>

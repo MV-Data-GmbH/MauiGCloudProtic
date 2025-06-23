@@ -11,7 +11,11 @@ using GCloudPhone.Models;
 //using Plugin.Firebase.CloudMessaging;
 using GCloudPhone.Views.Shop;
 using GCloudPhone.Views.Shop.Checkout;
+using Microsoft.Maui;
+using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
+
 /*using Microsoft.UI.Xaml;*/
 using Plugin.NFC;
 using System.Security;
@@ -19,7 +23,7 @@ using System.Security;
 namespace GCloudPhone
 {
     [Activity(
-        Theme = "@style/Maui.FullScreenSplashTheme",
+        Theme = "@style/Maui.SplashTheme",
         ScreenOrientation = ScreenOrientation.Locked,
         MainLauncher = true,
         ConfigurationChanges = ConfigChanges.ScreenSize
