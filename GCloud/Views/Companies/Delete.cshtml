@@ -1,0 +1,66 @@
+﻿@model GCloud.Models.Domain.Company
+
+@{
+    ViewBag.Title = "Unternehmen Löschen";
+}
+
+<h2>Unternehmen Löschen</h2>
+
+<h3>Möchten Sie dieses Unternehmen wirklich löschen?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Benutzername")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CommercialRegisterNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CommercialRegisterNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsCashbackEnabled)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsCashbackEnabled)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <a href="@Url.Action("Index")" class="btn btn-info">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                Zurück
+            </a>
+            <input type="submit" value="Löschen" class="btn btn-danger"/>
+        </div>
+    }
+</div>

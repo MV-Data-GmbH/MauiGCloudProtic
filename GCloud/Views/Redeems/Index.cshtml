@@ -1,0 +1,16 @@
+﻿@using GridMvc.Html
+@model IEnumerable<GCloud.Models.Domain.Redeem>
+
+@{
+    ViewBag.Title = "Einlösungen";
+}
+
+<h2>Einlösungen</h2>
+
+@Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(col => col.Coupon.Name);
+    columns.Add(col => col.User.Email);
+    columns.Add(col => col.CashValue);
+    columns.Add(col => col.CouponValue);
+}).Selectable(false);

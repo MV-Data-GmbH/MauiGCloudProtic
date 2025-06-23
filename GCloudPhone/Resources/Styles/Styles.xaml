@@ -1,0 +1,927 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Style TargetType="ActivityIndicator">
+        <Setter Property="Color" Value="{StaticResource White}" />
+    </Style>
+
+    <Style TargetType="IndicatorView">
+        <Setter Property="IndicatorColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}"/>
+        <Setter Property="SelectedIndicatorColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray100}}"/>
+    </Style>
+
+    <Style TargetType="Border">
+        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
+        <Setter Property="StrokeShape" Value="Rectangle"/>
+        <Setter Property="StrokeThickness" Value="1"/>
+    </Style>
+
+    <Style TargetType="BoxView">
+        <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
+    </Style>
+
+    <Style TargetType="Button">
+        <Setter Property="TextColor" Value="{StaticResource White}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Tertiary}" />
+        <Setter Property="FontFamily" Value="Quicksand-Bold"/>
+       
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="CornerRadius" Value="15"/>
+        <Setter Property="Padding" Value="14,10"/>
+        <Setter Property="Margin" Value="0,4"/>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+
+    <Style TargetType="CheckBox">
+        <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="DatePicker">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="Quicksand-Bold"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Editor">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="Quicksand-Regular"/>
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Entry">
+        
+
+        <!-- Podesimo visinu i padding kako bi Entry lepo izgledao -->
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="FontFamily" Value="Quicksand-Regular" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource Gray600}" />
+        <Setter Property="TextColor" 
+                Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+
+    
+    </Style>
+
+
+
+    <Style TargetType="Frame">
+        <Setter Property="HasShadow" Value="False" />
+        <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="BackgroundColor" Value="White" />
+    </Style>
+
+    <Style TargetType="ImageButton">
+        <Setter Property="Opacity" Value="1" />
+        <Setter Property="BorderColor" Value="Transparent"/>
+        <Setter Property="BorderWidth" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="Opacity" Value="0.5" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource GraySW}"/>
+        <Setter Property="FontFamily" Value="Quicksand-Regular"/>
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ListView">
+        <Setter Property="SeparatorColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
+        <Setter Property="RefreshControlColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
+    </Style>
+
+    <Style TargetType="Picker">
+        <Setter Property="TextColor" Value="{StaticResource GraySW}"/>
+        <Setter Property="TitleColor" Value="{StaticResource GraySW}" />
+        <Setter Property="BackgroundColor" Value="White" />
+        <Setter Property="FontFamily" Value="Quicksand-Regular"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{StaticResource GraySW}" />
+                            <Setter Property="TitleColor" Value="{StaticResource GraySW}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{StaticResource GraySW}" />
+                            <Setter Property="TitleColor" Value="{StaticResource GraySW}"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+
+    <Style TargetType="ProgressBar">
+        <Setter Property="ProgressColor" Value="{StaticResource Primary}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="ProgressColor" Value="{StaticResource Gray300}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="RadioButton">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="TextColor" Value="{StaticResource Black}" />
+        <Setter Property="FontFamily" Value="Quicksand-Regular"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{StaticResource Gray300}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="RefreshView">
+        <Setter Property="RefreshColor" Value="{StaticResource Gray900}" />
+    </Style>
+
+    <Style TargetType="SearchBar">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource Gray500}" />
+        <Setter Property="CancelButtonColor" Value="{StaticResource Gray500}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="Quicksand-Regular" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                            <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="SearchHandler">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource Gray500}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="Quicksand-Regular" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                            <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Shadow">
+        <Setter Property="Radius" Value="15" />
+        <Setter Property="Opacity" Value="0.5" />
+        <Setter Property="Brush" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
+        <Setter Property="Offset" Value="10,10" />
+    </Style>
+
+    <Style TargetType="Slider">
+        <Setter Property="MinimumTrackColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+        <Setter Property="MaximumTrackColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}" />
+        <Setter Property="ThumbColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="MinimumTrackColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"/>
+                            <Setter Property="MaximumTrackColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"/>
+                            <Setter Property="ThumbColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="SwipeItem">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+    </Style>
+
+    <Style TargetType="Switch">
+        <Setter Property="HeightRequest" Value="30"/>
+        <Setter Property="OnColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
+        <Setter Property="ThumbColor" Value="{StaticResource Gray300}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal"/>
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="OnColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource  Gray300}}" />
+                            <Setter Property="ThumbColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource  Gray300}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="On">
+                        <VisualState.Setters>
+                            <Setter Property="OnColor" Value="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource Secondary}}" />
+                            <Setter Property="ThumbColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Off">
+                        <VisualState.Setters>
+                            <Setter Property="ThumbColor" Value="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray400}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="TimePicker">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="FontFamily" Value="Quicksand-Regular"/>
+        <Setter Property="FontSize" Value="14"/>
+    
+
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal" />
+                    <VisualState x:Name="Disabled">
+                        <VisualState.Setters>
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Page" ApplyToDerivedTypes="True">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+    </Style>
+
+    <Style TargetType="Shell" ApplyToDerivedTypes="True">
+        <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray200}}" />
+        <Setter Property="Shell.ForegroundColor" Value="{OnPlatform WinUI={StaticResource Primary}, Default={StaticResource White}}" />
+        <Setter Property="Shell.TitleColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
+        <Setter Property="Shell.DisabledColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
+        <Setter Property="Shell.UnselectedColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray200}}" />
+        <Setter Property="Shell.NavBarHasShadow" Value="False" />
+        <Setter Property="Shell.TabBarBackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" />
+        <Setter Property="Shell.TabBarForegroundColor" Value="{AppThemeBinding Light={StaticResource TabBarSelectColor}, Dark={StaticResource White}}" />
+        <Setter Property="Shell.TabBarTitleColor" Value="{AppThemeBinding Light={StaticResource TabBarSelectColor}, Dark={StaticResource White}}" />
+        <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
+    </Style>
+
+    <Style TargetType="NavigationPage">
+        <Setter Property="BarBackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}" />
+        <Setter Property="BarTextColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource White}}" />
+        <Setter Property="IconColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource White}}" />
+    </Style>
+
+    <Style TargetType="TabbedPage">
+        <Setter Property="BarBackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray950}}" />
+        <Setter Property="BarTextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+        <Setter Property="UnselectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
+        <Setter Property="SelectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
+    </Style>
+
+    <Style TargetType="Grid" x:Key="BasicGrid">
+        <Setter Property="Padding" Value="20,30"/>
+        
+        
+    </Style>
+    <Style TargetType="Frame" x:Key="CardFrameSmall">
+        <Setter Property="WidthRequest" Value="90"/>
+        <Setter Property="HeightRequest" Value="120"/>
+        <Setter Property="BackgroundColor" Value="White"/>
+        <Setter Property="HasShadow" Value="True"/>
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="CornerRadius" Value="14"/>
+        <Setter Property="Frame.Shadow">
+            <Setter.Value>
+                <Shadow Brush="#999999"
+                    Offset="0,4"
+                    Opacity="0.25"
+                    Radius="12"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="Frame" x:Key="HoizontalCardFrame">
+        <Setter Property="WidthRequest" Value="280"/>
+        <Setter Property="HeightRequest" Value="80"/>
+        <Setter Property="BackgroundColor" Value="White"/>
+        <Setter Property="HasShadow" Value="True"/>
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="CornerRadius" Value="14"/>
+        <Setter Property="Frame.Shadow">
+            <Setter.Value>
+                <Shadow Brush="#999999"
+                    Offset="0,4"
+                    Opacity="0.25"
+                    Radius="12"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="Frame" x:Key="CardFrame">
+        <Setter Property="WidthRequest" Value="130"/>
+        <Setter Property="HeightRequest" Value="150"/>
+        <Setter Property="BackgroundColor" Value="White"/>
+        <Setter Property="HasShadow" Value="True"/>
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="CornerRadius" Value="14"/>
+        <Setter Property="Frame.Shadow">
+            <Setter.Value>
+                <Shadow Brush="#999999"
+                        Offset="0,4"
+                        Opacity="0.25"
+                        Radius="12"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style  TargetType="Label" x:Key="LabelsForNavMenu">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontFamily" Value="Quicksand-Bold"/>
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="TextColor" Value="Gray" />
+        
+
+    </Style>
+    <Style TargetType="Image" x:Key="CardImage">
+        <Setter Property="WidthRequest" Value="80" />
+        <Setter Property="HeightRequest" Value="80" />
+
+    </Style>
+    <Style x:Key="LinkLabelStyle" TargetType="Label">
+        <!-- Osnovni izgled: plava boja, bold, podvučeno -->
+        <Setter Property="TextColor" Value="{StaticResource LinkColor}"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="TextDecorations" Value="Underline"/>
+        <Setter Property="Padding" Value="5,2"/>
+        <!-- malo prostora oko teksta -->
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+
+        <!-- VisualState: kad je Label pritisnut, smanji veličinu i promeni boju -->
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <Setter.Value>
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Scale" Value="0.95"/>
+                                <Setter Property="TextColor" Value="{StaticResource LinkPressedColor}"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="Image" x:Key="iconNav">
+        <Setter Property="WidthRequest" Value="30" />
+        <Setter Property="HeightRequest" Value="30" />
+        
+    </Style>
+    <Style TargetType="VerticalStackLayout" x:Key="NavItemStyle">
+        
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <!-- Razmak između ikonice i teksta -->
+        <Setter Property="Spacing" Value="5" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Margin" Value="0" />
+    </Style>
+    
+    <Style TargetType="Label" x:Key="BoldedOptionNameCenter">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{StaticResource GraySW}" />
+        <Setter Property="FontFamily" Value="Quicksand-Bold"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+    </Style>
+
+    <Style TargetType="Label" x:Key="Headings">
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="TextColor" Value="{StaticResource GraySW}" />
+        <Setter Property="FontFamily" Value="Quicksand-Bold"/>
+        <Setter Property="VerticalTextAlignment" Value="Center"/>
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+
+    </Style>
+    <Style x:Key="HeadingTwo" TargetType="Label">
+        <Setter Property="FontFamily" Value="Quicksand-Bold"/>
+        <Setter Property="FontSize" Value="18"/>
+    
+    </Style>
+
+    <Style x:Key="Instuction" TargetType="Label">
+        <Setter Property="FontAttributes" Value="None"/>
+        <Setter Property="FontSize" Value="14"/>
+      
+    </Style>
+    <Style TargetType="Label" x:Key="ProductName">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontFamily" Value="Quicksand-Bold"></Setter>
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+    </Style>
+    <Style TargetType="Label" x:Key="ProductPrice">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="TextColor" Value="{StaticResource Gray500}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+
+    </Style>
+
+    <Style TargetType="Image" x:Key="CenteredImages">
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+    </Style>
+    <!--Buttons -->
+    <Style TargetType="Button" x:Key="ConfirmButtonStyle">
+        <!-- Osnovne postavke -->
+        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="CornerRadius" Value="15" />
+        <Setter Property="Background" Value="#61AB01" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="Padding" Value="15,0" />
+        <Setter Property="FontFamily" Value="Quicksand-Bold" />
+
+        <!-- Blaga senka ispod dugmeta -->
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow
+                Brush="Black"
+                Opacity="0.3"
+                Radius="10"
+                Offset="0,2" />
+            </Setter.Value>
+        </Setter>
+
+        <!-- Vizuelna stanja: kada se pritisne ili je disable -->
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <Setter.Value>
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <!-- Stanje PRITISNUTO -->
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <!-- Tamnija nijansa zelene prilikom pritiska -->
+                                <Setter Property="Background" Value="#4D8901" />
+                                <!-- Blagi shrink efekat -->
+                                <Setter Property="Scale" Value="0.95" />
+                            </VisualState.Setters>
+                        </VisualState>
+
+                        <!-- Stanje ONEMOGUĆENO -->
+                        <VisualState Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#CCCCCC" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="TextColor" Value="#888888" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style TargetType="Button" x:Key="DeclineButtonStyle">
+        <!-- Osnovne vrednosti -->
+        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="CornerRadius" Value="15" />
+        <Setter Property="Background" Value="{StaticResource Tertiary}" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="Padding" Value="15,0" />
+
+        <!-- Blaga senka ispod dugmeta -->
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow
+                Brush="Black"
+                Opacity="0.3"
+                Radius="10"
+                Offset="0,2" />
+            </Setter.Value>
+        </Setter>
+
+        <!-- Vizuelna stanja dugmeta -->
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <Setter.Value>
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <!-- Kada se dugme pritisne -->
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <!-- Promeni pozadinu u AccentOrange (ili neku drugu alarmnu boju) -->
+                                
+                                <!-- Blagi shrink efekat -->
+                                <Setter Property="Scale" Value="0.95" />
+                            </VisualState.Setters>
+                        </VisualState>
+
+                        <!-- Kada je dugme onemogućeno -->
+                        <VisualState Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#CCCCCC" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="TextColor" Value="#888888" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- Gradient brush za pozadinu dugmeta -->
+    <LinearGradientBrush x:Key="PrimaryBtnGradient"
+                     StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#FFBD33" Offset="0.0" />
+        <GradientStop Color="{StaticResource AccentOrange}" Offset="1.0" />
+    </LinearGradientBrush>
+
+    <!-- Shadow definicija koju ćemo koristiti na wrapperu -->
+    <Shadow x:Key="PrimaryBtnShadow"
+        Brush="Black"
+        Opacity="0.3"
+        Radius="10"
+        Offset="0,2" />
+
+
+    <Style TargetType="Button" x:Key="PrimaryBtn">
+        <!-- Gradient pozadina: svetlija nijansa na vrhu, AccentOrange na dnu -->
+        <Setter Property="BackgroundColor" Value="{StaticResource AccentOrange}"/>
+       
+
+
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="TextTransform" Value="Uppercase" />
+        <Setter Property="Padding" Value="10,0" />
+        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="MinimumWidthRequest" Value="120"/>
+
+        <Setter Property="CornerRadius" Value="15" />
+        
+
+        <!-- Blaga senka ispod dugmeta -->
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow 
+                Brush="Black"
+                Opacity="0.3"
+                Radius="10"
+                Offset="0,2" />
+            </Setter.Value>
+        </Setter>
+
+        <!-- Vizuelna stanja: Shrink efekat kada se pritisne, i sivo isteklo stanje za Disabled -->
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <Setter.Value>
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <!-- Kad dugme bude pritisnuto, smanji skalu na 0.97 -->
+                                <Setter Property="Scale" Value="0.97" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#CCCCCC" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="TextColor" Value="#888888" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+    <Style TargetType="Button" x:Key="SecondaryBtn">
+        <!-- Tekst u boji AccentOrange -->
+        <Setter Property="TextColor" Value="{StaticResource AccentOrange}" />
+
+        <!-- Početno: providna pozadina, samo obrub -->
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderColor" Value="{StaticResource AccentOrange}" />
+        <Setter Property="BorderWidth" Value="1" />
+
+        <Setter Property="FontSize" Value="18" />
+        
+        <Setter Property="Padding" Value="10,0" />
+        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="CornerRadius" Value="15" />
+        <Setter Property="TextTransform" Value="Uppercase" />
+
+        <!-- Blaga senka ispod dugmeta -->
+       
+
+        <!-- Visual States: kad je dugme pritisnuto, postavi gradijentnu pozadinu i smanji skalu;
+         kad je Disabled, siva pozadina i teks u sivoj boji -->
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <Setter.Value>
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <!-- Stanje PRITISNUTO -->
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <!-- Kad korisnik pritisne dugme, prelaz na gradijent -->
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <!-- Svetlija nijansa na vrhu -->
+                                            <GradientStop Color="{StaticResource AccentOrangeLight}" Offset="0.0" />
+                                            <!-- Tvoja AccentOrange na dnu -->
+                                            <GradientStop Color="{StaticResource AccentOrange}" Offset="1.0" />
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+
+                                <!-- Tekst u tom trenutku u beloj boji -->
+                                <Setter Property="TextColor" Value="White" />
+
+                                <!-- Blagi shrink efekat -->
+                                <Setter Property="Scale" Value="0.97" />
+                            </VisualState.Setters>
+                        </VisualState>
+
+                        <!-- Stanje ONEMOGUĆENO -->
+                        <VisualState Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#CCCCCC" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="TextColor" Value="#888888" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+    <!--Sitnija slova -->
+    <Style TargetType="Label" x:Key="Explanations">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="TextColor" Value="Gray"/>
+    </Style>
+
+    <!--Nazivi kategorija/Proizvoda bold -->
+    <Style TargetType="Label" x:Key="ListNames">
+        <Setter Property="FontSize" Value="18" />
+        
+        <Setter Property="FontFamily" Value="Quicksand-Bold"/>
+        <Setter Property="TextColor" Value="{StaticResource GraySW}" />
+    </Style>
+    <Style TargetType="Label" x:Key="ListNames1">
+        <Setter Property="FontSize" Value="18" />
+        
+        <Setter Property="FontFamily" Value="Quicksand-Bold"/>
+        <Setter Property="TextColor" Value="{StaticResource GraySW}" />
+    </Style>
+    <!--Slike kategorija/Proizvoda velike -->
+    <Style TargetType="Image" x:Key="ListPictures">
+        <Setter Property="HeightRequest" Value="60"/>
+        <Setter Property="WidthRequest" Value="60"/>
+        
+    </Style>
+    <!--Slike kategorija/Proizvoda velike -->
+    <Style TargetType="Image" x:Key="ListPictures1">
+        <Setter Property="HeightRequest" Value="50"/>
+        <Setter Property="WidthRequest" Value="50"/>
+
+    </Style>
+    <Style TargetType="Grid" x:Key="CheckoutGrids">
+        <Setter Property="ColumnDefinitions"  Value="Auto,*,Auto"></Setter>
+        <Setter Property="ColumnSpacing" Value="10"></Setter>
+        
+    </Style>
+    <Style TargetType="Image" x:Key="CheckoutImages">
+        <Setter Property="WidthRequest" Value="35"></Setter>
+        <Setter Property="HeightRequest" Value="35"></Setter>
+    </Style>
+    <Style TargetType="ImageButton" x:Key="CheckoutImagesBtn">
+        <Setter Property="WidthRequest" Value="30"></Setter>
+        <Setter Property="HeightRequest" Value="30"></Setter>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Margin" Value="0"/>
+    </Style>
+    <Style TargetType="Label" x:Key="LinkLabel">
+        <!-- Tekst u boji AccentOrange (umesto plave) -->
+        <Setter Property="TextColor" Value="{StaticResource Tertiary}" />
+
+        <!-- FontSize po želji (ovde je 15, možeš prilagoditi) -->
+        <Setter Property="FontSize" Value="15" />
+
+        <!-- Podvlačenje teksta -->
+        <Setter Property="TextDecorations" Value="Underline" />
+
+        <!-- Eventualno da budu centrirani rukom: -->
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <Setter.Value>
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Scale" Value="0.95"/>
+                                <Setter Property="TextColor" Value="{StaticResource LinkPressedColor}"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+    <!-- 1. Stil za sam Frame -->
+    <Style x:Key="SummaryCardFrameStyle" TargetType="Frame">
+        <Setter Property="Padding" Value="12"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="HasShadow" Value="True"/>
+        <!-- umesto tamnog bordera, koristimo senku -->
+        <Setter Property="BorderColor" Value="Transparent"/>
+        <Setter Property="BackgroundColor" Value="#FAF6E3"/>
+        <!-- pastelna, topla nijansa -->
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow Brush="#54595F" Offset="0,2" Radius="6" Opacity="0.25"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 2. Stil za separator (BoxView) -->
+    <Style x:Key="SummarySeparatorStyle" TargetType="BoxView">
+        <Setter Property="HeightRequest" Value="1"/>
+        <Setter Property="Opacity" Value="0.1"/>
+        <Setter Property="BackgroundColor" Value="{StaticResource Gray100}"/>
+    </Style>
+    <Style x:Key="SummaryLabel" TargetType="Label">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="TextColor" Value="{StaticResource Gray600}"/>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+    </Style>
+<!--Add address-->
+    <Style TargetType="Label" x:Key="FormLabel">
+        <!-- Tekst u boji AccentOrange (umesto plave) -->
+        <Setter Property="TextColor" Value="{StaticResource GraySW}" />
+        <Setter Property="FontFamily" Value="Quicksand-Bold" />
+
+        <Setter Property="FontSize" Value="16" />
+
+        <!-- Eventualno da budu centrirani rukom: -->
+        <Setter Property="HorizontalOptions" Value="Start" />
+        
+
+    </Style>
+    <Style TargetType="Label" x:Key="FrameLabel">
+        <!-- Tekst u boji AccentOrange (umesto plave) -->
+        <Setter Property="TextColor" Value="{StaticResource GraySW}" />
+        <Setter Property="FontFamily" Value="Quicksand-Regular" />
+        <Setter Property="FontSize" Value="14" />
+        <!-- Eventualno da budu centrirani rukom: -->
+        <Setter Property="HorizontalOptions" Value="Center"/>
+    </Style>
+
+    <Style TargetType="Label" x:Key="CardImageAddress">
+
+        <Setter Property="WidthRequest" Value="50" />
+        <Setter Property="HeightRequest" Value="50" />
+    </Style>
+    <Style TargetType="Label" x:Key="WarenkorbProductName">
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontFamily" Value="Quicksand-Bold" />
+        <Setter Property="TextColor" Value="{StaticResource GraySW}" />
+    </Style>
+    <Style TargetType="Label" x:Key="WarenkorbsSideDishName">
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="FontFamily" Value="Quicksand-Regular" />
+        <Setter Property="TextColor" Value="{StaticResource GraySW}" />
+    </Style>
+</ResourceDictionary>

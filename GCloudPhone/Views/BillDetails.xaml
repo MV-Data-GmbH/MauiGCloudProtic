@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GCloudPhone.Views.BillDetails"
+             Title="" NavigationPage.HasNavigationBar="False">
+    <ScrollView>
+        <Grid Padding="0,10,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.1*"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="0.1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <HorizontalStackLayout Grid.Row="0" Grid.ColumnSpan="2" VerticalOptions="Center" HorizontalOptions="Start">
+                <Image x:Name="btnBack"  Source="left_chevron32px.png"  HorizontalOptions="Start" VerticalOptions="Start" BackgroundColor="Transparent"/>
+                <Label Text="Zurück" TextColor="{StaticResource Tertiary}" FontSize="Large" VerticalOptions="Start"/>
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                </HorizontalStackLayout.GestureRecognizers>
+            </HorizontalStackLayout>
+            <ImageButton Source="share_icon.png" HorizontalOptions="End" Grid.ColumnSpan="2" Clicked="OnExportButtonClicked"/>
+            <Grid Grid.Row="1" Grid.Column="1" BackgroundColor="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.05*"></ColumnDefinition>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition Width="0.05*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <VerticalStackLayout Grid.Row="0" Grid.Column="1" HorizontalOptions="Center">
+                    <Label  x:Name="City" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                    <Label  x:Name="CompanyName" HorizontalTextAlignment="Center"/>
+                    <Label  x:Name="Street" HorizontalTextAlignment="Center"/>
+                    <Label  x:Name="PostCode" HorizontalTextAlignment="Center"/>
+                    <Label x:Name="VATIdentificationNumber" HorizontalTextAlignment="Center"/>
+                </VerticalStackLayout>
+                <Grid Grid.Row="0" Grid.Column="1" >
+                    <Label x:Name="Bill"  HorizontalOptions="Center"
+                           VerticalOptions="Center" FontFamily="CascadiaCode" FontSize="11"></Label>
+                </Grid>
+                <Image Grid.Row="1" Grid.Column="1" x:Name="QRCode" />
+            </Grid>
+            <Grid.Shadow>
+                <Shadow Brush="gray"
+                Offset="10,10"
+                Radius="40"
+                Opacity="0.4" />
+            </Grid.Shadow>
+        </Grid>
+    </ScrollView>
+</ContentPage>

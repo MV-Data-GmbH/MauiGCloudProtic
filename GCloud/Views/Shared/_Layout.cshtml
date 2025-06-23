@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jquery.autocomplete")
+    @Styles.Render("~/Content/jquery.autocomplete")
+    @Scripts.Render("~/bundles/gridmvc")
+    @RenderSection("styles", required: false)
+
+
+
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("FoodJet", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (User.IsInRole("Administrators"))
+                    {
+                        <li>@Html.ActionLink("Benutzer", "Index", "Users", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("Unternehmen", "Index", "Companies", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("Filialen", "Index", "Stores", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("Gutscheine", "IndexAdmin", "Coupons", new { area = "" }, null)</li>
+                    }
+                    @if (User.IsInRole("Managers"))
+                    {
+                        <li>@Html.ActionLink("Gutscheine", "Index", "Coupons", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("Produkte im Angebot", "Index", "SpecialProduct", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("Filialen", "Index", "Stores", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("Berichte", "Index", "Reports", new { area = "" }, null)</li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Schnellauswertungen<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href=@Url.Action("CouponUsages", "Reports")><i class="fa fa-bar-chart"></i> Gutschein-Verbrauch</a></li>
+                                <li><a href=@Url.Action("CouponUsagePerTime", "Reports")><i class="fa fa-bar-chart"></i> Gutschein-Verbrauch nach Zeit</a></li>
+                                <li><a href=@Url.Action("CouponUserUsages", "Reports")><i class="fa fa-bar-chart "></i> Gutschein-Verbrauch nach Benutzer</a></li>
+                            </ul>
+                        </li>
+                        <li>@*@Html.ActionLink("Kundenkarte", "CustomerIndex", "Users", new { area = "" }, null)*@</li>
+                    }
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                    }
+                </ul>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    using (Html.BeginForm("SearchCoupons", "Coupons", FormMethod.Get, new { @class = "navbar-form navbar-left search-coupons", role = "search" }))
+                    {
+                        <div class="form-group">
+                            <input name="searchText" type="text" class="form-control" id="searchCoupons" placeholder="Gutscheine suchen">
+                        </div>
+                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    }
+                }
+                <ul class="nav navbar-nav navbar-right">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Willkommen, @User.Identity.Name<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href=@Url.Action("ResetPassword", "Home")><i class="fa fa-key"></i> Password ändern</a></li>
+                                <li class="divider"></li>by Schnitzel und Mehr
+                                <li><a href=@Url.Action("LogOff", "Home")><i class="fa fa-sign-out"></i> Abmelden</a></li>
+                            </ul>
+                        </li>
+                        @*<li><a>Hallo @User.Identity.Name</a></li>
+                            <li>
+                                <input type="button" class="btn btn-danger navbar-btn" onclick="location.href = '@Url.Action("LogOff", "Home")'" value="Abmelden" />
+                            </li>*@
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        @*<footer>
+                <p>&copy; @DateTime.Now.Year - Gustav</p>
+            </footer>*@
+        <div class="navbar navbar-default navbar-fixed-bottom">
+            <div class="container">
+                <p class="navbar-text pull-left">© @DateTime.Now.Year - By Schnitzel und Mehr | <a href="@Url.Action("Impressum", "Home")">Impressum</a> | <a href="@Url.Action("Agb", "Home")">AGB</a> | <a href="@Url.Action("Datenschutzhinweise", "Home")">Datenschutzhinweise</a></p>
+                <a href="https://www.schnitzelundmehr.at/" target="_blank" class="navbar-btn btn-success btn pull-right">
+                    <span class="glyphicon glyphicon-star"></span>  
+                </a>
+            </div>
+        </div>
+    </div>
+
+    @RenderSection("scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            $('#searchCoupons').autoComplete({
+                cache: false,
+                minChars: 0,
+                source: function (term, response) {
+                    console.log(term.length);
+                    if (term.length < 3) {
+                        var result = [];
+                        result.push({ Value: "Min. 3 Buchstaben eingeben", Data: "" });
+                        response(result);
+                        return;
+                    }
+                    $.getJSON('/Coupons/SearchCouponsApi/',
+                        { query: term },
+                        function (data) {
+                            response(data.Suggestions);
+                        });
+                },
+                renderItem: function (item, search) {
+                    search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+                    var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
+                    if (item.Data.trim() === "") {
+                        return '<div class="autocomplete-suggestion">' + item.Value + '</div>';
+                    }
+                    return '<div class="autocomplete-suggestion" data-langname="' +
+                        item.Value +
+                        '" data-id="' +
+                        item.Data +
+                        '" data-val="' +
+                        search +
+                        '">' +
+                        '<img width="40" src="/Coupons/LoadCouponImage/' +
+                        item.Data +
+                        '"> ' +
+                        item.Value.replace(re, "<b>$1</b>") +
+                        '</div>';
+                },
+                onSelect: function (event, term, item) {
+                    var id = $(item).data("id");
+                    if (id) {
+                        window.location.href = '/Coupons/Edit/' + id;
+                    }
+                }
+            });
+            $(".search-coupons").on("submit",
+                function (event) {
+                    if ($(".autocomplete-suggestion.selected").length > 0) {
+                        event.preventDefault();
+                        $(".autocomplete-suggestion.selected").click();
+                    }
+                });
+        });
+
+    </script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+    @*<script>
+        window.addEventListener("load", function () {
+            window.cookieconsent.initialise({
+                "palette": {
+                    "popup": {
+                        "background": "#252e39"
+                    },
+                    "button": {
+                        "background": "#14a7d0"
+                    }
+                },
+                "content": {
+                    "message":
+                        "Wir verwenden Cookies, um unsere Webseite für Sie möglichst benutzerfreundlich zu gestalten. Wenn Sie fortfahren, nehmen wir an, dass Sie mit der Verwendung von Cookies auf der Webseite einverstanden sind.",
+                    "dismiss": "Einverstanden",
+                    "link": "Mehr erfahren"
+                }
+            });
+        });
+    </script>*@
+</body>
+</html>

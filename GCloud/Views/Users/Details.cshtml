@@ -1,0 +1,102 @@
+﻿@model GCloud.Models.Domain.User
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Erstellt von")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Benutzername")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Birthday)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Birthday)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Aktiviert")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Email Bestätigt")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailConfirmed)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Telefonnummer")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Telefonnummer bestätigt")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumberConfirmed)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("2-Faktor-Aktiviert")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TwoFactorEnabled)
+        </dd>
+    </dl>
+</div>
+<p>
+    <a href="@Url.Action("Index")" class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+        Zurück
+    </a>
+    <a href="@Url.Action("Edit", new {id = Model.Id})" class="btn btn-warning">
+        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+        Bearbeiten
+    </a>
+</p>

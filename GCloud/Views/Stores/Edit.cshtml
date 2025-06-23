@@ -1,0 +1,201 @@
+﻿@model GCloud.Controllers.ViewModels.Store.StoreEditViewModel
+
+@{
+    ViewBag.Title = "Filiale Bearbeiten";
+}
+
+@Scripts.Render(@"~/bundles/bootstrap-tagsinput")
+@Styles.Render(@"~/Content/bootstrap-tagsinput")
+
+@Scripts.Render(@"~/bundles/select2")
+@Styles.Render(@"~/Content/select2")
+
+<h2>Filiale Bearbeiten</h2>
+
+<style>
+    .bootstrap-tagsinput {
+        min-width: 280px !important;
+    }
+    select + .select2-container {
+        width: 280px !important;
+    }
+</style>
+
+@using (Html.BeginForm("Edit", "Stores", FormMethod.Post, new { enctype = "multipart/form-data", id = "storeEdit" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="form-horizontal col-md-6">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @Html.HiddenFor(model => model.CreationDateTime)
+            @Html.HiddenFor(x => x.ApiToken)
+
+            @if (User.IsInRole("Administrators"))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CompanyId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("CompanyId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CompanyId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            }
+            else
+            {
+                @Html.HiddenFor(x => x.CompanyId)
+            }
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CountryId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("CountryId", ViewBag.Countries as SelectList, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Plz, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Plz, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Plz, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Street, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Street, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Street, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.HouseNr, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.HouseNr, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.HouseNr, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SelectedTags, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.SelectedTags, ViewBag.Tags as SelectList, new { @class = "form-control", @style = "min-width:280px;", multiple = "multiple" })
+                    @Html.ValidationMessageFor(model => model.SelectedTags, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.EBillCategory, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("EBillCategory", (IEnumerable<SelectListItem>)ViewData["eBillkategories"], "Wert auswählen")
+                    @Html.ValidationMessageFor(model => model.EBillCategory, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.PointsPerEuro, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PointsPerEuro, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PointsPerEuro, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.EuroPerPoints, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EuroPerPoints, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EuroPerPoints, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <hr />
+            <div class="form-group">
+                @Html.LabelFor(model => model.ImageData, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @{
+                        var bannerPath = "/Stores/LoadStoreImage/" + Model.Id;
+                    }
+                    <img src="@bannerPath" id="Image" height="200" />
+                    <input type="hidden" name="ImageData" id="ImageData" />
+                    <input type="file" id="ImageDataFile" style="margin-top: 10px;" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group row">
+            <div class="col-md-offset-2 col-md-1">
+                <a href="@Url.Action("Index")" class="btn btn-info">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    Zurück
+                </a>
+            </div>
+            <div class="col-md-2">
+                <input type="submit" value="Speichern" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+
+    <hr />
+    <h2>Gutscheine zuweisen</h2>
+    @Html.Action("SelectCoupons", "Coupons", Model)
+}
+
+<script>
+    function getBase64(file) {
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            $("#ImageData").val(reader.result);
+            $("#Image").attr("src", reader.result);
+            console.log(reader.result);
+        };
+        reader.onerror = function (error) {
+            console.log('Error: ', error);
+        };
+    }
+
+    $(document).ready(function () {
+        $("#ImageDataFile").change(function() {
+            var imageFile = $("#ImageDataFile")[0].files[0];
+            getBase64(imageFile);
+        });
+        $('#SelectedTags').tagsinput({
+            confirmKeys: [13, 44]
+        });
+        $("#EBillCategory").select2({
+            tags: true,
+            placeholder: "Wert auswählen"
+        });
+        $('#EBillCategory').val('@Model.EBillCategory');
+        //$('#SelectedTags').on('itemAdded', function (event) {
+        //    console.log(event);
+        //    console.log($(".bootstrap-tagsinput input").val());
+        //    setTimeout(function () {
+        //        if ($(".bootstrap-tagsinput input").val() === ",") {
+        //            $(".bootstrap-tagsinput input").val("");
+        //        }
+        //    }, 10);
+        //    // event.item: contains the item
+        //});
+    });
+</script>

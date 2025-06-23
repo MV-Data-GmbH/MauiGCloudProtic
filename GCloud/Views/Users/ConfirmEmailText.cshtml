@@ -1,0 +1,7 @@
+﻿@model dynamic
+@{
+    Layout = null;
+}
+Bitte klicken Sie <a href="@Url.Action("ConfirmEmail","Users",new { userId = Model.userId, code = Model.code }, "http")">hier</a> um Ihren Account zu aktivieren.
+
+@*Bitte klicken Sie <a href="http://schnitzel.foodjet.online/Users/ConfirmEmail?userId=@Model.userId&code=@Model.code">hier</a> um Ihren Account zu aktivieren.*@

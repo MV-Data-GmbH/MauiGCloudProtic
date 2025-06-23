@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GCloudPhone.Views.BillList"
+             xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+             Title="" NavigationPage.HasNavigationBar="False">
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.05*"></RowDefinition>
+            <RowDefinition Height="0.95*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" BackgroundColor="{StaticResource Zuta}">
+            <HorizontalStackLayout Grid.Row="0" Grid.ColumnSpan="2" VerticalOptions="Center">
+                <Image x:Name="btnBack"  Source="left_chevron32px.png"  HorizontalOptions="Start" VerticalOptions="Start"/>
+                <Label Text="Zurück" TextColor="{StaticResource Tertiary}" FontSize="23" VerticalOptions="Start"/>
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackButtonClicked"/>
+                </HorizontalStackLayout.GestureRecognizers>
+            </HorizontalStackLayout>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.15*" ></RowDefinition>
+                
+                <RowDefinition Height="1.5*"></RowDefinition>
+                <RowDefinition Height="0.05*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" BackgroundColor="{StaticResource Tertiary}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="0.2*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <SearchBar Grid.Column="0" TextChanged="SearchBar_TextChanged" BackgroundColor="{StaticResource Tertiary}"/>
+                <Button Padding="5" Grid.Column="1" x:Name="btnShowPopupSort" Clicked="btnShowPopupSort_Clicked" ImageSource="sort_32px.png" Background="transparent" BackgroundColor="Transparent"/>
+                <Button x:Name="btnMore" Padding="5" Grid.Column="2" ImageSource="more_32px.png" BackgroundColor="Transparent" Background="transparent" Clicked="btnMore_Clicked"/>
+            </Grid>
+            <Label Grid.Row="1" Text="Noch keine Rechnung erstellt." x:Name="BillMsg" />
+            <CollectionView x:Name="Rachung"  Grid.Row="1"  IsEnabled="True">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition  Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" BackgroundColor="Red" >
+                                <Label Grid.Row="0" Padding="0,10,0,10"
+                                Text="{Binding Date}"
+                                 FontAttributes="Bold" TextColor="White"  HorizontalOptions="StartAndExpand"
+                                      />
+                            </Grid>
+                            <CollectionView Grid.Row="1" x:Name="BillsListView"  SelectionChanged="CollectionView_SelectionChanged" SelectionChangedCommandParameter="{Binding Id}" SelectionMode="Single"   ItemsSource="{Binding Bills}"  >
+                                <!--binding stores-->
+                                <CollectionView.ItemsLayout>
+                                    <GridItemsLayout Orientation="Vertical" />
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Padding="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition></RowDefinition>
+                                                <RowDefinition></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition>
+                                                </ColumnDefinition>
+                                                <ColumnDefinition>
+                                                </ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Text="{Binding Invoice.Biller.ComanyName}" Grid.Row="0" Grid.Column="0" Margin="5,0,0,0" FontAttributes="Bold"></Label>
+                                            <Label Text="{Binding Invoice.InvoiceDate,StringFormat='{0:dd.MM.yyyy} um {0:HH:mm} Uhr'}" Grid.Row="1" Grid.Column="0" Margin="5,0,0,8" TextColor="Gray"></Label>
+                                            <Label Text="{Binding Invoice.TotalGrossAmount,StringFormat='€ {0:F2}'}" Grid.Row="1" Grid.Column="1" HorizontalOptions="End" Margin="0,0,5,0"></Label>
+                                            <Border Grid.Row="1" VerticalOptions="End" Grid.ColumnSpan="2"/>
+                                           
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Label Grid.Row="3" Text="V.16.0A" FontSize="10" TextColor="Gray" HorizontalOptions="End" HorizontalTextAlignment="End" VerticalTextAlignment="End"/>
+        </Grid>
+    </Grid>
+</ContentPage>
+
+
+
+
+
+
+

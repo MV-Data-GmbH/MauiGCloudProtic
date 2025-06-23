@@ -1,0 +1,62 @@
+﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:GCloudPhone"
+              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             x:Class="GCloudPhone.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Color x:Key="SelectedColor">#CC0719</Color>
+            <Color x:Key="UnselectedColor">#B0BEC5</Color>
+            <ControlTemplate x:Key="ConnectionStatusTemplate">
+                <Grid>
+                    <ContentPresenter />
+                    <Frame WidthRequest="20"
+                           HeightRequest="20"
+                           CornerRadius="10"
+                           BackgroundColor="{TemplateBinding BindingContext.IndicatorColor}"
+                           VerticalOptions="Start"
+                           HorizontalOptions="End"
+                           HasShadow="False"
+                           Padding="0"/>
+                </Grid>
+            </ControlTemplate>
+            <Style x:Key="UnselectedButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="TextColor" Value="{StaticResource GraySW}"/>
+                <Setter Property="BorderColor" Value="Gray"/>
+                <Setter Property="BorderWidth" Value="1"/>
+                <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="WidthRequest" Value="200"/>
+                <Setter Property="HeightRequest" Value="40"/>
+                <Setter Property="FontSize" Value="14"/>
+            </Style>
+            <Style x:Key="SelectedButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource Tertiary}"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="BorderColor" Value="{StaticResource Tertiary}"/>
+                <Setter Property="BorderWidth" Value="1"/>
+                <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="WidthRequest" Value="200"/>
+                <Setter Property="HeightRequest" Value="40"/>
+                <Setter Property="FontSize" Value="14"/>
+            </Style>
+            
+            <Style TargetType="ContentPage">
+                <Setter Property="Behaviors">
+                    <Setter.Value>
+                        <mct:StatusBarBehavior
+                            StatusBarColor="White"
+                             />
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+        
+       
+    </Application.Resources>
+</Application>

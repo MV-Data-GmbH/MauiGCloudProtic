@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+             x:Class="GCloudPhone.Views.Points.TransferPoints"
+             Shell.NavBarIsVisible="False"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="White">
+
+    <!-- Glavni Grid sa tri reda: Back dugme, prikaz broja poena i forma za unos -->
+    <Grid RowDefinitions="Auto, Auto, *"
+          Style="{StaticResource BasicGrid}"
+          RowSpacing="15">
+
+        <!-- Red 0: Back dugme -->
+        <templates:BackBtnText 
+            x:Name="myBackBtnText"
+             />
+
+        <!-- Red 1: Prikaz trenutnog stanja poena -->
+        <StackLayout Grid.Row="1"
+                     VerticalOptions="Center"
+                     
+                     Padding="20"
+                     Spacing="5">
+            <Label Text="Dein aktueller Punktestand:"
+                   HorizontalTextAlignment="Center"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   />
+
+            <Label x:Name="pointsLabel"
+                   TextColor="{StaticResource Tertiary}"
+                   FontSize="50"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                  />
+        </StackLayout>
+
+        <!-- Red 2: Forma za unos poena i E-Mail -->
+        <Grid Grid.Row="2"
+                    >
+            <StackLayout Spacing="20">
+
+                <!-- Uputstvo za unos poena -->
+                <Label Style="{StaticResource Instuction}"
+                       Text="Bitte geben Sie die Anzahl der Punkte ein, die Sie übertragen möchten:"
+                       FontFamily="Quicksand" />
+
+                <!-- Frame oko numeric unosa -->
+                <Frame CornerRadius="10"
+                       HasShadow="False"
+                       BackgroundColor="{StaticResource White}"
+                       Padding="10">
+                    <Entry x:Name="pointsEntry"
+                           Placeholder="Punkte"
+                           Keyboard="Numeric"
+                           
+                           TextColor="{StaticResource GraySW}" />
+                </Frame>
+
+                <!-- Uputstvo za unos E-Mail adrese -->
+                <Label Style="{StaticResource Instuction}"
+                       Text="Bitte geben Sie die E-Mail-Adresse der Person ein, an die Sie Punkte senden möchten:"
+                       FontFamily="Quicksand" />
+
+                <!-- Frame oko E-Mail unosa -->
+                <Frame CornerRadius="10"
+                       HasShadow="False"
+                       BackgroundColor="{StaticResource White}"
+                       Padding="10">
+                    <Entry x:Name="emailEntry"
+                           Placeholder="E-Mail"
+                           Keyboard="Email"
+                           
+                           TextColor="{StaticResource GraySW}" />
+                </Frame>
+
+                <!-- Potvrdi dugme -->
+                <Button Text="Bestätigen"
+                        Style="{StaticResource PrimaryBtn}"
+                        
+                        Clicked="OnConfirmClicked"
+                        />
+            </StackLayout>
+        </Grid>
+
+    </Grid>
+</ContentPage>

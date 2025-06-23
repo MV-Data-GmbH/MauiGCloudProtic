@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+             x:Class="GCloudPhone.Views.ProduktePage"
+             Title=""
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="White">
+    <Grid RowDefinitions="14*,77*,2*,7*">
+        <!-- Header -->
+        <Grid Grid.Row="0"
+              Padding="{OnPlatform Android='0,20,0,0', Default='0'}">
+            <Image Source="produkt_header_res.jpg" Aspect="AspectFill"/>
+        </Grid>
+
+        <!-- WebView sadržaj -->
+        <ScrollView Grid.Row="1">
+            <WebView x:Name="webView"
+                     VerticalOptions="FillAndExpand"
+                     HorizontalOptions="FillAndExpand" />
+        </ScrollView>
+
+        <!-- Verzija (npr. naziv aplikacije ili verzija) -->
+        <templates:VersionLabelTemplate Grid.Row="2"/>
+
+        <!-- Donja navigaciona traka korišćenjem NavigationBar template-a -->
+        <templates:NavigationBar x:Name="navigationBar" Grid.Row="3"/>
+    </Grid>
+</ContentPage>

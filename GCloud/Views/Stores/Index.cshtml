@@ -1,0 +1,31 @@
+﻿@model IEnumerable<GCloud.Models.Domain.Store>
+@using GCloud.Extensions
+@using GridMvc.Html
+
+@{
+    ViewBag.Title = "Filialen";
+}
+
+<h2>Filialen</h2>
+
+@if (User.IsInRole("Administrators"))
+{
+    <div class="row" style="margin-bottom: 10px">
+        <div class="col-md-12">
+            <a href="@Url.Action("Create")" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                Hinzufügen
+            </a>
+        </div>
+    </div>
+}
+
+@Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(col => col.Company.Name).Titled("Firmenname");
+    columns.Add(col => col.Name).TitledByAttribute();
+    columns.Add(col => col.CreationDateTime).TitledByAttribute();
+    columns.AddListOptions(Html);
+}).Selectable(false)
+
+    

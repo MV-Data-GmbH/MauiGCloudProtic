@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Glavne boje -->
+    <Color x:Key="Primary">#40A416</Color>
+    <Color x:Key="Secondary">#99C68E</Color>
+    <Color x:Key="Tertiary">#E60012</Color>
+    <Color x:Key="Zuta">#FFCC00</Color>
+    <Color x:Key="GraySW">#333333</Color>
+    <Color x:Key="White">#FFFFFF</Color>
+   
+    <Color x:Key="Black">#000000</Color>
+    <Color x:Key="AccentOrange">#FF6A00</Color>
+    <Color x:Key="AccentOrangeLight">#FFBD33</Color>
+    <Color x:Key="LinkColor">#E60012</Color>
+    
+    <Color x:Key="LinkPressedColor">#990517</Color>
+    <Color x:Key="AccentGreenDef">#2E7D32</Color>
+    <Color x:Key="AccentGreenLightDef">#E8F5E9</Color>
+
+
+
+    <!-- Sivilo (osvežene nijanse) -->
+    <Color x:Key="Gray100">#F3F3F3</Color>
+    <Color x:Key="Gray200">#DDDDDD</Color>
+    <Color x:Key="Gray300">#BBBBBB</Color>
+    <Color x:Key="Gray400">#999999</Color>
+    <Color x:Key="Gray500">#777777</Color>
+    <Color x:Key="Gray600">#555555</Color>
+    <Color x:Key="Gray900">#2E2E2E</Color>
+    <Color x:Key="Gray950">#1C1C1C</Color>
+
+    <!-- Akcenti -->
+    <Color x:Key="Yellow100Accent">#FFB100</Color>
+    <Color x:Key="Yellow200Accent">#FFD966</Color>
+    <Color x:Key="Yellow300Accent">#FFF3B3</Color>
+    <Color x:Key="Cyan100Accent">#00B8C8</Color>
+    <Color x:Key="Cyan200Accent">#6DE3EF</Color>
+    <Color x:Key="Cyan300Accent">#C1F3F7</Color>
+    <Color x:Key="Blue100Accent">#007AFF</Color>
+    <Color x:Key="Blue200Accent">#5AA9FF</Color>
+    <Color x:Key="Blue300Accent">#B2D8FF</Color>
+
+    <!-- UI stanja -->
+    <Color x:Key="TabBarSelectColor">#E60012</Color>
+    <Color x:Key="ListItemSelectColor">#FF8C00</Color>
+    <Color x:Key="ConfirmationColor">#38B000</Color>
+    <Color x:Key="WarningColor">#D90429</Color>
+
+    <!-- Brushes -->
+    <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}" />
+    <SolidColorBrush x:Key="ZutaBrush" Color="{StaticResource Zuta}" />
+    <SolidColorBrush x:Key="GraySWBrush" Color="{StaticResource GraySW}" />
+
+    <SolidColorBrush x:Key="AccentOrangeBrush" Color="{StaticResource AccentOrange}" />
+    <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}" />
+    <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}" />
+    <SolidColorBrush x:Key="Gray100Brush" Color="{StaticResource Gray100}" />
+    <SolidColorBrush x:Key="Gray200Brush" Color="{StaticResource Gray200}" />
+    <SolidColorBrush x:Key="Gray300Brush" Color="{StaticResource Gray300}" />
+    <SolidColorBrush x:Key="Gray400Brush" Color="{StaticResource Gray400}" />
+    <SolidColorBrush x:Key="Gray500Brush" Color="{StaticResource Gray500}" />
+    <SolidColorBrush x:Key="Gray600Brush" Color="{StaticResource Gray600}" />
+    <SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}" />
+    <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}" />
+
+    <SolidColorBrush x:Key="Yellow100AccentBrush" Color="{StaticResource Yellow100Accent}" />
+    <SolidColorBrush x:Key="Yellow200AccentBrush" Color="{StaticResource Yellow200Accent}" />
+    <SolidColorBrush x:Key="Yellow300AccentBrush" Color="{StaticResource Yellow300Accent}" />
+    <SolidColorBrush x:Key="Cyan100AccentBrush" Color="{StaticResource Cyan100Accent}" />
+    <SolidColorBrush x:Key="Cyan200AccentBrush" Color="{StaticResource Cyan200Accent}" />
+    <SolidColorBrush x:Key="Cyan300AccentBrush" Color="{StaticResource Cyan300Accent}" />
+    <SolidColorBrush x:Key="Blue100AccentBrush" Color="{StaticResource Blue100Accent}" />
+    <SolidColorBrush x:Key="Blue200AccentBrush" Color="{StaticResource Blue200Accent}" />
+    <SolidColorBrush x:Key="Blue300AccentBrush" Color="{StaticResource Blue300Accent}" />
+
+    <SolidColorBrush x:Key="TabBarSelectColorBrush" Color="{StaticResource TabBarSelectColor}" />
+    <SolidColorBrush x:Key="ListItemSelectColorBrush" Color="{StaticResource ListItemSelectColor}" />
+    <SolidColorBrush x:Key="ConfirmationColorBrush" Color="{StaticResource ConfirmationColor}" />
+    <SolidColorBrush x:Key="WarningColorBrush" Color="{StaticResource WarningColor}" />
+
+</ResourceDictionary>

@@ -1,0 +1,18 @@
+﻿namespace GCloud.Models.Domain
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class AddNewColumnStore : DbMigration
+    {
+        public override void Up()
+        {
+            AddColumn("dbo.Stores", "EuroPerPoints", c => c.Decimal(nullable: false, precision: 18, scale: 2));
+        }
+        
+        public override void Down()
+        {
+            DropColumn("dbo.Stores", "EuroPerPoints");
+        }
+    }
+}

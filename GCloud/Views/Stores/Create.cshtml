@@ -1,0 +1,170 @@
+﻿@model GCloud.Controllers.ViewModels.Store.StoreCreateViewModel
+
+@{
+    ViewBag.Title = "Filiale Hinzufügen";
+}
+
+@Scripts.Render(@"~/bundles/bootstrap-tagsinput")
+@Styles.Render(@"~/Content/bootstrap-tagsinput")
+
+@Scripts.Render(@"~/bundles/select2")
+@Styles.Render(@"~/Content/select2")
+<style>
+    .bootstrap-tagsinput {
+        min-width: 280px !important;
+    }
+    select + .select2-container {
+        width: 280px !important;
+    }
+</style>
+
+<h2>Filiale Hinzufügen</h2>
+
+@using (Html.BeginForm("Create", "Stores", FormMethod.Post, new { enctype = "multipart/form-data", id = "storeCreate" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+
+        <div class="form-horizontal col-md-6">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompanyId, "Firma", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.CompanyId, ViewBag.CompanyId as SelectList, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CompanyId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CountryId, "Land", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.CountryId, ViewBag.Countries as SelectList, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Plz, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Plz, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Plz, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Street, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Street, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Street, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.HouseNr, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.HouseNr, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.HouseNr, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SelectedTags, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.SelectedTags, new SelectList(new List<string>()), new { @class = "form-control", @style = "min-width:280px;", data_role = "tagsinput", multiple = "multiple" })
+                    @Html.ValidationMessageFor(model => model.SelectedTags, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.EBillCategory, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("EBillCategory", (IEnumerable<SelectListItem>)ViewData["eBillkategories"], "Wert auswählen")
+                    @Html.ValidationMessageFor(model => model.EBillCategory, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.PointsPerEuro, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PointsPerEuro, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PointsPerEuro, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.EuroPerPoints, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EuroPerPoints, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EuroPerPoints, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <hr />
+            <div class="form-group">
+                @Html.LabelFor(model => model.ImageData, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    <img src="~/Content/nav_header_background.jpg" id="Image" height="200" />
+                    <input type="hidden" name="ImageData" id="ImageData" />
+                    <input type="file" id="ImageDataFile" style="margin-top: 10px;" />
+                    @Html.ValidationMessageFor(model => model.ImageData, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a href="@Url.Action("Index")" class="btn btn-info">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    Zurück
+                </a>
+                <input type="submit" value="Hinzufügen" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+    function getBase64(file) {
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            $("#ImageData").val(reader.result);
+            $("#Image").attr("src", reader.result);
+            console.log(reader.result);
+        };
+        reader.onerror = function (error) {
+            console.log('Error: ', error);
+        };
+    }
+
+    $(document).ready(function () {
+        $("#ImageDataFile").change(function () {
+            var file = $("#ImageDataFile")[0].files[0];
+            getBase64(file);
+        });
+        $("#EBillCategory").select2({
+            tags: true,
+            placeholder: "Wert auswählen"
+        });
+    });
+</script>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GCloudPhone.Views.Templates.NavigationBar">
+    <Grid BackgroundColor="White"
+          VerticalOptions="End"
+          ColumnDefinitions="*,*,*,*,*"
+          ColumnSpacing="10">
+        
+        <VerticalStackLayout Grid.Column="0"
+                              Style="{StaticResource NavItemStyle}">
+            <Image Source="home.png" 
+                   Style="{StaticResource iconNav}"/>
+            <Label Text="Home" 
+                  Style="{StaticResource LabelsForNavMenu}" />
+            <VerticalStackLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnHomeTapped"/>
+            </VerticalStackLayout.GestureRecognizers>
+        </VerticalStackLayout>
+       
+        <VerticalStackLayout Grid.Column="2"
+                             Style="{StaticResource NavItemStyle}">
+            <Image Source="order.png" 
+                    Style="{StaticResource iconNav}"/>
+            <Label Text="Bestellen" 
+                   Style="{StaticResource LabelsForNavMenu}" />
+            <VerticalStackLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnBestellenTapped"/>
+            </VerticalStackLayout.GestureRecognizers>
+        </VerticalStackLayout>
+        
+        <VerticalStackLayout Grid.Column="1"
+                             Style="{StaticResource NavItemStyle}">
+            <Image Source="actions.png" 
+                    Style="{StaticResource iconNav}"/>
+            <Label Text="Aktionen" 
+                  Style="{StaticResource LabelsForNavMenu}" />
+            <VerticalStackLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnAktionenTapped"/>
+            </VerticalStackLayout.GestureRecognizers>
+        </VerticalStackLayout>
+        
+        <VerticalStackLayout Grid.Column="3"
+                             Style="{StaticResource NavItemStyle}">
+            <Image Source="points.png" 
+                    Style="{StaticResource iconNav}"/>
+            <Label Text="Punkte" 
+                   Style="{StaticResource LabelsForNavMenu}" />
+            <VerticalStackLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnPunkteTapped"/>
+            </VerticalStackLayout.GestureRecognizers>
+            
+        </VerticalStackLayout>
+        
+        <VerticalStackLayout Grid.Column="4"
+                             Style="{StaticResource NavItemStyle}">
+            <Image Source="setting.png"
+                    Style="{StaticResource iconNav}"/>
+            <Label Text="Settings" 
+            Style="{StaticResource LabelsForNavMenu}" 
+                   />
+            <VerticalStackLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnSettingsTapped"/>
+            </VerticalStackLayout.GestureRecognizers>
+        </VerticalStackLayout>
+    </Grid>
+</ContentView>

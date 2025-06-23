@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Class="GCloudPhone.Views.Settings.MyAccount.AddressesBottomPopup"
+    VerticalOptions="End"
+    Size="{OnPlatform Default='800,500'}">
+
+    <Grid
+      Style="{StaticResource BasicGrid}"
+      BackgroundColor="White"
+      RowSpacing="15"
+      RowDefinitions="Auto,Auto,*,Auto,Auto">
+
+        <!-- Header -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*">
+            <Label
+          Grid.Column="0"
+          Text="Adressen"
+          Style="{StaticResource Headings}"
+          VerticalOptions="Center" />
+            <ImageButton
+          Grid.Column="1"
+          Source="remove.png"
+          Clicked="OnCloseButtonClicked"
+          HeightRequest="32"
+          VerticalOptions="Center"
+          HorizontalOptions="End" />
+        </Grid>
+
+        <!-- Ako nema adresa -->
+        <Label
+        Grid.Row="1"
+        x:Name="NoAddressesLabel"
+        Text="Sie haben keine gespeicherten Adressen"
+        IsVisible="False"
+        Style="{StaticResource Headings}" />
+
+        <!-- Lista adresa sa SelectionChanged -->
+        <CollectionView
+        Grid.Row="2"
+        ItemsSource="{Binding SavedAddresses}"
+        SelectionMode="Single"
+        SelectionChanged="OnSelectionChanged">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame
+              Style="{StaticResource HoizontalCardFrame}"
+              BackgroundColor="White"
+              BorderColor="{StaticResource Gray300}">
+                        <Grid ColumnDefinitions="Auto,*,*"
+                  VerticalOptions="Center"
+                  ColumnSpacing="20">
+                            <Image
+                  Grid.Column="0"
+                  Source="location_izo.png"
+                  Style="{StaticResource CheckoutImages}" />
+                            <Label
+                  Grid.Column="1"
+                  Text="{Binding AddressLine1}"
+                  Style="{StaticResource BoldedOptionNameCenter}" />
+                            <Label
+                  Grid.Column="2"
+                  Text="{Binding City}"
+                  Style="{StaticResource BoldedOptionNameCenter}" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Dodaj novu adresu -->
+        <Button
+        Grid.Row="3"
+        Style="{StaticResource PrimaryBtn}"
+        Clicked="OnAddNewAddressTapped"
+        Text="Neue Adresse hinzufügen" />
+
+        <!-- Upravljaj adresama -->
+        <Label
+        Grid.Row="4"
+        Text="Verwalten Sie Ihre Adressen"
+        Style="{StaticResource LinkLabel}"
+        HorizontalOptions="Center">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="ManageAddressesTapped" />
+            </Label.GestureRecognizers>
+        </Label>
+
+    </Grid>
+</toolkit:Popup>

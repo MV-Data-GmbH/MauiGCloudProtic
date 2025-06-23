@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="GCloudPhone.Views.Templates.BackButtonControl">
+
+    <Grid>
+        <HorizontalStackLayout VerticalOptions="Center">
+            <!-- OVDJE stavljamo GestureRecognizers -->
+            <HorizontalStackLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnBackButtonClicked" />
+            </HorizontalStackLayout.GestureRecognizers>
+
+            <Image
+                x:Name="btnBack"
+                Source="left_chevron32px.png"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"
+                BackgroundColor="Transparent" />
+
+            <Label
+                Text="Zurück"
+                TextTransform="Uppercase"
+                TextColor="{StaticResource Tertiary}"
+                FontFamily="Quicksand-Bold"
+                FontSize="18"
+                VerticalOptions="Center" />
+        </HorizontalStackLayout>
+    </Grid>
+</ContentView>
+

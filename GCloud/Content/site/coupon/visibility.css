@@ -1,0 +1,27 @@
+﻿.icons-preview {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+    .icons-preview li {
+        float: left;
+        text-align: center;
+        padding: 20px 10px 20px 10px;
+        border: 1px solid #eee;
+        margin: 5px;
+        background: #fff;
+    }
+
+        .icons-preview li:hover {
+            background-color: azure;
+        }
+
+        .icons-preview li i {
+            display: block;
+        }
+
+        .icons-preview li small {
+            display: block;
+            font-size: 10px;
+            margin-top: 10px;
+        }

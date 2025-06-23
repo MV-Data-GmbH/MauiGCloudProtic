@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+             x:Class="GCloudPhone.Views.Settings.MyAccount.ManageAddressesPage"
+             Title="" Shell.NavBarIsVisible="False" NavigationPage.HasNavigationBar="False">
+    <Grid RowDefinitions="Auto,*,Auto"
+          Style="{StaticResource BasicGrid}"
+          RowSpacing="20">
+        
+        <Grid Grid.Row="0"
+              ColumnDefinitions="Auto,*">
+            <templates:BackButtonView VerticalOptions="Start"/>
+            <Label 
+                Grid.Column="1"
+                Text="Ihre Adressen" 
+                Style="{StaticResource Headings}"/>
+        </Grid>
+        
+
+            <CollectionView x:Name="AddressesCollectionView" Grid.Row="1"
+                            ItemsSource="{Binding UserAddresses}"
+                            >
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        
+                    <Frame Style="{StaticResource HoizontalCardFrame}" >
+                            <Grid
+                                ColumnDefinitions="Auto,*,Auto,Auto"
+                                ColumnSpacing="20">
+                               
+
+                            <Image 
+                                Grid.Column="0"
+                                Source="location_izo.png" 
+                                Style="{StaticResource CheckoutImages}"/>
+
+                            <Grid Grid.Column="1"
+                                  RowDefinitions="Auto,Auto,Auto" >
+                                    <Label Grid.Row="0" Text="{Binding AddressLine1}"  />
+                                    <Label Grid.Row="1" Text="{Binding AddressLine2}"  />
+                                    <Label Grid.Row="2" Text="{Binding City}"  />
+                            </Grid>
+
+                               
+                                             
+                                            
+                                <ImageButton 
+                                    Grid.Column="2"
+                                    Source="edit20.png"
+                                                 Command="{Binding BindingContext.EditAddressCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
+                                                 CommandParameter="{Binding .}"
+                                                 Style="{StaticResource CheckoutImagesBtn}"/> 
+                                <ImageButton 
+                                    Grid.Column="3"
+                                    Source="trash.png"
+                                                 Command="{Binding BindingContext.DeleteAddressCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
+                                                 CommandParameter="{Binding .}"
+                                                 Style="{StaticResource CheckoutImagesBtn}"/>
+                                
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        <Button Text="Adresse hinzufügen"
+                Clicked="AddAddressClicked"
+                Style="{StaticResource PrimaryBtn}"
+                Grid.Row="2"/>
+    </Grid>
+</ContentPage>

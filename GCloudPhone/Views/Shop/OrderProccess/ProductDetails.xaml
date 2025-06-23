@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:GCloudPhone.Views.Shop"
+             xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+             x:Class="GCloudPhone.Views.Shop.OrderProccess.ProductDetails"
+             Shell.NavBarIsVisible="False" NavigationPage.HasNavigationBar="False"
+             x:Name="ProductDetailsPage"
+             ControlTemplate="{StaticResource ConnectionStatusTemplate}">
+
+    <ContentPage.Resources>
+        <local:Base64ToImageSourceConverter x:Key="Base64ToImageSourceConverter" />
+
+        <Style TargetType="Border" x:Key="SelectableItemStyle">
+            <Setter Property="Padding" Value="10, 5, 10, 0"/>
+            <Setter Property="HeightRequest" Value="50"/>
+            <Setter Property="StrokeShape" Value="RoundRectangle 3,3,3,3"/>
+            <Setter Property="StrokeThickness" Value="0"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowSpacing="10"
+          Style="{StaticResource BasicGrid}"
+          RowDefinitions="Auto,Auto,Auto,*, Auto"
+          >
+        
+
+        <Grid Grid.Row="0"
+              ColumnDefinitions="*,Auto">
+        
+            <templates:BackButtonView 
+                Grid.Column="0"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"
+                                  x:Name="BackButtonView"/>
+            
+    
+            <ImageButton Grid.Column="1"
+             Source="speechbubble.png" 
+             BorderWidth="0"
+             HeightRequest="30" 
+             WidthRequest="50"
+             VerticalOptions="Center"
+             HorizontalOptions="End"
+             Clicked="TapGestureRecognizer_Tapped"/>
+            
+        </Grid>
+        <Grid Grid.Row="1">
+
+            <Label 
+      
+             x:Name="ProductNameLabel"
+                Style="{StaticResource Headings}"/>
+      
+        </Grid>
+        
+        
+
+
+        <Label Grid.Row="2" 
+               Text="Möchten Sie etwas hinzufügen?"
+               FontSize="16" 
+    
+               HorizontalOptions="Center" 
+              
+               IsVisible="{Binding ShowSideDishesLabel}"/>
+
+        <CollectionView x:Name="SideDishesCollectionView1"
+                        Grid.Row="3"  
+                        SelectionMode="None" 
+                        
+                        VerticalScrollBarVisibility="Always">
+            
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Style="{StaticResource SelectableItemStyle}"
+                            Padding="10"
+                            Margin="5"
+                            HeightRequest="55"
+                            >
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border"
+                                         Binding="{Binding IsSelected}" 
+                                         Value="True">
+                                <Setter Property="BackgroundColor" 
+                                        Value="{StaticResource ListItemSelectColor}"/>
+                            </DataTrigger>
+                        </Border.Triggers>
+                        
+                        <Grid ColumnDefinitions="Auto, *, Auto"
+                              ColumnSpacing="20"
+                             >
+                            <Grid.GestureRecognizers>
+                                <!--<TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:ProductDetails}}, Path=BindingContext.SelectSideDishCommand}" CommandParameter="{Binding .}" />-->
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference ProductDetailsPage}, Path=BindingContext.ProductDetailsContext.SelectSideDishCommand}" CommandParameter="{Binding .}" />
+
+                            </Grid.GestureRecognizers>
+
+                            <Image Source="{Binding Picturestring, Converter={StaticResource Base64ToImageSourceConverter}}" 
+                                   Style="{StaticResource ListPictures1}"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Start"
+                                   Grid.Column="0" />
+
+                            <Label Grid.Column="1" 
+                                   VerticalOptions="Center"
+                                   Text="{Binding Description1}" 
+                                   Style="{StaticResource ProductName}"/>
+
+                            <Label Grid.Column="2" 
+                                   Text="{Binding PriceAmount, StringFormat='{0:C}'}" 
+                                   TextColor="{StaticResource Gray500}" 
+                                   
+                                   FontSize="14"
+                                    FontAttributes="Bold"
+                                   VerticalOptions="Center"/>
+
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        
+        <CollectionView x:Name="SideDishesCollectionView2"
+            Grid.Row="3" 
+            
+            SelectionMode="None"
+            VerticalScrollBarVisibility="Never">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Style="{StaticResource SelectableItemStyle}" >
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                <Setter Property="BackgroundColor" Value="{StaticResource ListItemSelectColor}"/>
+                            </DataTrigger>
+                        </Border.Triggers>
+                        <Grid ColumnDefinitions="Auto, *, Auto"
+                              ColumnSpacing="15">
+                            <Grid.GestureRecognizers>
+                                <!--<TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:ProductDetails}}, Path=BindingContext.SelectSideDishCommand}" CommandParameter="{Binding .}" />-->
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference ProductDetailsPage}, Path=BindingContext.ProductDetailsContext.SelectSideDishCommand}" CommandParameter="{Binding .}" />
+                            </Grid.GestureRecognizers>
+
+                            <Image Source="{Binding Picturestring, Converter={StaticResource Base64ToImageSourceConverter}}"
+                                   Style="{StaticResource ListPictures1}"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Start"
+                                   Grid.Column="0"  />
+
+                            <Label Grid.Column="1"
+                                   Text="{Binding Description1}" 
+                                   Style="{StaticResource ProductName}"/>
+                            
+                            <Label Grid.Column="2" 
+                                   Text="{Binding PriceAmount, StringFormat='{0:C}'}" 
+                                   Style="{StaticResource ProductPrice}"/>
+
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <CollectionView x:Name="SideDishesCollectionView3"
+                        Grid.Row="3"
+                        SelectionMode="None"
+                        VerticalScrollBarVisibility="Never">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Style="{StaticResource SelectableItemStyle}" 
+                                 >
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                <Setter Property="BackgroundColor" Value="{StaticResource ListItemSelectColor}"/>
+                            </DataTrigger>
+                        </Border.Triggers>
+                        <Grid ColumnDefinitions="Auto, *, Auto"
+                              ColumnSpacing="15">
+                            <Grid.GestureRecognizers>
+                                <!--<TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:ProductDetails}}, Path=BindingContext.SelectSideDishCommand}" CommandParameter="{Binding .}" />-->
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference ProductDetailsPage}, Path=BindingContext.ProductDetailsContext.SelectSideDishCommand}" CommandParameter="{Binding .}" />
+                            </Grid.GestureRecognizers>
+
+                            <Image Source="{Binding Picturestring, Converter={StaticResource Base64ToImageSourceConverter}}"
+                                  Style="{StaticResource ListPictures1}"
+                                   VerticalOptions="Center" Grid.Column="0" />
+
+                            <VerticalStackLayout Grid.Column="1"  Margin="0" Padding="0">
+                                <Label Text="{Binding Description1}"
+                                       Style="{StaticResource ProductName}" Margin="0" Padding="0"/>
+                                <Label Text="{Binding PriceAmount, StringFormat='{0:C}'}" 
+                                       Style="{StaticResource ProductPrice}" Margin="0" Padding="0"/>
+                            </VerticalStackLayout>
+
+                            <Grid Grid.Column="2" 
+                                  ColumnDefinitions="Auto,*,Auto" 
+                                  HorizontalOptions="Center" 
+                                  IsVisible="False" 
+                                  ColumnSpacing="3">
+                                <Grid.Triggers>
+                                    <DataTrigger TargetType="Grid" Binding="{Binding IsSelected}" Value="True">
+                                        <Setter Property="IsVisible" Value="True"/>
+                                    </DataTrigger>
+                                </Grid.Triggers>
+                                <ImageButton Source="minus.png" 
+                                             WidthRequest="45" 
+                                             Grid.Column="0" 
+                                             Command="{Binding Source={x:Reference ProductDetailsPage}, Path=BindingContext.ProductDetailsContext.DecreaseQuantityCommand}"
+                                             CommandParameter="{Binding .}" />
+                                <Label Text="{Binding Quantity}"  
+                                       Grid.Column="1" 
+                                       VerticalOptions="Center" 
+                                       FontSize="14" 
+                                       TextColor="White"
+                                        FontAttributes="Bold"/>
+                                <ImageButton Source="plus.png" 
+                                              WidthRequest="50"  
+                                             Grid.Column="2"
+                                             Command="{Binding Source={x:Reference ProductDetailsPage}, Path=BindingContext.ProductDetailsContext.IncreaseQuantityCommand}"
+                                             CommandParameter="{Binding .}" />
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <CollectionView x:Name="SideDishesCollectionView4" 
+                        Grid.Row="3" 
+                        SelectionMode="None"
+                        VerticalScrollBarVisibility="Never">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Style="{StaticResource SelectableItemStyle}"
+                            Margin="5"
+                            Padding="10">
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsSelected}" Value="True">
+                                <Setter Property="BackgroundColor" Value="{StaticResource ListItemSelectColor}"/>
+                            </DataTrigger>
+                        </Border.Triggers>
+                        <Grid ColumnDefinitions="Auto, *, Auto" 
+                              ColumnSpacing="20">
+                            <Grid.GestureRecognizers>
+                                <!--<TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:ProductDetails}}, Path=BindingContext.SelectSideDishCommand}" CommandParameter="{Binding .}" />-->
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference ProductDetailsPage}, Path=BindingContext.ProductDetailsContext.SelectSideDishCommand}" CommandParameter="{Binding .}" />
+                            </Grid.GestureRecognizers>
+
+                            <Image Source="{Binding Picturestring, Converter={StaticResource Base64ToImageSourceConverter}}"
+                                  Style="{StaticResource ListPictures1}"
+                                   VerticalOptions="Center" 
+                                   Grid.Column="0" />
+
+                            <VerticalStackLayout Grid.Column="1" Margin="0" Padding="0">
+                                <Label Text="{Binding Description1}" 
+                                       Style="{StaticResource ProductName}" Margin="0" Padding="0"/>
+                                <Label Text="{Binding PriceAmount, StringFormat='{0:C}'}"
+                                       Style="{StaticResource ProductPrice}" Margin="0" Padding="0"/>
+
+                            </VerticalStackLayout>
+                            <Grid Grid.Column="2"
+                                  ColumnDefinitions="Auto,Auto,Auto"
+                                  HorizontalOptions="Center"
+                                  IsVisible="False" ColumnSpacing="3">
+                                <Grid.Triggers>
+                                    <DataTrigger TargetType="Grid" Binding="{Binding IsSelected}" Value="True">
+                                        <Setter Property="IsVisible" Value="True"/>
+                                    </DataTrigger>
+                                </Grid.Triggers>
+                               
+                                <ImageButton Source="minus.png" 
+                                            WidthRequest="45" 
+                                            Grid.Column="0" 
+                                            Command="{Binding Source={x:Reference ProductDetailsPage}, Path=BindingContext.ProductDetailsContext.DecreaseQuantityCommand}"
+                                            CommandParameter="{Binding .}" />
+                                <Label Text="{Binding Quantity}"  
+                                      Grid.Column="1" 
+                                      VerticalOptions="Center" 
+                                      FontSize="14"
+                                       TextColor="White"
+                                        FontAttributes="Bold"/>
+                                <ImageButton Source="plus.png" 
+                                             WidthRequest="50"  
+                                            Grid.Column="2"
+                                            Command="{Binding Source={x:Reference ProductDetailsPage}, Path=BindingContext.ProductDetailsContext.IncreaseQuantityCommand}"
+                                            CommandParameter="{Binding .}" />
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Grid ColumnDefinitions="10,Auto,*,Auto,10"
+              ColumnSpacing="10"
+              Grid.Row="4">
+           
+            
+            <ImageButton Grid.Column="1" 
+                         x:Name="PreviousPageButton" 
+                         Source="backarrow_red.png"
+                         HeightRequest="20"
+                         WidthRequest="20"
+                         Clicked="PreviousPageButton_Clicked"
+                         HorizontalOptions="Start" 
+                         BorderWidth="0" 
+                         />
+            <Button Grid.Column="2"
+                    Text="Ausgewählt: 0,00 €" 
+                    x:Name="AddToCartButton" 
+                   Style="{StaticResource PrimaryBtn}"
+                   WidthRequest="200"
+                    Clicked="OnAddToCartButtonClicked"/>
+            
+            <ImageButton Grid.Column="3"
+                         x:Name="NextPageButton" Source="arrow_green.png" 
+                         HeightRequest="20" 
+                         WidthRequest="20"
+                         Clicked="NextPageButton_Clicked"
+                         HorizontalOptions="End"
+                         BorderWidth="0"
+                         />
+        </Grid>
+
+    </Grid>
+</ContentPage>

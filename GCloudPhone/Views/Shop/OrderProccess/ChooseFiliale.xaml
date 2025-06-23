@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+             xmlns:local="clr-namespace:GCloudPhone.Views.Shop"
+             x:Class="GCloudPhone.Views.Shop.OrderProccess.ChooseFiliale"
+             Title="" NavigationPage.HasNavigationBar="False" Shell.NavBarIsVisible="False">
+    <Grid RowDefinitions="14*,77*,2*,7*"
+          Style="{StaticResource BasicGrid}">
+        <Grid.GestureRecognizers>
+            <SwipeGestureRecognizer Direction="Right" Swiped="OnSwipedRight"/>
+        </Grid.GestureRecognizers>
+
+        <!--  (header) -->
+        <Grid Grid.Row="0">
+            <Image Source="bestellen_header_res.jpg" Aspect="AspectFill"/>
+        </Grid>
+
+        <!-- CollectionView za listu "Stores" -->
+        <Grid Grid.Row="1" 
+              VerticalOptions="Center"
+              HorizontalOptions="Center"
+              Padding="0,20,0,20">
+            <CollectionView x:Name="StoresList">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="1" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                       
+                        <Grid HeightRequest="70" 
+                              RowDefinitions="Auto,Auto" 
+                              VerticalOptions="Center"
+                              HorizontalOptions="Start"
+                              ColumnSpacing="20"
+                              
+                      ColumnDefinitions="0.10*,*,0.2*">
+
+                            <!-- Ikona lokacije s levim paddingom -->
+                            <VerticalStackLayout Grid.RowSpan="2"
+                                                 HorizontalOptions="Start"
+                                                 Margin="20,0,20,0">
+                                <Image Source="location_izo.png"
+                               HeightRequest="50" 
+                               WidthRequest="50"
+                               Grid.Row="1"/>
+                            </VerticalStackLayout>
+
+                            <!-- Naziv trgovine  -->
+                            <StackLayout Grid.Column="1" 
+                                         Grid.RowSpan="1" 
+                                         Grid.ColumnSpan="2"
+                                         VerticalOptions="Center"
+                                         HorizontalOptions="Start"
+                                         Orientation="Horizontal">
+                                <Label Text="Schnitzelwelt - " 
+                                       FontSize="17"
+                                       VerticalTextAlignment="Center"/>
+                                <Label Text="{Binding Name}" FontSize="17" 
+                               LineBreakMode="WordWrap" 
+                               />
+                            </StackLayout>
+
+                            <!-- Adresa -->
+                            <Label Grid.Column="1" 
+                                   Grid.Row="1" TextColor="Gray" 
+                           FontSize="14" 
+                                   
+                                   VerticalTextAlignment="Center">
+                                <Label.Text>
+                                    <MultiBinding StringFormat="{}{0} {1}, {2} {3}">
+                                        <Binding Path="Street" />
+                                        <Binding Path="HouseNr" />
+                                        <Binding Path="Plz" />
+                                        <Binding Path="City" />
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+
+                         
+                            
+
+                            <!-- Dodavanje tap gesturea na celu stavku -->
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:Reference StoresList}, Path=BindingContext.TapCommand}" 
+                                              CommandParameter="{Binding Id}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+
+
+        <!-- Verzija aplikacije -->
+        <templates:VersionLabelTemplate Grid.Row="2"/>
+
+        <!-- Navigacijski meni -->
+        <templates:NavigationBar
+     x:Name="navigationBar"
+     Grid.Row="3" />
+    </Grid>
+</ContentPage>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+             x:Class="GCloudPhone.Views.Points.BuyPoints"
+             Shell.NavBarIsVisible="False" NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="Auto,*" 
+          Style="{StaticResource BasicGrid}"
+          RowSpacing="30">
+
+        <templates:BackBtnText x:Name="myBackBtnText" />
+
+        <Grid Grid.Row="1"
+              
+             RowSpacing="20"
+              RowDefinitions="Auto,Auto,Auto,60*">
+
+            <Label Text="Bitte geben Sie die Anzahl der Punkte ein, die Sie senden möchten:" Style="{StaticResource Instuction}"/>
+            
+            <Frame Grid.Row="1" Margin="0"
+                   Padding="10">
+                <Entry
+                 Placeholder="Anzahl der Punkte"
+                 x:Name="pointsEntry"
+                 Keyboard="Numeric" />
+            </Frame>
+
+            <VerticalStackLayout Grid.Row="2" Spacing="5">
+                <Label Text="Wählen Sie Ihre Zahlungsmethode"
+                    Style="{StaticResource Instuction}"/>
+                <Frame CornerRadius="5">
+                    <Grid>
+                        <Picker x:Name="PaymentMethodPicker" 
+                         FontSize="12"
+                         Title="Wählen Sie Ihre Zahlungsmethode" TitleColor="{StaticResource Gray400}"
+                         SelectedIndexChanged="OnPaymentMethodChanged" 
+                         > 
+                        </Picker>
+
+                        <Image Source="arrow.png"
+                            HeightRequest="30" VerticalOptions="Center" 
+                            HorizontalOptions="End"/>   
+                    </Grid>
+                </Frame>
+            </VerticalStackLayout>
+
+            <Button
+                Style="{StaticResource PrimaryBtn}"
+                Grid.Row="3"
+                Text="Bestätigen"
+                Clicked="OnConfirmClicked" 
+                VerticalOptions="End">
+               
+            </Button>
+        </Grid>
+        
+        
+    </Grid>
+</ContentPage>

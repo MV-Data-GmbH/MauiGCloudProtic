@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>707dd199-ec06-4b6a-b074-f69916f461a9</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>GCloudShared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\AuthToken.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\BasePersistable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\Bill.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\MobilePhone.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\Parameters.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\Resources.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\SpecialProduct.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\Subscription.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\TypeParameter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\User.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Domain\UserLoginMethod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IAuthService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IBillService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\ICashbackService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IStartupService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IStoresService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IUserCouponService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IUserStoreService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IWebShopService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repository\AbstractRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repository\MobilePhoneRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repository\ParametersRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repository\SubscriptionRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repository\UserRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\AuthService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\BillService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\CashbackService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Dto\ChangePasswordRequestModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Dto\ImageViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Dto\LoginRequestModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Dto\LoginResponseModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Dto\RecoveryPasswordToWebShopModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Dto\RegisterToWebShopModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Dto\RegisterToWebShopResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Dto\SpecialProductsResultModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\Dto\RegisterRequestModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\StartupService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\StoreService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\UrlConnection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\UserAddressService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\UserCouponService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\UserPointsService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\UserStoreService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\WebShopService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Shared\AESCrypt.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Shared\CompressString.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Shared\DbBootstraper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SocketServer\ISocketClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SocketServer\NetworkConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SocketServer\SendToDispayKuechenService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SocketServer\SocketClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SocketServer\StateObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebShopDto\BaseEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebShopDto\ModelError.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebShopDto\OrderItemKuechenDisplay.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebShopDto\OrderKuechenDisplay.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebShopDto\RegisterResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebShopDto\WebError.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)ErrorsException\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Validation\" />
+  </ItemGroup>
+</Project>

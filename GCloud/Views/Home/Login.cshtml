@@ -1,0 +1,136 @@
+﻿@model GCloud.Models.Domain.LoginBindingModel
+@{
+    ViewBag.Title = "Anmeldung";
+}
+<div class="row vertical-offset-100">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row-fluid user-row">
+                    <img src="/Content/images/icon.png" class="img-responsive" alt="Conxole Admin" />
+                </div>
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "form-signin", role = "form" }))
+                {
+                    <fieldset>
+                        @if (!string.IsNullOrWhiteSpace(ViewBag.ErrorMessage))
+                        {
+                            <label class="panel-login alert alert-danger">
+                                <div class="login_result">@ViewBag.ErrorMessage</div>
+                            </label>
+                        }
+
+                        @if (ViewBag?.EmailConfirmed != null && !ViewBag.EmailConfirmed)
+                        {
+                            <div class="alert alert-warning">
+                                Email wurde noch nicht bestätigt! Um die Bestätigungsemail nochmals zu senden klicken sie bitte 
+                                @Html.ActionLink("hier", "ResendActivationEmail", "Users", new {username = Model.Username}, null)
+                            </div>
+                        }
+                        @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", placeholder = "Benutzername", id = "username" } })
+                        @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Passwort", id = "password" })
+                        <br />
+                        <input type="submit" class="btn btn-lg btn-success btn-block" id="login" value="Anmelden" />
+                    </fieldset>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/app")
+    @Scripts.Render("https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js")
+
+    <script>
+        $(document).ready(function () {
+            $(document).mousemove(function (event) {
+                TweenLite.to($("body"),
+                    .5,
+                    {
+                        css: {
+                            backgroundPosition: "" +
+                            parseInt(event.pageX / 8) +
+                            "px " +
+                            parseInt(event.pageY / '12') +
+                            "px, " +
+                            parseInt(event.pageX / '15') +
+                            "px " +
+                            parseInt(event.pageY / '15') +
+                            "px, " +
+                            parseInt(event.pageX / '30') +
+                            "px " +
+                            parseInt(event.pageY / '30') +
+                            "px",
+                            "background-position": parseInt(event.pageX / 8) +
+                            "px " +
+                            parseInt(event.pageY / 12) +
+                            "px, " +
+                            parseInt(event.pageX / 15) +
+                            "px " +
+                            parseInt(event.pageY / 15) +
+                            "px, " +
+                            parseInt(event.pageX / 30) +
+                            "px " +
+                            parseInt(event.pageY / 30) +
+                            "px"
+                        }
+                    });
+            });
+        })
+    </script>
+
+    <style>
+
+        .form-signin input[type="text"] {
+            margin-bottom: 5px;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .form-signin input[type="password"] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+
+        .form-signin input[type="submit"] {
+            max-width: 500px;
+        }
+
+        .form-signin .form-control {
+            position: relative;
+            font-size: 16px;
+            font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+            height: auto;
+            padding: 10px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            max-width: 500px;
+        }
+
+        .vertical-offset-100 {
+            padding-top: 100px;
+        }
+
+        .img-responsive {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: auto;
+        }
+
+        .panel {
+            margin-bottom: 20px;
+            background-color: rgba(255, 255, 255, 0.75);
+            border: 1px solid transparent;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+        }
+    </style>
+}
+

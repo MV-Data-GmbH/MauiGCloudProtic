@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+    xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+    x:Class="GCloudPhone.Views.Points.SpecialProductsDetailsSwpts"
+    Title=""
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="White">
+
+    <!-- Glavni Grid sa 5 redova (procentualne visine) -->
+    <Grid RowDefinitions="Auto,31*,40*,2*,7*"
+          ColumnDefinitions="*"
+          RowSpacing="0"
+          ColumnSpacing="0"
+          Padding="0">
+
+        <!-- ROW 0: Back dugme i naslov -->
+        <HorizontalStackLayout
+            Grid.Row="0"
+            Padding="10,0"
+            HorizontalOptions="Fill"
+            VerticalOptions="Center"
+            Spacing="10">
+
+            <!-- Back dugme -->
+            <templates:BackButtonView
+                VerticalOptions="Center"
+                HorizontalOptions="Start" />
+
+            <!-- Naslov -->
+            <Label 
+                Text="Coupon-Details"
+                Style="{StaticResource Headings}"
+                VerticalOptions="Center"
+                />
+        </HorizontalStackLayout>
+
+        <!-- ROW 1: QR kod prikaz -->
+        <zxing:BarcodeGeneratorView
+            Grid.Row="1"
+            x:Name="CouponQRcode"
+            Format="QrCode"
+            HeightRequest="220"
+            WidthRequest="220"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+
+        <!-- ROW 2: Grid sa detaljima -->
+        <Grid
+            Grid.Row="2"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            RowSpacing="5"
+            ColumnSpacing="26"
+            RowDefinitions="*,*,*,*"
+            ColumnDefinitions="*,*">
+
+            <!-- Red 0: 'Gültig ab:' -->
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="Gültig ab:" />
+            <Label
+                Grid.Row="0"
+                Grid.Column="1"
+                x:Name="ValidFromLabel" />
+
+            <!-- Red 1: 'Gültig bis:' -->
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                Text="Gültig bis:" />
+            <Label
+                Grid.Row="1"
+                Grid.Column="1"
+                x:Name="ValidToLabel" />
+
+            <!-- Red 2: 'Einlösbar:' -->
+            <Label
+                Grid.Row="2"
+                Grid.Column="0"
+                Text="Einlösbar:" />
+            <Label
+                Grid.Row="2"
+                Grid.Column="1"
+                x:Name="ReedemableLabel" />
+
+            <!-- Red 3: 'Wert:' i prikaz bodova -->
+            <Label
+                Grid.Row="3"
+                Grid.Column="0"
+                Text="Wert:" />
+            <HorizontalStackLayout
+                Grid.Row="3"
+                Grid.Column="1"
+                Spacing="4">
+                <Label
+                    x:Name="PointsLabel" />
+                <Label
+                    Text=" Punkte" />
+            </HorizontalStackLayout>
+        </Grid>
+
+        <!-- ROW 3: Verzijska labela kao template -->
+        <templates:VersionLabelTemplate
+            Grid.Row="3"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            Margin="0,5" />
+
+        <!-- ROW 4: (Preostali prostor ili prazan) -->
+        <!-- Po potrebi dodajte nešto u ovaj red, ili ga ostavite prazan -->
+    </Grid>
+</ContentPage>

@@ -1,0 +1,16 @@
+﻿@using System.Activities.Expressions
+@using GCloud.Reporting
+@using ReportViewerForMvc
+@{
+    ViewData["Title"] = "Berichte";
+}
+
+<div id="reportView" class="table-responsive">
+    @if(ViewBag.ReportViewer != null && ViewBag.ReportViewer is GustavReportViewer) {
+        @Html.ReportViewer((GustavReportViewer)ViewBag.ReportViewer, new {scrolling = "yes", width = "100%"})
+    }
+</div>
+
+<div>
+    <a href="/Reports/Index" class="btn btn-default"><i class="fa fa-arrow-left"></i> Zur&uuml;ck zur &Uuml;bersicht</a>
+</div>

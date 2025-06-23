@@ -1,0 +1,58 @@
+﻿@model GCloud.Models.Domain.Redeem
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Redeem</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Coupon.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Coupon.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CashValue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CashValue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CouponValue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CouponValue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDeleted)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

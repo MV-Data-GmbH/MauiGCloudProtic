@@ -1,0 +1,90 @@
+﻿@using GCloud.Controllers
+@model GCloud.Models.Domain.Coupon
+
+@{
+    ViewBag.Title = "Neue Gültigkeit erstellen";
+}
+@Styles.Render("~/Content/visibility")
+<h2>Neue Sichtbarkeit erstellen</h2>
+
+<div class="row">
+    <div class="col-md-12 visibility-type">
+        <h4>Sichtbarkeit auswählen:</h4>
+        <ul class="icons-preview">
+            @foreach (CouponVisibilityNamesViewModel item in ViewBag.VisibilityTypes)
+            {
+                if (Model.Visibilities.All(x => x.GetType().FullName != item.FullName))
+                {
+                    <li style="min-width: 100px" data-type="@(item.Name)" data-typefull="@(item.FullName)"><i class="fa fa-3x fa-address-book"></i>@(item.HumanReadableName)</li>
+                }
+            }
+        </ul>
+
+    </div>
+    <form class="col-md-12 visibility-settings" style="display: none;" data-parsley-validate>
+        <div class="sk-rotating-plane"></div>
+    </form>
+</div>
+<style>
+    .visibility-settings .form-group {
+        margin-left: 0;
+    }
+</style>
+<script>
+    //# sourceURL=CouponVisibility/Create.js
+    function objectifyForm(formArray) {//serialize data function
+        var returnArray = {};
+        for (var i = 0; i < formArray.length; i++) {
+            returnArray[formArray[i]['name']] = formArray[i]['value'];
+        }
+        return returnArray;
+    }
+    $(document).ready(function () {
+        $("ul.icons-preview li").click(function (event) {
+            var $this = $("#couponForm").filter(function (index, element) {
+                return $(element).attr("name") !== "ImageData";
+            });
+            var frmValues = $this.serialize();
+            $(".visibility-type").hide();
+            $(".visibility-settings").show();
+            $(this).addClass("active");
+            var url = '';
+            url = '/' + $(this).data("type") + '/Create';
+            $.ajax({
+                url: url,
+                data: frmValues,
+                type: "post",
+                success: function (result) {
+                    $(".visibility-settings").html(result);
+                }
+            });
+        });
+        $(".visibility-settings").on("submit", function ($event) {
+            $event.preventDefault();
+            var formArray = objectifyForm($(this).serializeArray());
+            var type = $("ul.icons-preview li.active").data("type");
+
+            if (window[type] && typeof window[type] === "function") {
+                if (!window[type]()) {
+                    return;
+                }
+            }
+            var storeCouponVisibilitiesStr = $("#couponVisibilities").val();
+            var storedCouponVisibilities;
+
+            if (!storeCouponVisibilitiesStr) {
+                storedCouponVisibilities = [];
+            } else {
+                storedCouponVisibilities = JSON.parse(storeCouponVisibilitiesStr);
+            }
+            storedCouponVisibilities.push({
+                key: $("ul.icons-preview li.active").data("typefull"),
+                delete: false,
+                value: formArray
+            });
+            $("#couponVisibilities").val(JSON.stringify(storedCouponVisibilities));
+            $('#myModal').modal('hide');
+            $(document).trigger('updateCouponVisibilities');
+        });
+    });
+</script>

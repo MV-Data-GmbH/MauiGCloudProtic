@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+    x:Class="GCloudPhone.Views.Aktionen.AktionenPage"
+    Title=""
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="White">
+
+    <!--
+      Spoljašnji Grid sa dva reda:
+        0 = sav glavni sadržaj (uz moguć scrolla unutar CollectionView)
+        1 = fiksirani NavigationBar na dnu
+    -->
+    <Grid RowDefinitions="*, Auto" Style="{StaticResource BasicGrid}" RowSpacing="0">
+
+        <!-- RED 0: cela logika stranice bez NavigationBar-a -->
+        <Grid Grid.Row="0" RowDefinitions="Auto, *, Auto" RowSpacing="10">
+
+            <!-- ROW 0: GLOBALNI Label kada nema akcija -->
+            <Label
+                x:Name="AktioneLabel"
+                Grid.Row="0"
+                Text="No Aktionen"
+                Style="{StaticResource Headings}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                IsVisible="False" />
+
+            <!-- ROW 1: CollectionView sa stavkama (ona sama po sebi scroll-a) -->
+            <CollectionView
+                x:Name="AktionenList"
+                Grid.Row="1"
+                Margin="10"
+                ItemsSource="{Binding Aktionen}"
+                SelectionMode="None">
+
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout
+                        Orientation="Vertical"
+                        Span="2"
+                        VerticalItemSpacing="10"
+                        HorizontalItemSpacing="10" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.EmptyView>
+                    <StackLayout
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        Padding="20">
+                        <Label
+                            Text="No Aktionen"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            TextColor="{StaticResource GraySW}" />
+                    </StackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            StrokeShape="RoundRectangle,8"
+                            BackgroundColor="White"
+                            Padding="0">
+                            <Grid RowDefinitions="Auto, Auto, Auto"
+                                  ColumnDefinitions="*"
+                                  Padding="8">
+
+                                <!-- Slika akcije -->
+                                <Image
+                                    Source="{Binding ImageSource}"
+                                    Aspect="AspectFill"
+                                    HeightRequest="140"
+                                    WidthRequest="60"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Start"
+                                    Grid.Row="0" />
+
+                                <!-- Naziv akcije -->
+                                <Label
+                                    Text="{Binding Name}"
+                                    FontSize="14"
+                                    FontAttributes="Bold"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    LineBreakMode="WordWrap"
+                                    Grid.Row="1"
+                                    Margin="0,6,0,0" />
+
+                                <!-- Broj bodova + tekst -->
+                                <StackLayout
+                                    Orientation="Horizontal"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Start"
+                                    Grid.Row="2"
+                                    Spacing="4"
+                                    Margin="0,6,0,0">
+                                    <Label
+                                        Text="{Binding CouponPoints}"
+                                        FontSize="13"
+                                        FontAttributes="Bold"
+                                        TextColor="{StaticResource Tertiary}" />
+                                    <Label
+                                        Text="günstiger"
+                                        FontSize="13"
+                                        FontAttributes="Bold"
+                                        TextColor="{StaticResource Tertiary}" />
+                                </StackLayout>
+                            </Grid>
+
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={x:Reference AktionenList}, Path=BindingContext.ItemTappedCommand}"
+                                    CommandParameter="{Binding Id}" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- ROW 2: Verzijska oznaka -->
+            <templates:VersionLabelTemplate
+                Grid.Row="2"
+                Margin="10,5" />
+
+        </Grid>
+
+        <!-- RED 1: Fiksirani NavigationBar na dnu -->
+        <templates:NavigationBar
+            x:Name="navigationBar"
+            Grid.Row="1"
+            Margin="0" />
+    </Grid>
+</ContentPage>

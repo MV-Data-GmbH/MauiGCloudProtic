@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GCloudPhone.Views.PopupSortList"
+              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui">
+    <Grid BackgroundColor="White" ColumnSpacing="10" MinimumHeightRequest="210" MinimumWidthRequest="210">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition Height="0.8*"></RowDefinition>
+            <RowDefinition Height="0.7*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition Height="1.2*"></RowDefinition>
+            <RowDefinition Height="0.1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.1*"></ColumnDefinition>
+            <ColumnDefinition Width="1.5*"></ColumnDefinition>
+            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+            <ColumnDefinition Width="0.1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="1" Margin="10,0,0,0" Grid.ColumnSpan="4" Text="Sortieren nach"  FontSize="20"/>
+        <Label Grid.Row="3" Grid.Column="1" Text="Datum" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+        <RadioButton Grid.Row="3" Grid.Column="2" x:Name="radioBtnDatum" CheckedChanged="radioBtnDatum_CheckedChanged" Value="Datum" IsChecked="True" HorizontalOptions="End"/>
+        <Label Grid.Row="4" Grid.Column="1" Text="Rechnungs-Nr"  HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+        <RadioButton Grid.Row="4" Grid.Column="2" x:Name="radioBtnRechnungs" CheckedChanged="radioBtnDatum_CheckedChanged" Value="Rachung" HorizontalOptions="End"/>
+        <Label Grid.Row="5" Grid.Column="1" Text="Preis"  HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+        <RadioButton Grid.Row="5" Grid.Column="2" x:Name="radioBtnPreis" CheckedChanged="radioBtnDatum_CheckedChanged" Value="Preis" HorizontalOptions="End"/>
+        <Label Grid.Row="6" Grid.Column="1" Text="Store"  HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+        <RadioButton Grid.Row="6" Grid.Column="2" x:Name="radioBtnStore" CheckedChanged="radioBtnDatum_CheckedChanged" Value="Store" HorizontalOptions="End"/>
+        <HorizontalStackLayout Grid.Row="7" Grid.ColumnSpan="4" HorizontalOptions="Center" Spacing="15">
+            <ImageButton Source="sort_desc64px.png" Clicked="ImageButton_Clicked" CommandParameter="0"/>
+            <ImageButton Source="sort_64px.png"  Clicked="ImageButton_Clicked" CommandParameter="1"/>
+        </HorizontalStackLayout>
+        <Button Grid.Row="9" Grid.ColumnSpan="4" Text="UBERNEHMEN" Clicked="Button_Clicked" BackgroundColor="LightGray" TextColor="Gray" HorizontalOptions="Center"/>
+    </Grid>
+</mct:Popup>

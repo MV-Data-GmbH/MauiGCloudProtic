@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+    xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+    x:Class="GCloudPhone.Views.Points.MyPointsPage"
+    Title=""
+    BackgroundColor="{StaticResource White}"
+    
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False"
+    >
+
+    <!-- Definišemo 4 reda: 
+         Row 0 = Auto     (naslov i broj bodova)
+         Row 1 = *        (glavni sadržaj bez ScrollView-a)
+         Row 2 = Auto     (verzija aplikacije)
+         Row 3 = Auto     (navigaciona traka) -->
+    <Grid
+        RowDefinitions="Auto, *, Auto, Auto"
+        ColumnDefinitions="*"
+        RowSpacing="10"
+        Style="{StaticResource BasicGrid}"
+        >
+
+        <!-- ========== RED 0: Naslov i bodovi ========== -->
+        <VerticalStackLayout
+            Grid.Row="0"
+            Spacing="5"
+            HorizontalOptions="Center"
+            VerticalOptions="Start"
+            Padding="0,10">
+
+            <Label
+                Text="Dein aktueller Punktestand:"
+               Style="{StaticResource Headings}"
+                HorizontalTextAlignment="Center" />
+
+            <Label
+                x:Name="pointsLabel"
+                TextColor="{StaticResource Tertiary}"
+                FontAttributes="Bold"
+                FontSize="40"
+                HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+
+
+        <!-- ========== RED 1: Glavni sadržaj ========== -->
+        <VerticalStackLayout
+            Grid.Row="1"
+            Spacing="30"
+            HorizontalOptions="Center"
+            VerticalOptions="Start">
+
+            <!-- Sekcija: "Kaufen oder Übertragen Punkte" -->
+            <VerticalStackLayout
+                Spacing="5"
+                HorizontalOptions="Center">
+
+                <Label
+                    Text="Kaufen"
+                    TextColor="{StaticResource AccentOrange}"
+                    FontAttributes="Bold"
+                    TextTransform="Uppercase"
+                    FontSize="20"
+                    HorizontalTextAlignment="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnLabelTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <Label
+                    Text="oder"
+                    TextColor="{StaticResource GraySW}"
+                    FontSize="16"
+                    HorizontalTextAlignment="Center" />
+
+                <Label
+                    Text="Übertragen"
+                    TextDecorations="Underline"
+                    TextTransform="Uppercase"
+                    FontSize="20"
+                    TextColor="{StaticResource GraySW}"
+                    HorizontalTextAlignment="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnLabelTapped1" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <Label
+                    Text="Punkte"
+                    TextColor="{StaticResource GraySW}"
+                    FontSize="16"
+                    HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+
+            <!-- QR kod unutar okvira -->
+            <Frame
+                HasShadow="True"
+                CornerRadius="10"
+                Padding="10"
+                BackgroundColor="{StaticResource White}"
+                BorderColor="{StaticResource Gray200}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+
+                <zxing:BarcodeGeneratorView
+                    x:Name="UserQRcode"
+                    Format="QrCode"
+                    Value="https://dotnet.microsoft.com"
+                    HeightRequest="200"
+                    WidthRequest="200"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
+            </Frame>
+
+            <!-- Dva dugmeta u horizontalnoj liniji -->
+            <HorizontalStackLayout
+                Spacing="20"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+
+                <Frame
+                    x:Name="borderJetzEinlosbar"
+                    BorderColor="{StaticResource Gray200}"
+                    CornerRadius="10"
+                    BackgroundColor="Transparent"
+                    HasShadow="False"
+                    Padding="0">
+
+                    <Label
+                        Text="Jetzt EINLÖSBAR"
+                        FontSize="14"
+                        TextColor="{StaticResource GraySW}"
+                        VerticalTextAlignment="Center"
+                        HorizontalTextAlignment="Center"
+                        Padding="12,8">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped88" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Frame>
+
+                <Frame
+                    x:Name="borderSoFunkt"
+                    BorderColor="{StaticResource Gray200}"
+                    CornerRadius="10"
+                    BackgroundColor="Transparent"
+                    HasShadow="False"
+                    Padding="0">
+
+                    <Label
+                        Text="... so funktioniert es"
+                        FontSize="14"
+                        TextColor="{StaticResource GraySW}"
+                        VerticalTextAlignment="Center"
+                        HorizontalTextAlignment="Center"
+                        Padding="12,8">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_8" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Frame>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+
+        <!-- ========== RED 2: Verzija aplikacije (ne u ScrollView-u) ========== -->
+        <templates:VersionLabelTemplate
+            Grid.Row="2"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            Margin="0,10,0,10" />
+
+
+        <!-- ========== RED 3: Donja navigaciona traka (uvek pri dnu) ========== -->
+        <templates:NavigationBar
+            x:Name="navigationBar"
+            Grid.Row="3"
+            HorizontalOptions="Fill"
+            VerticalOptions="End" />
+    </Grid>
+</ContentPage>

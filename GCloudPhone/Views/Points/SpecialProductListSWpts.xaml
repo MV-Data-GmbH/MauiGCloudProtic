@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GCloudPhone.Views.Points.SpecialProductListSWpts"
+             xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+             Title="" NavigationPage.HasNavigationBar="False" Shell.NavBarIsVisible="False" BackgroundColor="White">
+    <Grid Style="{StaticResource BasicGrid}"
+          RowDefinitions="Auto,*,Auto"
+          RowSpacing="10">
+    
+
+        <Grid Grid.Row="0">
+            <templates:BackButtonView
+    
+     VerticalOptions="Center"
+     HorizontalOptions="Start" />
+        </Grid>
+
+        <Label Text="No coupons" Grid.Row="1" x:Name="CouponLabel" IsVisible="false"></Label>
+
+        <Grid Grid.Row="1"
+              RowDefinitions="Auto, Auto">
+
+           
+            
+
+            <ActivityIndicator IsRunning="{Binding IsLoading}"
+            IsVisible="{Binding IsLoading}"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            ZIndex="1"
+            WidthRequest="40"
+            HeightRequest="40"
+            Margin="0,40,0,0"/>
+
+            
+
+                <Grid Grid.Row="1" x:Name="GridCouponList" IsVisible="True">
+
+                    <CollectionView x:Name="CouponList">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Vertical" Span="2" VerticalItemSpacing="5" HorizontalItemSpacing="5"/>
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border HeightRequest="200" 
+                                        StrokeThickness="2" 
+                                        Stroke="{Binding BorderColor}" 
+                                        StrokeShape="RoundRectangle 8" 
+                                        Padding="10"
+                                        Margin="5">
+                                    <Grid RowDefinitions="*,Auto,Auto">
+                                       
+
+                                        <Image Source="{Binding ImageSource}" 
+                                               VerticalOptions="Start" 
+                                               HorizontalOptions="Center" Aspect="AspectFill" HeightRequest="150"
+                                               WidthRequest="{Binding PictureWidth}" Grid.Row="0" />
+
+                                        <Label Text="{Binding Name}" 
+                                               FontSize="14" 
+                                               VerticalOptions="Center"
+                                               HorizontalTextAlignment="Center" 
+                                               HorizontalOptions="Center" LineBreakMode="WordWrap" Grid.Row="1" Grid.ColumnSpan="2"/>
+
+                                        <StackLayout Grid.Row="2"  Orientation="Horizontal" VerticalOptions="End" HorizontalOptions="Center" Spacing="5">
+                                            <Label Text="{Binding CouponPoints}" TextColor="{Binding TextColor}" FontAttributes="Bold" FontSize="11"/>
+                                            <Label Text="{Binding PointsText}" TextColor="{Binding TextColor}" FontAttributes="Bold" FontSize="11" />
+                                        </StackLayout>
+                                    </Grid>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding BindingContext.ItemTappedCommand, Source={x:Reference CouponList}}" CommandParameter="{Binding Id}" />
+                                    </Border.GestureRecognizers>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+           
+        </Grid>
+
+        <templates:VersionLabelTemplate
+    Grid.Row="2"
+    HorizontalOptions="Center"
+    VerticalOptions="Center"
+ />
+
+
+    </Grid>
+</ContentPage>

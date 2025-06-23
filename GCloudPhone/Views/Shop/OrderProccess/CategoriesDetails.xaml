@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:GCloudPhone.Views.Shop.OrderProccess"
+             xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+             x:Class="GCloudPhone.Views.Shop.OrderProccess.CategoriesDetails"
+             Shell.NavBarIsVisible="False" NavigationPage.HasNavigationBar="False">
+   
+    <Grid RowDefinitions="Auto,*"
+          Style="{StaticResource BasicGrid}"
+          RowSpacing="20">
+
+
+        <Grid 
+            Grid.Row="0"
+            ColumnDefinitions="Auto, *">
+            <templates:BackButtonView VerticalOptions="Center"/>
+            <templates:CartTemplate 
+                Grid.Column="1"
+                VerticalOptions="Center"
+                HorizontalOptions="End"/>
+        </Grid>
+
+        
+
+        
+
+        <CollectionView x:Name="ProductsCollectionView"
+                    Grid.Row="1"
+                    SelectionMode="None"
+                    VerticalScrollBarVisibility="Never"
+                    BackgroundColor="White">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid x:Name="LayoutGrid" 
+                          ColumnSpacing="10"
+                          ColumnDefinitions="Auto,*,Auto,Auto"
+          
+          BackgroundColor="{Binding IsHighlighted}">
+
+                        <!-- Produktbild -->
+                        <Image Source="{Binding Image}"
+               Style="{StaticResource ListPictures}"
+               VerticalOptions="Center"
+               BackgroundColor="Transparent"
+               Grid.Column="0"/>
+
+                        <!-- Bezeichnung (standardmäßig sichtbar, wird bei +/- ausgeblendet) -->
+                        <Label x:Name="DescriptionLabel"
+               Text="{Binding Description1}"
+               Style="{StaticResource ListNames1}"              
+               HorizontalOptions="Start"
+               VerticalOptions="Center"
+               Grid.Column="1"
+               IsVisible="True"/>
+
+                        <!-- Preis in eigener Spalte -->
+                        <StackLayout x:Name="PriceContainer"
+                     Grid.Column="2"
+                     VerticalOptions="Center"
+                     Orientation="Vertical">
+                            <Label x:Name="PriceLabel"
+                   Text="{Binding PriceAmount, StringFormat='{0:0.00} €'}"
+                   HorizontalOptions="End"
+                   VerticalOptions="Center"
+                   TextColor="{StaticResource Gray500}">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsCoupon}" Value="True">
+                                        <Setter Property="IsVisible" Value="False"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsCoupon}" Value="False">
+                                        <Setter Property="IsVisible" Value="True"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+
+                            <Label x:Name="CouponLabel"
+                   Text="{Binding CouponValue, StringFormat='{0} Punkte'}"
+                   HorizontalOptions="End"
+                   VerticalOptions="Center"
+                   TextColor="{StaticResource Gray500}">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsCoupon}" Value="True">
+                                        <Setter Property="IsVisible" Value="True"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsCoupon}" Value="False">
+                                        <Setter Property="IsVisible" Value="False"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </StackLayout>
+
+                        <!-- Bezeichnung + Preis untereinander (wird nur angezeigt, wenn +/- aktiv ist) -->
+                        <StackLayout x:Name="StackDetails"
+                     Grid.Column="1"
+                     Orientation="Vertical"
+                     VerticalOptions="Center"
+                     IsVisible="False">
+                            <Label Text="{Binding Description1}"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Center"/>
+                            <Label Text="{Binding PriceAmount, StringFormat='{0:0.00} €'}"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Center"
+                   TextColor="{StaticResource Gray500}"/>
+                        </StackLayout>
+
+                        <!-- Plus/Minus-Steuerung -->
+                        <Grid x:Name="PlusMinus"
+              Grid.Column="3"
+              ColumnDefinitions="Auto,Auto,Auto"
+              HorizontalOptions="Center"
+              VerticalOptions="Center"
+              HeightRequest="50"
+              ColumnSpacing="3"
+              IsVisible="{Binding ShowQuantityControls}">
+
+                            <ImageButton Source="minus.png"
+                         WidthRequest="45"
+                         VerticalOptions="Center"
+                         Grid.Column="0"
+                         Command="{Binding Source={RelativeSource AncestorType={x:Type local:CategoriesDetails}}, Path=BindingContext.DecreaseQuantityCommand}"
+                         CommandParameter="{Binding .}" />
+
+                            <Label Text="{Binding Quantity}"
+                   Grid.Column="1"
+                   VerticalOptions="Center"
+                   FontSize="14"
+                   FontAttributes="Bold"/>
+
+                            <ImageButton Source="plus.png"
+                         WidthRequest="50"
+                         VerticalOptions="Center"
+                         Grid.Column="2"
+                         Command="{Binding Source={RelativeSource AncestorType={x:Type local:CategoriesDetails}}, Path=BindingContext.IncreaseQuantityCommand}"
+                         CommandParameter="{Binding .}" />
+                        </Grid>
+
+                        <!-- Pfeil -->
+                        <templates:ArrowImageItem x:Name="ArrowItem"
+                              Grid.Column="4"
+                              MaximumHeightRequest="70"/>
+
+                        <!-- Tap-Erkennung -->
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnItemTapped" CommandParameter="{Binding .}"/>
+                        </Grid.GestureRecognizers>
+
+                        <!-- Triggers zur Layout-Änderung -->
+                        <Grid.Triggers>
+                            <!-- Wenn +/- aktiv ist: -->
+                            <DataTrigger TargetType="Grid" Binding="{Binding ShowQuantityControls}" Value="True">
+                                <Setter TargetName="PriceContainer" Property="IsVisible" Value="False"/>
+                                <Setter TargetName="StackDetails" Property="IsVisible" Value="True"/>
+                                <Setter TargetName="DescriptionLabel" Property="IsVisible" Value="False"/>
+                            </DataTrigger>
+
+                            <!-- Wenn +/- deaktiviert ist: -->
+                            <DataTrigger TargetType="Grid" Binding="{Binding ShowQuantityControls}" Value="False">
+                                <Setter TargetName="PriceContainer" Property="IsVisible" Value="True"/>
+                                <Setter TargetName="StackDetails" Property="IsVisible" Value="False"/>
+                                <Setter TargetName="DescriptionLabel" Property="IsVisible" Value="True"/>
+                            </DataTrigger>
+                        </Grid.Triggers>
+                    </Grid>
+                </DataTemplate>
+
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Notification Panel -->
+        <Border x:Name="NotificationPanel"
+            BackgroundColor="White"
+            Margin="5"
+            StrokeShape="RoundRectangle 10,10,10,10"
+            IsVisible="False">
+            <StackLayout>
+                <Label x:Name="NotificationLabel" Padding="2" TextColor="{StaticResource Tertiary}" FontSize="14" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                <Label x:Name="NotificationLabel2" Padding="2" TextColor="{StaticResource Tertiary}" FontSize="14" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+            </StackLayout>
+        </Border>
+
+        <!-- Overlay zum Blockieren von Interaktionen, solange das Popup sichtbar ist -->
+        <BoxView x:Name="PopupOverlay"
+                 Grid.RowSpan="6"
+                 BackgroundColor="White"
+                 IsVisible="False"/>
+
+        <!-- Multiplikation Popup Panel -->
+        <Border x:Name="MultiplicationPopupPanel"
+        Grid.RowSpan="3"
+        BackgroundColor="White"
+        Margin="20"
+        
+        Stroke="{StaticResource Gray200Brush}"
+        StrokeThickness="2"
+        IsVisible="False"
+        StrokeShape="RoundRectangle 20"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+           
+                
+                <Grid RowDefinitions="Auto,*,Auto,Auto,Auto"
+                      Style="{StaticResource BasicGrid}"
+                      RowSpacing="20">
+
+                    <Button x:Name="PopupCancelButton"
+                            Grid.Row="0"
+                            Text="X" Clicked="OnPopupCancelClicked"
+                            BackgroundColor="Transparent"
+                            TextColor="{StaticResource GraySW}"
+                            FontSize="40"
+                            
+                            HorizontalOptions="End"
+                            />
+
+                    <Image x:Name="PopupProductImage" 
+                           Grid.Row="1"
+                           HeightRequest="300" 
+                           WidthRequest="300" 
+                           HorizontalOptions="Center"/>
+                    
+                    <Label x:Name="PopupProductDescription" 
+                           Grid.Row="2"
+                           Text="Produktname" 
+                           HorizontalOptions="Center"  
+                           Style="{StaticResource Headings}"/>
+                    
+                    <Grid 
+                        Grid.Row="3"
+                        ColumnDefinitions="Auto,Auto,Auto"
+                          HorizontalOptions="Center"
+                          ColumnSpacing="10">
+                        <ImageButton 
+                            Grid.Column="0"
+                            x:Name="PopupMinusButton"
+                            Source="minus.png" Clicked="OnPopupMinusClicked"
+                            VerticalOptions="Center"
+                            WidthRequest="50" HeightRequest="50"/>
+                        <Label x:Name="PopupQuantityLabel" 
+                               Grid.Column="1"
+                               Text="1" VerticalOptions="Center"
+                               FontSize="30" />
+                        <ImageButton 
+                            Grid.Column="2"
+                            VerticalOptions="Center"
+                            x:Name="PopupPlusButton" Source="plus.png" Clicked="OnPopupPlusClicked" WidthRequest="50" HeightRequest="50"/>
+                    </Grid>
+                    <Button
+                        Grid.Row="4"
+                        x:Name="PopupOkButton"
+                        Text="OK" Clicked="OnPopupOkClicked" 
+                        HeightRequest="50"
+                        Style="{StaticResource PrimaryBtn}"/>
+                </Grid>
+                <!-- Rotes "X" als Abbruch-Button in der oberen rechten Ecke -->
+              
+            
+        </Border>
+
+       
+    </Grid>
+</ContentPage>

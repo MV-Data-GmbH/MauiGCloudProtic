@@ -1,0 +1,4 @@
+﻿@model IEnumerable<GCloud.Models.Domain.Coupon>
+@{
+    Html.RenderPartial("_IndexTable", Model, new ViewDataDictionary { { "select", true }, { "store", ViewBag.store } });
+}

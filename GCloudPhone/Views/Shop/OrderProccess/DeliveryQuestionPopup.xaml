@@ -1,0 +1,19 @@
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               x:Class="GCloudPhone.Views.Shop.DeliveryQuestionPopup">
+
+    <Grid Padding="20" BackgroundColor="White" RowSpacing="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Label Text="Bitte wählen Sie die Bestellart:" FontAttributes="Bold" FontSize="Medium" />
+
+        <!-- Buttons are added dynamically in the code-behind based on Config -->
+        <VerticalStackLayout Grid.Row="1" x:Name="RadioButtonContainer" Spacing="10"/>
+
+       
+    </Grid>
+</toolkit:Popup>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GCloudPhone.Views.Aktionen.AktionenCouponDetails"
+             xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             Title="" NavigationPage.HasNavigationBar="False" Shell.NavBarIsVisible="False">
+    <Grid RowDefinitions="Auto,3*,*,2*"
+          Style="{StaticResource BasicGrid}">
+    
+        <Grid Grid.Row="0" >
+            <HorizontalStackLayout Grid.Row="0" >
+                <Image x:Name="btnBack"  Source="gray_chevron32px.png"  HorizontalOptions="Start" VerticalOptions="Start"/>
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackButtonClicked"/>
+                </HorizontalStackLayout.GestureRecognizers>
+            </HorizontalStackLayout>
+            <Label 
+        Style="{StaticResource Headings}"
+        Text="Aktionen-Details" HorizontalOptions="Center" />
+        </Grid>
+       
+
+        <zxing:BarcodeGeneratorView Grid.Row="1" Format="QrCode" x:Name="CouponQRcode" HeightRequest="250" WidthRequest="250"/>
+
+        <Grid Grid.Row="2" 
+              RowDefinitions="Auto,Auto,Auto,Auto"
+              ColumnDefinitions="Auto,Auto"
+              HorizontalOptions="Center" 
+              ColumnSpacing="70"
+              VerticalOptions="Center"
+              RowSpacing="5">
+      
+
+            <Label Grid.Row="0" Grid.Column="0" Text="Gültig ab:" />
+            <Label Grid.Row="0" Grid.Column="1" x:Name="ValidFromLabel"/>
+
+            <Label Grid.Row="1" Grid.Column="0" Text="Gültig bis:" />
+            <Label Grid.Row="1" Grid.Column="1" x:Name="ValidToLabel" />
+
+            <Label Grid.Row="2" Grid.Column="0" Text="Einlösbar:" />
+            <Label Grid.Row="2" Grid.Column="1" x:Name="ReedemableLabel" />
+
+            <Label Grid.Row="3" Grid.Column="0" Text="Wert:" />
+            <HorizontalStackLayout  Grid.Row="3" Grid.Column="1">
+                <Label x:Name="PointsLabel" />
+                <Label Text=" günstiger" />
+            </HorizontalStackLayout>
+        </Grid>
+
+        <templates:VersionLabelTemplate Grid.Row="3"/>
+
+    </Grid>
+</ContentPage>

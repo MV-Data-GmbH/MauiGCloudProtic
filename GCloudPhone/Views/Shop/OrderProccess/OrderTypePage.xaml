@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+    x:Class="GCloudPhone.Views.Shop.OrderProccess.OrderTypePage"
+    Shell.NavBarIsVisible="False"
+    NavigationPage.HasNavigationBar="False"
+    BackgroundColor="White"
+    >
+
+    <!-- Glavni Grid: tri reda -->
+    <Grid Style="{StaticResource BasicGrid}"
+          RowDefinitions="Auto,Auto, *, Auto"
+          RowSpacing="10">
+
+        <!-- ROW 0: BackButtonView i naslov -->
+        <Grid Grid.Row="0"
+              ColumnDefinitions="Auto, *">
+            <templates:BackButtonView
+                Grid.Column="0"
+                VerticalOptions="Center"
+                HorizontalOptions="Start" />
+        </Grid>
+        <Grid Grid.Row="1" VerticalOptions="Center" HorizontalOptions="Center">
+            <Label Padding="0,40" Text="Wählen Sie Ihren Bestelltyp:"
+                Style="{StaticResource Headings}"
+                VerticalOptions="Center" HorizontalOptions="Center"/>
+        </Grid>
+        
+        
+        <!-- ROW 1: Opcije u 2x2 mreži, uz originalne nazive x:Name -->
+        <Grid Grid.Row="2"
+              RowDefinitions="Auto, Auto"
+              ColumnDefinitions="*, *"
+              RowSpacing="20"
+              Padding="0,30"
+              VerticalOptions="Start"
+              ColumnSpacing="10">
+
+            <!-- Im Restaurant -->
+            <Frame
+                x:Name="FastOrder"
+                Grid.Row="0"
+                Grid.ColumnSpan="2"
+                Style="{StaticResource CardFrame}">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnDineInClicked" />
+                </Frame.GestureRecognizers>
+                <VerticalStackLayout
+                    Spacing="5"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+
+                    <ImageButton
+                        Source="restauranticon.png"
+                        Style="{StaticResource CardImage}"
+                        BackgroundColor="Transparent"
+                        Clicked="RestaurantClicked" />
+
+                    <Label
+                        Text="Im Restaurant"
+                        Style="{StaticResource BoldedOptionNameCenter}" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Auf dem Parkplatz -->
+            <Frame
+                x:Name="ParkAndOrder"
+                Grid.Row="0"
+                Grid.Column="1"
+                Style="{StaticResource CardFrame}">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnParkingClicked" />
+                </Frame.GestureRecognizers>
+                <VerticalStackLayout
+                    Spacing="10"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+
+                    <ImageButton
+                        Source="parking.png"
+                        Style="{StaticResource CardImage}"
+                        BackgroundColor="Transparent"
+                        Clicked="ParkingClicked" />
+
+                    <Label
+                        Text="Auf dem Parkplatz"
+                        Style="{StaticResource BoldedOptionNameCenter}" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Lieferung -->
+            <Frame
+                x:Name="Delivery"
+                Grid.Row="1"
+                Grid.Column="0"
+                Style="{StaticResource CardFrame}">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnDeliveryClicked" />
+                </Frame.GestureRecognizers>
+                <VerticalStackLayout
+                    Spacing="10"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+
+                    <ImageButton
+                        Source="deliveryicon.png"
+                        Style="{StaticResource CardImage}"
+                        BackgroundColor="Transparent"
+                        Clicked="DeliveryClicked"/>
+
+                    <Label
+                        Text="Lieferung"
+                        Style="{StaticResource BoldedOptionNameCenter}" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Abholung/Mitnahme -->
+            <Frame
+                x:Name="Pickup"
+                Grid.Row="1"
+                Grid.Column="1"
+                Style="{StaticResource CardFrame}">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnPickUpClicked" />
+                </Frame.GestureRecognizers>
+                <VerticalStackLayout
+                    Spacing="10"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+
+                    <ImageButton
+                        Source="pickupicon.png"
+                        Style="{StaticResource CardImage}"
+                        BackgroundColor="Transparent"
+                        Clicked="PickUpClicked" />
+
+                    <Label
+                        Text="Abholung/Mitnahme"
+                        Style="{StaticResource BoldedOptionNameCenter}" />
+                </VerticalStackLayout>
+            </Frame>
+        </Grid>
+
+        <!-- ROW 2: Link i prikaz bodova, isti nazivi -->
+        <VerticalStackLayout
+            Grid.Row="3"
+            Spacing="10"
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
+
+            <Label
+                Text="Nochmals bestellen?"
+                Style="{StaticResource LinkLabelStyle}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OrderAgainButton_Clicked" />
+                </Label.GestureRecognizers>
+            </Label>
+
+            <Label
+                x:Name="pointsLabel"
+                TextColor="{StaticResource AccentOrange}"
+                FontSize="16"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

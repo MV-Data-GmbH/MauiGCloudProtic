@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+    xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+    x:Class="GCloudPhone.Views.SoFunktioniert"
+    Title=""
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="White">
+
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource White}" />
+    </ContentPage.Behaviors>
+
+    <!-- Glavni Grid sa dva reda: Back dugme i sadržaj -->
+    <Grid
+        Style="{StaticResource BasicGrid}"
+        RowDefinitions="Auto, *" >
+
+        <!-- ROW 0: Back dugme -->
+        <templates:BackButtonControl Grid.Row="0"  />
+
+        <!-- ROW 1: Sadržaj sa ScrollView -->
+        <ScrollView Grid.Row="1">
+            <StackLayout Padding="10" Spacing="10">
+
+                <!-- Punkte sammeln -->
+                <Label Text="Punkte sammeln" FontSize="24" FontAttributes="Bold" />
+                <Label Text="- Einfach bei der Bestellung/Bezahlung an der Kassa in der Schnitzelwelt deinen persönlichen QR Code scannen lassen und Punkte sammeln" />
+                <Label Text="- Die Punkte werden automatisch gutgeschrieben" />
+                <Label Text="- Pro 1€ Konsumation bekommt man 1 Punkt" />
+                <Label Text="- Bereits gesammelte Punkte können NICHT verfallen" />
+                <Label Text="- Beim Bestellen im Online Shop (NUR über die App) werden die Punkte automatisch gutgeschrieben" />
+
+                <!-- Punkte einlösen -->
+                <Label Text="Punkte einlösen" FontSize="24" FontAttributes="Bold" />
+                <Label Text="- Den Button “Punkte” in der unteren Leiste in der App auswählen" />
+                <Label Text="- “Jetzt EINLÖSEN” (unterhalb des QR-Codes) auswählen und eine Übersicht der angebotenen Produkte finden. Hier sieht man, wie viele Punkte noch fehlen (rot) oder ob man die Punktezahl erreicht hat (grün)." />
+                <Label Text="- Wenn genug Punkte gesammelt sind, auf das gewünschte Produkt klicken, und der Gutschein öffnet sich in der App. Die Punkte werden automatisch abgezogen." />
+                <Label Text="- Die angebotenen Produkte wechseln regelmäßig" />
+                <Label Text="- Die Punkte können NUR in den Filialen eingelöst werden, NICHT im Online-Shop." />
+
+                <!-- Freunde werben -->
+                <Label Text="Freunde werben" FontSize="24" FontAttributes="Bold" />
+                <Label Text="- Unter “Sonstiges” kann man Freunde werben und weitere Punkte sammeln" />
+                <Label Text="- Pro geworbenem Freund erhält man 50 Punkte" />
+                <Label Text="- Den 9-stelligen Code weitergeben; er muss bei der Neuanmeldung angegeben werden, damit die Punkte automatisch gutgeschrieben werden." />
+
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

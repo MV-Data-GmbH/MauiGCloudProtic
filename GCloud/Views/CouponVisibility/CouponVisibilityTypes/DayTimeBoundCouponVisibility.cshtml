@@ -1,0 +1,127 @@
+﻿@model GCloud.Models.Domain.DayTimeBoundCouponVisibility
+<div class="alert alert-danger alert" role="alert" style="display: none">
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <span class="sr-only">Error:</span>
+    Die Von-Zeit muss vor der Nach-Zeit sein
+</div>
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <hr />
+        <div class="row">
+            <div class="col-md-offset-1 col-md-5">
+                @Html.LabelFor(model => model.MondayFrom)
+                @Html.EditorFor(model => model.MondayFrom, new { htmlAttributes = new { @class = "form-control from", @type = "time" } })
+            </div>
+            <div class="col-md-5">
+                @Html.LabelFor(model => model.MondayTo)
+                @Html.EditorFor(model => model.MondayTo, new { htmlAttributes = new { @class = "form-control to", @type = "time" } })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-5">
+                @Html.LabelFor(model => model.TuesdayFrom)
+                @Html.EditorFor(model => model.TuesdayFrom, new { htmlAttributes = new { @class = "form-control from", @type = "time" } })
+            </div>
+            <div class="col-md-5">
+                @Html.LabelFor(model => model.TuesdayTo)
+                @Html.EditorFor(model => model.TuesdayTo, new { htmlAttributes = new { @class = "form-control to", @type = "time" } })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-5">
+                @Html.LabelFor(model => model.WednesdayFrom)
+                @Html.EditorFor(model => model.WednesdayFrom, new { htmlAttributes = new { @class = "form-control from", @type = "time" } })
+            </div>
+            <div class="col-md-5">
+                @Html.LabelFor(model => model.WednesdayTo)
+                @Html.EditorFor(model => model.WednesdayTo, new { htmlAttributes = new { @class = "form-control to", @type = "time" } })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-5">
+                @Html.LabelFor(model => model.ThursdayFrom)
+                @Html.EditorFor(model => model.ThursdayFrom, new { htmlAttributes = new { @class = "form-control from", @type = "time" } })
+            </div>
+            <div class="col-md-5">
+                @Html.LabelFor(model => model.ThursdayTo)
+                @Html.EditorFor(model => model.ThursdayTo, new { htmlAttributes = new { @class = "form-control to", @type = "time" } })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-5">
+                @Html.LabelFor(model => model.FridayFrom)
+                @Html.EditorFor(model => model.FridayFrom, new { htmlAttributes = new { @class = "form-control from", @type = "time" } })
+            </div>
+            <div class="col-md-5">
+                @Html.LabelFor(model => model.FridayTo)
+                @Html.EditorFor(model => model.FridayTo, new { htmlAttributes = new { @class = "form-control to", @type = "time" } })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-5">
+                @Html.LabelFor(model => model.SaturdayFrom)
+                @Html.EditorFor(model => model.SaturdayFrom, new { htmlAttributes = new { @class = "form-control from", @type = "time" } })
+            </div>
+            <div class="col-md-5">
+                @Html.LabelFor(model => model.SaturdayTo)
+                @Html.EditorFor(model => model.SaturdayTo, new { htmlAttributes = new { @class = "form-control to", @type = "time" } })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-5">
+                @Html.LabelFor(model => model.SundayFrom)
+                @Html.EditorFor(model => model.SundayFrom, new { htmlAttributes = new { @class = "form-control from", @type = "time" } })
+            </div>
+            <div class="col-md-5">
+                @Html.LabelFor(model => model.SundayTo)
+                @Html.EditorFor(model => model.SundayTo, new { htmlAttributes = new { @class = "form-control to", @type = "time" } })
+            </div>
+        </div>
+    </div>
+
+    <input class="btn btn-primary" type="submit" value="Übernehmen" />
+</div>
+
+<script>
+    //# sourceURL=DayTimeBoundCouponVisibility.js
+    function DayTimeBoundCouponVisibility() {
+        $(".alert").hide();
+        var result = true;
+        $.each($(".row input.from"),
+            function (index, item) {
+                var parent = $(item).parent().parent();
+                var from = $(item);
+                var to = $(parent).find(".to");
+                var fromValue = $(from).val();
+                var toValue = $(to).val();
+
+                if (fromValue !== undefined && fromValue !== "" && toValue !== undefined && toValue !== "") {
+                    var fromDate = new Date();
+                    fromDate.setHours(fromValue.split(":")[0]);
+                    fromDate.setMinutes(fromValue.split(":")[1]);
+                    var toDate = new Date();
+                    toDate.setHours(toValue.split(":")[0]);
+                    toDate.setMinutes(toValue.split(":")[1]);
+
+                    if (fromDate.getTime() > toDate.getTime()) {
+                        $(".alert").show();
+                        result = false;
+                    }
+                }
+            });
+        return result;
+    }
+</script>

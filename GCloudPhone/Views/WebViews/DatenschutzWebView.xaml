@@ -1,0 +1,20 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GCloudPhone.Views.WebViews.DatenschutzWebView"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+            xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+             Title="" NavigationPage.HasNavigationBar="False" Shell.NavBarIsVisible="False">
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource White}" />
+    </ContentPage.Behaviors>
+
+    <Grid
+        
+        RowDefinitions="Auto,*"
+       Style="{StaticResource BasicGrid}">
+      
+
+        <templates:BackButtonControl Grid.Row="0"/>
+        <WebView x:Name="webView" Grid.Row="1" />
+    </Grid>
+</ContentPage>

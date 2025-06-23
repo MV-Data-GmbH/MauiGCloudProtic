@@ -1,0 +1,48 @@
+﻿@using GCloud.Controllers.ViewModels.Coupon
+@Styles.Render("~/Content/croppie")
+@Scripts.Render("~/bundles/croppie")
+@Styles.Render("~/Content/CouponImage")
+@Scripts.Render("~/bundles/CouponImage")
+<div class="form-group upload-img-div">
+    @{
+        var filePath = "";
+        var finished = false;
+        if (ViewBag.Coupon != null && ViewBag.Coupon.GetType() == typeof(CouponEditViewModel))
+        {
+            finished = true;
+            filePath = "/Coupons/LoadCouponImage/" + ViewBag.Coupon.Id;
+        }
+        if (ViewBag.Coupon != null && ViewBag.Coupon.ImageData != null && ViewBag.Coupon.ImageData.StartsWith("data:"))
+        {
+            finished = true;
+            filePath = ViewBag.Coupon.ImageData;
+        }
+    }
+    <div class="row upload-img @(finished ? "finished":"")">
+        <div class="upload-img-preview">
+            <img src="@filePath" alt="" />
+        </div>
+        <div class="upload-img-msg">
+            Laden sie ein Bild hoch
+        </div>
+        <div class="upload-img-container">
+            <div class="upload-img-canvas"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-offset-2 col-xs-4 col-md-offset-2 col-md-4">
+            <input type="file" id="imgUpload" style="display: none" />
+            <label for="imgPreview" class="btn btn-primary" id="imgUploadLabel">
+                <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                Bild Hochladen
+            </label>
+        </div>
+        <div class="col-xs-4 col-md-4 img-crop-save">
+            <input type="hidden" id="imgCropSave" name="ImageData" value="@(string.IsNullOrWhiteSpace(ViewBag.Coupon.ImageData)?"":ViewBag.Coupon.ImageData)" style="display: none;" />
+            <label for="imgCropSave" class="btn btn-primary" id="imgCropSaveLabel">
+                <i class="fa fa-crop" aria-hidden="true"></i>
+                Bild zuschneiden
+            </label>
+        </div>
+    </div>
+</div>

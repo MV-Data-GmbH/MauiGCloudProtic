@@ -1,0 +1,144 @@
+﻿@using System.Text
+@using GCloud.Models
+@using GCloud.Models.Charts
+@model IList<GCloud.Models.Charts.ColumnDataModel>
+
+@{
+    ViewBag.Title = "Gutschein-Verbrauch";
+    var showNavBar = Request.Params.Get("fullscreen") == null; ;
+}
+@Styles.Render("~/Content/select2")
+@Scripts.Render("~/bundles/moment")
+@Scripts.Render("~/bundles/select2")
+@Styles.Render("~/Content/daterangepicker")
+@Scripts.Render("~/bundles/daterangepicker")
+@if (!showNavBar)
+{
+    <style>
+        body {
+            padding-top: 0;
+        }
+
+        div.navbar.navbar-default {
+            display: none;
+        }
+
+        div.cc-window {
+            display: none;
+        }
+    </style>
+}
+<h2>Gutschein-Verbrauch</h2>
+@if (showNavBar)
+{
+    using (Html.BeginForm("CouponUsages", "Reports", FormMethod.Get))
+    {
+        <div class="well well-lg alert-info">
+            <label>Filiale:</label>
+            @Html.DropDownList("storeGuid", new SelectList(ViewBag.Stores, "Id", "Name"), new { @class = "store-selector" })
+            <label>Zeitraum:</label>
+            <input type="text" id="date-range" />
+            <input type="hidden" name="dateFrom" id="dateFrom" />
+            <input type="hidden" name="dateTo" id="dateTo" />
+            <input type="submit" class="btn btn-primary" value="Anwenden" id="show-report" />
+        </div>
+    }
+}
+
+@section scripts {
+    @if (Model.Count != 0)
+    {
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', { packages: ['corechart', 'bar'] });
+            google.charts.setOnLoadCallback(drawStacked);
+
+            function drawStacked() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Element', 'Anzahl Einlösungen', { role: 'style' }],
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        var item = Model[i];
+                        <text>['@Html.Raw(item.Name)', @item.Value, '@ChartColors.Colors[i % ChartColors.Colors.Length]'],</text>
+                    }
+                ]);
+                if (data.getNumberOfRows() === 0) {
+                    data.addRows([
+                        ['', 0, null, 'No Data Copy']
+                    ]);
+                }
+                var options = {
+                    chartArea: { 'width': '90%' },
+                    title: '',
+                    isStacked: false,
+                    hAxis: {
+                        title: 'Gutscheine'
+                    },
+                    annotations: {
+                        stem: {
+                            color: 'transparent',
+                            length: 120
+                        }
+                    }
+                };
+
+                var chart = new google.visualization.ColumnChart(document.getElementById('chart-outer-div'));
+                chart.draw(data, options);
+            }
+
+            $(document).ready(function() {
+                $(window).resize(function() {
+                    drawStacked();
+                });
+            });
+        </script>
+    }
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var currentStore = '@Request.Params["storeGuid"]';
+            $('.store-selector').val(currentStore);
+            $('.store-selector').select2({
+                placeholder: "Filiale auswählen",
+                dropdownAutoWidth: true,
+                width: 'auto'
+            });
+            var startString = '@Request.Params["dateFrom"]';
+            var endString = '@Request.Params["dateTo"]';
+            var start, end;
+
+            if (startString === '') {
+                start = moment().subtract(1, 'weeks');
+            } else {
+                start = moment(startString);
+            }
+            if (endString === '') {
+                end = moment();
+            } else {
+                end = moment(endString);
+            }
+            $("#date-range").daterangepicker({
+                startDate: start,
+                endDate: end,
+                locale: {
+                    format: 'DD/MM/YYYY'
+                }
+            });
+
+            $("#show-report").click(function(event) {
+                var value = $("#date-range").val();
+                var from = value.split("-")[0].trim();
+                var to = value.split("-")[1].trim();
+                $("#dateFrom").val(moment(from, "DD-MM-YYYY").toISOString());
+                $("#dateTo").val(moment(to, "DD-MM-YYYY").toISOString());
+            });
+        });
+    </script>
+}
+<div class="layout-row" style="height: 70vh">
+    <div class="flex-100  flex-column-fill">
+        <div id="chart-outer-div" class="flex-column-fill flex-row-fill">
+            Keine Daten verfügbar
+        </div>
+    </div>
+</div>

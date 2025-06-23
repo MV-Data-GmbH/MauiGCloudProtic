@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:GCloudPhone.Views.Shop.ShoppingCart"
+    xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+    
+    x:Class="GCloudPhone.Views.Shop.ShoppingCart.Warenkorb"
+    NavigationPage.HasNavigationBar="False"
+    BackgroundColor="{StaticResource White}">
+    
+    <ContentPage.Resources>
+        <Style x:Key="RecommendationFrameStyle" TargetType="Frame">
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Margin" Value="5,0"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="HeightRequest" Value="120"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource White}"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto, *, Auto, Auto,Auto"
+          Style="{StaticResource BasicGrid}"
+          RowSpacing="15">
+
+        <!-- RED 0: Header -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto, *">
+            <!-- Back dugme -->
+            <templates:BackButtonView 
+                Grid.Column="0"
+                VerticalOptions="Center"
+                HorizontalOptions="Start" />
+
+            <!-- Naslov -->
+            <Label 
+                Grid.Column="1"
+                Text="Warenkorb Artikel" 
+                Style="{StaticResource Headings}"
+                VerticalOptions="Center"
+                HorizontalOptions="Center" />
+        </Grid>
+
+        <!-- RED 1: Glavni sadržaj -->
+        
+                <!-- 1) CollectionView za stavke u korpi -->
+                <CollectionView 
+                    Grid.Row="1"
+                    x:Name="CartCollectionView"
+                    ItemsSource="{Binding CartItems}"
+                    SelectionMode="None"
+                    VerticalScrollBarVisibility="Never">
+
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="0" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <VerticalStackLayout Spacing="12">
+                                <!-- Grid sa glavnim detaljima stavke -->
+                                <Grid 
+                                    ColumnDefinitions="Auto, *, Auto, Auto, Auto, Auto"
+                                    RowDefinitions="Auto, Auto"
+                                    ColumnSpacing="10">
+
+                                    <!-- Slika stavke (40x40) -->
+                                    <Image 
+                                        Source="{Binding ImageSource}"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="0"
+                                        HeightRequest="40"
+                                        WidthRequest="40"
+                                        Aspect="AspectFill"
+                                        IsVisible="{Binding ShowImage}" />
+
+                                    <!-- Opis proizvoda -->
+                                    <Label 
+                                        Text="{Binding ProductDescription1}" 
+                                        Grid.Row="0" Grid.Column="1" 
+                                        Style="{StaticResource WarenkorbProductName}"
+                                        LineBreakMode="TailTruncation"
+                                        VerticalOptions="Center" />
+
+                                    <!-- Cena proizvoda -->
+                                    <Label 
+                                        Text="{Binding Amount, StringFormat='{}{0:C}'}"
+                                        Grid.Row="1" Grid.Column="1"
+                                        TextColor="{StaticResource Gray500}"
+                                        FontSize="12"
+                                        FontAttributes="Bold"
+                                        VerticalOptions="Center" />
+
+                                    <!-- Minus dugme -->
+                                    <ImageButton 
+                                        Source="minus.png"
+                                        Grid.RowSpan="2" Grid.Column="2"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:Warenkorb}}, Path=BindingContext.DecreaseQuantityCommand}"
+                                        HeightRequest="30"
+                                        WidthRequest="30"
+                                        BackgroundColor="Transparent"
+                                        BorderWidth="0"
+                                        CommandParameter="{Binding .}"
+                                        VerticalOptions="Center" />
+
+                                    <!-- Količina -->
+                                    <Label 
+                                        Text="{Binding Quantity}"
+                                        Grid.RowSpan="2" Grid.Column="3"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        FontSize="14"
+                                        FontAttributes="Bold" />
+
+                                    <!-- Plus dugme -->
+                                    <ImageButton 
+                                        Source="plus.png"
+                                        Grid.RowSpan="2" Grid.Column="4"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:Warenkorb}}, Path=BindingContext.IncreaseQuantityCommand}"
+                                        HeightRequest="30"
+                                        WidthRequest="30"
+                                        BackgroundColor="Transparent"
+                                        BorderWidth="0"
+                                        CommandParameter="{Binding .}"
+                                        VerticalOptions="Center" />
+
+                                    <!-- Dugme za brisanje stavke (kanta) -->
+                                    <ImageButton 
+                                        Source="trash.png"
+                                        Grid.RowSpan="2" Grid.Column="5"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:Warenkorb}}, Path=BindingContext.DeleteItemCommand}"
+                                        HeightRequest="30"
+                                        WidthRequest="30"
+                                        BackgroundColor="Transparent"
+                                        BorderWidth="0"
+                                        CommandParameter="{Binding .}"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="End" />
+                                </Grid>
+
+                                <!-- 2) Prilozi (Side Dishes) za dati artikl -->
+                                <CollectionView 
+                                    ItemsSource="{Binding SideDishes}"
+                                    x:Name="CartSideDishesCollectionView"
+                                    Margin="10,0,0,0"
+                                    VerticalScrollBarVisibility="Never">
+
+                                    <CollectionView.ItemsLayout>
+                                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="5" />
+                                    </CollectionView.ItemsLayout>
+
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid 
+                                                ColumnDefinitions="Auto, *, Auto, Auto, Auto, Auto"
+                                                RowDefinitions="Auto, Auto"
+                                                ColumnSpacing="10"
+                                                Padding="0,4">
+
+                                                <!-- Opis priloga -->
+                                                <Label 
+                                                    Text="{Binding ProductDescription1}"
+                                                    Grid.Row="0" Grid.Column="1"
+                                                    Style="{StaticResource WarenkorbsSideDishName}"
+                                                    VerticalOptions="Center" />
+
+                                                <!-- Cena priloga -->
+                                                <Label 
+                                                    Text="{Binding Amount, StringFormat='{}{0:C}'}"
+                                                    Grid.Row="1" Grid.Column="1"
+                                                    TextColor="{StaticResource Gray500}"
+                                                    FontSize="12"
+                                                    VerticalOptions="Center" />
+
+                                                <!-- Minus dugme za prilog -->
+                                                <ImageButton 
+                                                    Source="minus.png"
+                                                    Grid.RowSpan="2" Grid.Column="2"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:Warenkorb}}, Path=BindingContext.DecreaseQuantityCommand}"
+                                                    HeightRequest="24"
+                                                    WidthRequest="24"
+                                                    BackgroundColor="Transparent"
+                                                    BorderWidth="0"
+                                                    CommandParameter="{Binding .}"
+                                                    VerticalOptions="Center" />
+
+                                                <!-- Količina priloga -->
+                                                <Label 
+                                                    Text="{Binding Quantity}"
+                                                    Grid.RowSpan="2" Grid.Column="3"
+                                                    HorizontalOptions="Center"
+                                                    VerticalOptions="Center"
+                                                    FontSize="12"
+                                                    FontAttributes="Bold" />
+
+                                                <!-- Plus dugme za prilog -->
+                                                <ImageButton 
+                                                    Source="plus.png"
+                                                    Grid.RowSpan="2" Grid.Column="4"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:Warenkorb}}, Path=BindingContext.IncreaseQuantityCommand}"
+                                                    HeightRequest="24"
+                                                    WidthRequest="24"
+                                                    BackgroundColor="Transparent"
+                                                    BorderWidth="0"
+                                                    CommandParameter="{Binding .}"
+                                                    VerticalOptions="Center" />
+
+                                                <!-- Kanta za brisanje priloga -->
+                                                <ImageButton 
+                                                    Source="trash.png"
+                                                    Grid.RowSpan="2" Grid.Column="5"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:Warenkorb}}, Path=BindingContext.DeleteItemCommand}"
+                                                    HeightRequest="24"
+                                                    WidthRequest="24"
+                                                    BackgroundColor="Transparent"
+                                                    BorderWidth="0"
+                                                    CommandParameter="{Binding .}"
+                                                    VerticalOptions="Center"
+                                                    HorizontalOptions="End" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+        
+
+        <!-- RED 2: Preporuke -->
+        <Grid 
+            Grid.Row="2"
+            RowSpacing="10"
+            RowDefinitions="{OnPlatform
+        iOS='Auto,120,Auto',
+        Android='Auto,150,Auto'
+        }">
+            <!-- Naslov -->
+            <Label 
+      Grid.Row="0"
+      Text="Empfehlungen"
+      Style="{StaticResource HeadingTwo}"
+      HorizontalOptions="Start"
+     />
+
+            <!-- CollectionView za dve kartice po ekranu -->
+            <CollectionView
+      Grid.Row="1"
+      ItemsSource="{Binding ProductsCollection}"
+      x:Name="RecommendationsCollectionView"
+      HorizontalScrollBarVisibility="Never">
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="15" />
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame
+            Style="{StaticResource RecommendationFrameStyle}"
+            WidthRequest="{Binding CardWidth}">
+                            <VerticalStackLayout  HorizontalOptions="Center">
+                                <Image Source="{Binding Image}"
+                     HeightRequest="50" WidthRequest="50"/>
+                                <Label Text="{Binding Description1}"
+                     FontFamily="Quicksand-Bold"
+                     FontSize="12"
+                     HorizontalOptions="Center"/>
+                                <Label Text="{Binding PriceAmount, StringFormat='€{0:F2}'}"
+                     FontFamily="Quicksand-Regular"
+                     
+                     FontSize="12"
+                     HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:Warenkorb}}, Path=BindingContext.ToggleRecommendationSelectionCommand}" CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- (opciono) IndicatorView ako želiš tačkice -->
+            <IndicatorView
+      Grid.Row="2"
+      ItemsSource="{Binding ProductsCollection}"
+      IndicatorColor="{StaticResource Gray400}"
+      SelectedIndicatorColor="{StaticResource Tertiary}"
+      IndicatorsShape="Circle"
+      HorizontalOptions="Center"
+      Margin="0,5,0,0"/>
+        </Grid>
+
+
+        <Grid Grid.Row="3"
+              RowDefinitions="Auto,Auto">
+            <Button 
+Grid.Row="0"
+Text="{Binding TotalPrice, StringFormat='Weiter zur Kasse / €{0:F2}'}"
+Clicked="ContinueToCheckoutClicked"
+Style="{StaticResource SecondaryBtn}"
+VerticalOptions="End" />
+
+            <!-- Link za otkazivanje narudžbine -->
+            <Label 
+Grid.Row="1"
+Text="Bestellung stornieren?"
+FontSize="12"
+TextDecorations="Underline"
+HorizontalOptions="Center"
+TextColor="{StaticResource Gray500}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="CancelOrder_Tapped" />
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+        
+    </Grid>
+</ContentPage>

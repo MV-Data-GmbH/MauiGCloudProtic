@@ -1,0 +1,115 @@
+﻿@model GCloud.Controllers.ViewModels.User.UserCreateViewModel
+
+@{
+    ViewBag.Title = "Benutzer Hinzufügen";
+}
+
+<h2>Benutzer Hinzufügen</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <hr />
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" }, labelText: "Benutzername")
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", placeholder = "Benutzername" } })
+            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" }, labelText: "Passwort")
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control  input-md", type = "password", placeholder = "Passwort" } })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    @*<div class="form-group">
+            <label class="col-md-2 control-label" for="PasswordHash">Passwort</label>
+            <div class="col-md-10">
+                <input id="PasswordHash" name="PasswordHash" type="password" placeholder="Passwort" class="form-control input-md" required="">
+                @Html.ValidationMessageFor(model => model.User.PasswordHash, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Enabled, htmlAttributes: new { @class = "control-label col-md-2" }, labelText: "Aktiviert")
+        <div class="col-md-10">
+            <div>
+                @Html.CheckBoxFor(model => model.Enabled, new { @class = "checkbox", @checked = true })
+                @Html.ValidationMessageFor(model => model.Enabled, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "E-Mail Adresse" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "Vorname" } })
+            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Nachname" } })
+            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Birtday, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Birtday, new { htmlAttributes = new { @class = "form-control", placeholder = "Nachname" } })
+            @Html.ValidationMessageFor(model => model.Birtday, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.RoleId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.RoleId, ViewBag.availableRoles as SelectList, null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Erstellen" class="btn btn-success" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+        Zurück
+    </a>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

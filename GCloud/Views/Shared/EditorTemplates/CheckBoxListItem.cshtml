@@ -1,0 +1,7 @@
+﻿@model GCloud.Controllers.ViewModels.CheckBoxListItem
+
+@Html.HiddenFor(model => model.Display)
+@Html.HiddenFor(model => model.Id)
+@Html.CheckBoxFor(x => x.IsChecked)
+@Html.LabelFor(x => x.IsChecked, Model.Display)
+<br />

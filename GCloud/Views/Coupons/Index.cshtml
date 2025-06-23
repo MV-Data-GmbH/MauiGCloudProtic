@@ -1,0 +1,48 @@
+﻿@using GCloud.Models.Domain
+@using GCloud.Extensions
+@model IEnumerable<GCloud.Models.Domain.Coupon>
+
+@{
+    ViewBag.Title = "Gutscheine";
+}
+
+<h2>Gutscheine</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-2">
+                @Html.Label("Filiale Filtern:", htmlAttributes: new { @class = "control-label col-md-1" })
+            </div>
+            <div class="col-md-6">
+                @Html.DropDownList("stores", (SelectList) ViewBag.stores, "--- Alle ---", new {@class = "form-control"})
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 text-right">
+        <a href="@Url.Action("Create", "Coupons")" class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            Hinzufügen
+        </a>
+    </div>
+</div>
+
+<div id="target">
+    @{
+        Html.RenderPartial("_IndexTable", ViewData.Model);
+    }
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#stores").change(function () {
+                var storeSelected = $("select option:selected").first().val();
+                $.get('@Url.Action("CouponsByStoreId")',
+                    { storeId: storeSelected }, function (data) {
+                        $("#target").html(data);
+                    });
+            });
+        });
+    </script>
+}

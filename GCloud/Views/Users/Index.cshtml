@@ -1,0 +1,88 @@
+﻿@using System.Collections
+@using GCloud.Controllers.ViewModels.User
+@using GCloud.Extensions
+@using Microsoft.AspNet.Identity.EntityFramework
+@using GridMvc.Html
+@model IEnumerable<UserIndexViewModel>
+
+@{
+    ViewBag.Title = "Benutzer";
+}
+
+<h2>Benutzer</h2>
+
+<div class="row" style="margin-bottom: 10px">
+    <div class="col-md-12">
+        <a href="@Url.Action("Create", "Users")" class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            Hinzufügen
+        </a>
+    </div>
+</div>
+
+@Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(col => col.Username).TitledByAttribute();
+    columns.Add(col => col.CreatedByUsername).TitledByAttribute();
+    columns.Add(col => col.Email).TitledByAttribute();
+    columns.AddListOptions(Html);
+}).SetRowCssClasses(model => !model.Enabled ? "danger" : "active").Selectable(false)
+
+<!-- Modal -->
+<div class="modal fade" id="resetPasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            @using (Ajax.BeginForm("ResetCustomerPassword", "Users", new AjaxOptions()
+            {
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "resetPasswordModalBody",
+                OnSuccess = "HideSaveButton",
+                HttpMethod = "POST",
+                OnFailure = "ReplaceContent"
+            }))
+            {
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Password zurücksetzen</h4>
+                </div>
+                <div id="resetPasswordModalBody" class="modal-body">
+                    @Html.Partial("_ResetPassword", new ResetUserPasswordViewModel())
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
+                    <input id="resetPasswordModalSaveButton" type="submit" class="btn btn-primary" value="Speichern"/>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $("#resetPasswordModal").on('hidden.bs.modal',
+                function() {
+                    $("#resetPasswordModalSaveButton").show();
+                    $.get("/Users/ResetCustomerPassword",
+                        function(result) {
+                            $("#resetPasswordModalBody").html(result);
+                        });
+                });
+        });
+
+        function openResetPasswortModal(id) {
+            $("#resetPasswordModal").modal({
+                keyboard: false
+            });
+            $("#resetPasswordModal #ResetPasswordUserId").val(id);
+        }
+
+        function HideSaveButton() {
+            $("#resetPasswordModalSaveButton").hide();
+        }
+
+        function ReplaceContent(data) {
+            $("#resetPasswordModalBody").html(data.responseText);
+        }
+    </script>
+}

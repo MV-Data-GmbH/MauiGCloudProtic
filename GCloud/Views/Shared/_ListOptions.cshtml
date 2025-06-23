@@ -1,0 +1,70 @@
+﻿@using GCloud.Controllers.ViewModels.User
+@using GCloud.Models
+@using GCloud.Models.Domain
+@model GCloud.Models.IIdentifyable
+
+<a href="@Url.Action("Edit", new {id = Model.GetId()})" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Bearbeiten">
+    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+</a>
+@if (!(Model is Coupon) && !(Model is Store))
+{
+    <a href="@Url.Action("Details", new {id = Model.GetId()})" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Details">
+        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+    </a>
+}
+@if ((!(Model is UserIndexViewModel) && (!(Model is Store))) || User.IsInRole("Administrators"))
+{
+    <a href="@Url.Action("Delete", new {id = Model.GetId()})" class="btn btn-danger" data-toggle="tooltip" data-placement="left" title="Löschen">
+        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+    </a>
+}
+
+@if (Model is Store s)
+{
+    <span class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Mehr
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a target="_blank" href="@Url.HttpRouteUrl("DefaultApi", new {controller = "StoresApi", id = s.GetId()})">QR-Code</a></li>
+            <li><a href="@Url.Action("NotifyFollowingUsers", "Stores", new {id = s.GetId()})">Notification Test</a></li>
+            <li><a href="@Url.Action("EditNotifications", "Stores", new {id = s.GetId()})">Notifications</a></li>
+        </ul>
+    </span>
+}
+
+@if (Model is UserIndexViewModel user)
+{
+    if (user.Enabled)
+    {
+        <a href="@Url.Action("ToggleActive", "Users", new {userId = user.GetId()})" class="btn btn-danger">
+            <span class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true"></span>
+        </a>
+    }
+    else
+    {
+        <a href="@Url.Action("ToggleActive", "Users", new {userId = user.GetId()})" class="btn btn-success">
+            <span class="glyphicon glyphicon-circle-arrow-up" aria-hidden="true"></span>
+        </a>
+    }
+    <a class="btn btn-info" onclick="openResetPasswortModal('@user.Id')">
+        <span class="fa fa-key" aria-hidden="true"></span>
+    </a>
+}
+
+@if (Model is Coupon coupon)
+{
+    if (coupon.Enabled)
+    {
+        <a href="@Url.Action("ToggleEnabled", "Coupons", new {couponId = coupon.GetId()})" class="btn btn-danger" data-toggle="tooltip" data-placement="right" title="Deaktivieren">
+            <span class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true"></span>
+        </a>
+    }
+    else
+    {
+        <a href="@Url.Action("ToggleEnabled", "Coupons", new {couponId = coupon.GetId()})" class="btn btn-success" data-toggle="tooltip" data-placement="right" title="Aktivieren">
+            <span class="glyphicon glyphicon-circle-arrow-up" aria-hidden="true"></span>
+        </a>
+    }
+}

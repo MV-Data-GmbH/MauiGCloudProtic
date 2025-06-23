@@ -1,0 +1,208 @@
+﻿@using GCloud.Models.Domain
+@model GCloud.Models.Domain.Coupon
+
+<h3>Sichtbarkeiten:</h3>
+<button id="couponVisibilityCreate" type="button" class="btn btn-primary">
+    Sichtbarkeit erstellen
+</button>
+@if (Model.Visibilities.Any(x => x.GetType() == typeof(BirthdayCouponVisibility)))
+{
+    <h4>Geburtstags:</h4>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="width: 40%;">Valide Von</th>
+                <th style="width: 40%;">Valide Bis</th>
+                <th style="width: 20%;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Visibilities.Where(x => x.GetType() == typeof(BirthdayCouponVisibility)))
+            {
+                <tr style="@(item.Id == Guid.Empty ? "background-color: #81C784":"")">
+                    <td>
+                        @(((BirthdayCouponVisibility)item).ValidDaysAfter)
+                    </td>
+                    <td>
+                        @(((BirthdayCouponVisibility)item).ValidDaysBefore)
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-danger coupon-visibility-delete" data-id="@item.Id" data-type="@item.GetType().FullName">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@if (Model.Visibilities.Any(x => x.GetType() == typeof(DateBoundCouponVisibility)))
+{
+    <h4>Datumsgebunden:</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="width: 40%;">Valide Von</th>
+                <th style="width: 40%;">Valide Bis</th>
+                <th style="width: 20%;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Visibilities.Where(x => x.GetType() == typeof(DateBoundCouponVisibility)))
+            {
+                <tr style="@(item.Id == Guid.Empty ? "background-color: #81C784":"")">
+                    <td>
+                        @(((DateBoundCouponVisibility)item).ValidFrom?.ToString("D"))
+                    </td>
+                    <td>
+                        @(((DateBoundCouponVisibility)item).ValidTo?.ToString("D"))
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-danger coupon-visibility-delete" data-id="@item.Id" data-type="@item.GetType().FullName">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@if (Model.Visibilities.Any(x => x.GetType() == typeof(DayTimeBoundCouponVisibility)))
+{
+    <h4>Tageszeitgebunden:</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Montag</th>
+                <th>Dienstag</th>
+                <th>Mittwoch</th>
+                <th>Donnerstag</th>
+                <th>Freitag</th>
+                <th>Samstag</th>
+                <th>Sonntag</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Visibilities.Where(x => x.GetType() == typeof(DayTimeBoundCouponVisibility)))
+            {
+                <tr style="@(item.Id == Guid.Empty ? "background-color: #81C784":"")">
+                    <td>
+                        @(((DayTimeBoundCouponVisibility)item).MondayFrom) - @(((DayTimeBoundCouponVisibility)item).MondayTo)
+                    </td>
+                    <td>
+                        @(((DayTimeBoundCouponVisibility)item).TuesdayFrom) - @(((DayTimeBoundCouponVisibility)item).TuesdayTo)
+                    </td>
+                    <td>
+                        @(((DayTimeBoundCouponVisibility)item).WednesdayFrom) - @(((DayTimeBoundCouponVisibility)item).WednesdayTo)
+                    </td>
+                    <td>
+                        @(((DayTimeBoundCouponVisibility)item).ThursdayFrom) - @(((DayTimeBoundCouponVisibility)item).ThursdayTo)
+                    </td>
+                    <td>
+                        @(((DayTimeBoundCouponVisibility)item).FridayFrom) - @(((DayTimeBoundCouponVisibility)item).FridayTo)
+                    </td>
+                    <td>
+                        @(((DayTimeBoundCouponVisibility)item).SaturdayFrom) - @(((DayTimeBoundCouponVisibility)item).SaturdayTo)
+                    </td>
+                    <td>
+                        @(((DayTimeBoundCouponVisibility)item).SundayFrom) - @(((DayTimeBoundCouponVisibility)item).SundayTo)
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-danger coupon-visibility-delete" data-id="@item.Id" data-type="@item.GetType().FullName">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@if (Model.Visibilities.Any(x => x.GetType() == typeof(MinimumTurnoverCouponVisibility)))
+{
+    <h4>Umsatzgebunden:</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="width: 40%;">Mindestumsatz:</th>
+                <th style="width: 40%;">Anzahl Tage vor:</th>
+                <th style="width: 20%;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Visibilities.Where(x => x.GetType() == typeof(MinimumTurnoverCouponVisibility)))
+            {
+                <tr style="@(item.Id == Guid.Empty ? "background-color: #81C784":"")">
+                    <td>
+                        @($"{((MinimumTurnoverCouponVisibility)item).MinimumTurnover:C}")
+                    </td>
+                    <td>
+                        @(((MinimumTurnoverCouponVisibility)item).DateRange)
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-danger coupon-visibility-delete" data-id="@item.Id" data-type="@item.GetType().FullName">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@if (Model.Visibilities.Any(x => x.GetType() == typeof(MinimumVisitCouponVisibility)))
+{
+    <h4>Anzahl der Besuche:</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="width: 40%;">Mindestbesuche:</th>
+                <th style="width: 40%;">Anzahl Tage vor:</th>
+                <th style="width: 20%;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Visibilities.Where(x => x.GetType() == typeof(MinimumVisitCouponVisibility)))
+            {
+                <tr style="@(item.Id == Guid.Empty ? "background-color: #81C784": "")">
+                    <td>
+                        @(((MinimumVisitCouponVisibility)item).MinimumVisits)
+                    </td>
+                    <td>
+                        @(((MinimumVisitCouponVisibility)item).DateRange)
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-danger coupon-visibility-delete" data-id="@item.Id" data-type="@item.GetType().FullName">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<script>
+    $(document).ready(function () {
+        $(".coupon-visibility-delete").click(function () {
+            var id = $(this).data("id");
+
+            var storeCouponVisibilitiesStr = $("#couponVisibilities").val();
+            var storedCouponVisibilities;
+
+            if (!storeCouponVisibilitiesStr) {
+                storedCouponVisibilities = [];
+            } else {
+                storedCouponVisibilities = JSON.parse(storeCouponVisibilitiesStr);
+            }
+            storedCouponVisibilities.push({
+                key: $(this).data("type"),
+                delete: true,
+                value: {
+                    Id: id
+                }
+            });
+            $("#couponVisibilities").val(JSON.stringify(storedCouponVisibilities));
+            $(document).trigger('updateCouponVisibilities');
+        });
+    });
+</script>

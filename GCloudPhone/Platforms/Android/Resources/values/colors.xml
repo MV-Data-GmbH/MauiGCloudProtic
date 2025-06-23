@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#CC0719</color>
+    <color name="colorPrimaryDark">#ffd401</color>
+    <color name="colorAccent">#CC0719</color>
+	<string name="com.google.firebase.crashlytics.mapping_file_id">none</string>
+</resources>

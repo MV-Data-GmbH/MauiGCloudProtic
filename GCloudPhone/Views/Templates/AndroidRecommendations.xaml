@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GCloudPhone.Views.Templates.AndroidRecommendations">
+    <DataTemplate x:Key="RecommendationItemTemplate">
+        <Frame
+        Padding="10"
+        Margin="5,0"
+        HasShadow="True"
+        CornerRadius="10"
+        BackgroundColor="{StaticResource White}"
+        HorizontalOptions="Fill"
+        VerticalOptions="Start">
+            <VerticalStackLayout HorizontalOptions="Center">
+                <Image Source="{Binding Image}" HeightRequest="50" WidthRequest="50"/>
+                <Label Text="{Binding Description1}"
+               FontFamily="Quicksand-Bold"
+               FontSize="12"
+               HorizontalOptions="Center"/>
+                <Label Text="{Binding PriceAmount, StringFormat='€{0:F2}'}"
+               FontFamily="Quicksand-Regular"
+               FontSize="12"
+               HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer
+
+            CommandParameter="{Binding .}" />
+            </Frame.GestureRecognizers>
+        </Frame>
+    </DataTemplate>
+
+</ResourceDictionary>

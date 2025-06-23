@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "247765800639",
+    "project_id": "schnitzelweltsecondversion",
+    "storage_bucket": "schnitzelweltsecondversion.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:247765800639:android:a8aa7e42d48ad3a06a580a",
+        "android_client_info": {
+          "package_name": "com.mvdata.gcloudschnitzelweltV5"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtLrMYcYZUOtJFM4GBfb-Q0WQbIG-_uSg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

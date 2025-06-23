@@ -1,0 +1,93 @@
+﻿@model GCloud.Controllers.ViewModels.SpecialProduct.SpecialProductCreateViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "SpecialProduct", FormMethod.Post, new { enctype = "multipart/form-data", id = "specialProductCreate" }))
+{
+    @*<input type="hidden" id="couponVisibilities" name="couponVisibilities" />*@
+    @Html.AntiForgeryToken()
+    <div>
+        <!-- Nav tabs -->
+        <!--<ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a href="#general" aria-controls="home" role="tab" data-toggle="tab">Allgemein</a>
+            </li>
+            <li role="presentation">
+                <a href="#visibility" aria-controls="profile" role="tab" data-toggle="tab">Sichtbarkeiten</a>
+            </li>
+        </ul>-->
+        <!-- Tab panes -->
+
+        <div class="row ">
+            <div class="col-lg-6 col-sm-6 col-xs-12">
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+
+                        @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ShortDescription, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.ShortDescription, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ShortDescription, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Value, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Enabled, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.CheckBoxFor(x => x.Enabled, new { @class = "" })
+                            @Html.ValidationMessageFor(m => m.Enabled, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AssignedStores, "Zugewiesene Filiale", new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.AssignedStores)
+                            @*@Html.ValidationMessageFor(model => model.AssignedStoreId, "", new { @class = "text-danger" })*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <div class="col-md-offset-3 col-md-9">
+                    <a href="@Url.Action("Index")" class="btn btn-info">
+                        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                        Zurück
+                    </a>
+                    <button id="saveCoupon" type="submit" class="btn btn-success">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                        Hinzufügen
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+}
+

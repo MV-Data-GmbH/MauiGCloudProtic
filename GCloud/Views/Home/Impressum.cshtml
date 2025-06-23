@@ -1,0 +1,60 @@
+﻿@{
+    bool showNavBars = Request.Params.Get("fullscreen") == null ? true : false;
+    ViewBag.Title = "Impressum";
+}
+@if (!showNavBars)
+{
+    <style>
+        body {
+            padding-top: 0;
+        }
+
+        div.navbar.navbar-default {
+            display: none;
+        }
+    </style>
+}
+
+<style>
+    p {
+        font-size: 15px;
+    }
+</style>
+<h2>Impressum</h2>
+<br />
+<p>
+    <strong>Firmenname</strong>
+</p>
+<p>Schnitzel und Mehr GmbH</p>
+<p>Gustav Degen Gasse 19</p>
+<p>7210 Mattersburg</p>
+<p>0664 944 07 41</p>
+<br />
+<p>
+    <strong>Firmenbuchnummer</strong>
+</p>
+<p>478498z</p>
+<br />
+<p>
+    <strong>Firmengericht</strong>
+</p>
+<p>Landesgericht Eisenstadt</p>
+<p>GLN (der öffentlichen Verwaltung)</p>
+<p>9110025349600</p>
+<br />
+<p>
+    <strong>Berechtigungen aufrecht</strong>
+</p>
+<p>
+    Berechtigungen aufrecht
+    FG Gastronomie Gastgewerbe gemäß § 94 Ziffer 26 GewO 1994, mit den Berechtigungen des § 111 Abs.1 Ziffer 2 GewO 1994 in der Betriebsart Imbiss Seit 30.09.2017 für den Standort7210 Mattersburg, Gustav Degen-Gasse 19 (kann vom Gründungsdatum abweichen)Gewerberechtliche Geschäftsführung: Vlasto Protic Berufszweig: Imbissstuben, Jausenstationen, Milchtrinkstuben
+</p>
+<br />
+<p>
+    <strong>GISA-Zahl</strong>
+</p>
+<p>10266601</p>
+<p>Behörde gem. ECG (E-Commerce Gesetz)</p>
+<p>Bezirkshauptmannschaft Mattersburg</p>
+<br />
+

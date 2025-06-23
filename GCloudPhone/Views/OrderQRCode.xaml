@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:cv="clr-namespace:Camera.MAUI;assembly=Camera.Maui"
+             x:Class="GCloudPhone.Views.OrderQRCode"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+     Title="" NavigationPage.HasNavigationBar="False" Shell.NavBarIsVisible="False">
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource Zuta}" />
+    </ContentPage.Behaviors>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.3*"></RowDefinition>
+            <RowDefinition Height="2.5*"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" BackgroundColor="{StaticResource Zuta}">
+            <HorizontalStackLayout Grid.Row="0" Grid.ColumnSpan="2" VerticalOptions="Center">
+                <Image x:Name="btnBack"  Source="left_chevron32px.png"  HorizontalOptions="Start" VerticalOptions="Start"/>
+                <Label Text="Zurück" TextColor="{StaticResource Tertiary}" FontSize="23" VerticalOptions="Start"/>
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                </HorizontalStackLayout.GestureRecognizers>
+            </HorizontalStackLayout>
+        </Grid>
+
+        <Label x:Name="TextLbl" Text="Netzwerkfehler, bitte zeigen Sie den QR-Code an der Kasse vor." FontSize="22" HorizontalTextAlignment="Center" Grid.Row="1"/>
+        <Grid Grid.Row="2" x:Name="GridQrCoder">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="20*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <!--<Border Stroke="black" Grid.Row="0">
+               
+            </Border>-->
+            <Label x:Name="OrderTimeLbl" Grid.Row="0" FontSize="20" HorizontalTextAlignment="Center"/>
+            <cv:BarcodeImage x:Name="qrCodeImage" Grid.Row="1" BarcodeMargin="0" 
+                         BarcodeHeight="1000" BarcodeWidth="1000"
+                         BarcodeBackground="White" BarcodeForeground="Black"
+                         BarcodeFormat="QR_CODE"  />
+            <!--<Border Stroke="red" BackgroundColor="Transparent" Grid.Row="1" >
+               
+            </Border>-->
+
+        </Grid>
+
+
+    </Grid>
+</ContentPage>

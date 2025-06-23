@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+    x:Class="GCloudPhone.Views.SettingsPage"
+    Title=""
+    NavigationPage.HasNavigationBar="False"
+    NavigationPage.HasBackButton="False"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="White">
+
+    <!-- Glavni Grid sa tri reda: 
+         1) ScrollView u prvom redu (raste preostali prostor)
+         2) Verzijska oznaka (Auto)
+         3) NavigationBar (Auto, uvek na dnu) -->
+    <Grid RowDefinitions="*,Auto,Auto" 
+          ColumnDefinitions="*" 
+          Style="{StaticResource BasicGrid}"
+          
+          >
+
+
+        <Grid Grid.Row="0"
+                RowSpacing="10" 
+                  VerticalOptions="Center"
+                  RowDefinitions="Auto,Auto,Auto,Auto" 
+                 >
+
+                <!-- Prvi unutrašnji Grid (User i Deljenje) -->
+                <Grid Grid.Row="0" 
+                      RowSpacing="10"
+                      HorizontalOptions="Center"
+                      VerticalOptions="Center"
+                      RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                      ColumnDefinitions="*,Auto">
+                    <Label Grid.Row="0" Grid.Column="0" 
+                           Text="Benutzer" 
+                           
+                           Style="{StaticResource HeadingTwo}" />
+
+                    <Label Grid.Row="1" Grid.Column="0" 
+                           x:Name="UsernameString" 
+                           LineBreakMode="WordWrap" />
+
+                    <Label Grid.Row="2" Grid.Column="0" 
+                           Text="Freunde werben" 
+                           Style="{StaticResource HeadingTwo}" />
+
+                    <Label Grid.Row="3" Grid.Column="0" 
+                           x:Name="FreundesCodeText" 
+                           Style="{StaticResource Explanations}" />
+
+                    <ImageButton x:Name="shareButton" 
+                                 Grid.Row="3" Grid.Column="1" 
+                                 Source="share.png" 
+                                 Clicked="OnShareButtonClicked" />
+
+                    <Label Grid.Row="4" Grid.Column="1"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Start"
+                           Text="Teilen"
+                           Style="{StaticResource HeadingTwo}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                Tapped="OnShareButtonClicked"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                    <Label Grid.Row="4" Grid.Column="0"
+                           LineBreakMode="WordWrap"
+                           Style="{StaticResource HeadingTwo}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                Tapped="OnShareButtonClicked"/>
+                        </Label.GestureRecognizers>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Teile unsere App mit Freunden und erhalte weitere Punkte und Aktionen"
+                                      FontSize="12"
+                                      TextColor="Gray" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </Grid>
+
+                <!-- Drugi unutrašnji Grid (Promena lozinke) -->
+                <Grid Grid.Row="1" Grid.Column="1"
+                      RowSpacing="15"
+                      RowDefinitions="Auto,Auto">
+                    <Label Grid.Row="0" 
+                           Text="Sicherheit" 
+                           Style="{StaticResource HeadingTwo}" />
+
+                    <Button Grid.Row="2"
+                            x:Name="btnChangePassw"
+                            Text="PASSWORTVERWALTUNG"
+                            Style="{StaticResource PrimaryBtn}"
+                            Clicked="btnChangePassw_Clicked">
+                        <Button.Shadow>
+                            <Shadow Brush="Black" Opacity="0.3" Radius="10"/>
+                        </Button.Shadow>
+                    </Button>
+                </Grid>
+
+                <!-- Treći unutrašnji Grid (Pravno, Marketing, Odjava itd.) -->
+                <Grid Grid.Row="3" Grid.Column="1"
+                      RowSpacing="10"
+                      RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                    <Label Grid.Row="0" 
+                           Text="Rechtliches Marketing" 
+                           Style="{StaticResource Headings}" 
+                           HorizontalOptions="Start"/>
+
+                    <HorizontalStackLayout Grid.Row="1" Spacing="5">
+                        <Label Text="Datenschutz"
+                               TextDecorations="Underline"
+                               Style="{StaticResource HeadingTwo}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Tapped="TapGestureRecognizer_Tapped_1"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="annehmen" 
+                               Style="{StaticResource HeadingTwo}"/>
+                    </HorizontalStackLayout>
+
+                    <!--<HorizontalStackLayout Grid.Row="2" Spacing="5">
+                        <Label Text="AGB's"
+                               TextDecorations="Underline"
+                               Style="{StaticResource HeadingTwo}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Tapped="TapGestureRecognizer_Tapped_2"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="annehmen" 
+                               Style="{StaticResource HeadingTwo}"/>
+                    </HorizontalStackLayout>-->
+
+                    <HorizontalStackLayout Grid.Row="2" Spacing="5">
+                        <Label Text="Impressum"
+                               TextDecorations="Underline"
+                               Style="{StaticResource HeadingTwo}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Tapped="TapGestureRecognizer_Tapped_3"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </HorizontalStackLayout>
+
+                
+
+                    <Label Grid.Row="3" 
+                           Text="Adressen verwalten" 
+                           Style="{StaticResource HeadingTwo}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                Tapped="OnManageAddressesTapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                    <Label Grid.Row="4" 
+                           x:Name="lblAbmelden" 
+                           Text="Abmelden" 
+                           Style="{StaticResource HeadingTwo}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                Tapped="LogoutCalled"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                    <Label Grid.Row="7" 
+                           x:Name="lblDeleteUser" 
+                           Text="Benutzer löschen" 
+                            
+                           Style="{StaticResource HeadingTwo}"
+                           TextColor="{StaticResource Tertiary}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                Tapped="TapGestureRecognizer_Tapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                    <Button Grid.Row="8" 
+                            x:Name="sendNotificationAdminButton" 
+                            IsVisible="False" 
+                            Text="Benachrichtigung senden" 
+                            Clicked="SendNotification"/>
+                </Grid>
+            </Grid>
+   
+
+        <!-- 2) Verzijska oznaka (npr. "v1.0.3") -->
+        <templates:VersionLabelTemplate Grid.Row="1"/>
+
+        <!-- 3) NavigationBar uvek u poslednjem redu -->
+        <templates:NavigationBar x:Name="navigationBar" 
+                                Grid.Row="2" />
+    </Grid>
+</ContentPage>

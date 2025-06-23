@@ -1,0 +1,20 @@
+﻿@using GCloud.Helper
+@model GCloud.Models.Domain.User
+
+@{
+    ViewBag.Title = "Kundenkarte";
+}
+
+<h2>Kundenkarte</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dd>
+            @Html.QRCode(Model.Id, 200, 0)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Zurück", "Index")
+</p>

@@ -1,0 +1,36 @@
+﻿@using GCloud.Extensions
+@using GCloud.Models.Domain
+@using GridMvc.Html
+@model IEnumerable<GCloud.Models.Domain.Coupon>
+
+@{
+    var unbegrenzt = "Unbegrenzt";
+}
+
+@Html.Grid(Model).SetLanguage("de").Columns(columns =>
+{
+    if (ViewBag.select != null && ViewBag.select)
+    {
+        columns.Add(col => col.Id, "Checkbox").Titled("Zuweisen").Sanitized(false).Encoded(false).RenderValueAs(x => Html.Raw($@"<input name='SelectCoupons' type='checkbox' value='{x.Id}' {(x.AssignedStores.Any(y=> y.Id == ViewBag.store.Id) ? "checked" : "")}/>").ToHtmlString());
+        }
+        columns.Add(col => col.Id, true);
+        columns.Add(col => col.Id, "Image").Titled("Logo").WithImage(Html, x => Url.Action("LoadCouponImage", "Coupons", new {id = x.Id}));
+        columns.Add(col => col.Name).Filterable(true).TitledByAttribute();
+        columns.Add(col => col.AssignedStores).Filterable(true).RenderValueAs(x => string.Join(Environment.NewLine, x.AssignedStores.Select(y => y.Name))).Titled("Filialname");
+        columns.Add(col => col.MaxRedeems).RenderValueAs(x => x.MaxRedeems.HasValue ? x.MaxRedeems.ToString() : unbegrenzt).TitledByAttribute();
+        columns.Add(col => col.Id, "ValidFrom").RenderValueAs(x => x.GetValidFrom(null).HasValue ? x.GetValidFrom(null)?.ToString("dd.MM.yyyy") : unbegrenzt).Titled("Gültig von");
+        columns.Add(col => col.Id, "ValidTo").RenderValueAs(x => x.GetValidTo(null).HasValue ? x.GetValidTo(null)?.ToString("dd.MM.yyyy") : unbegrenzt).Titled("Gültig bis");
+        columns.Add(col => col.Value).TitledByAttribute();
+        columns.Add(col => col.CouponType).RenderValueAs(x => x.CouponType.GetDisplayName()).TitledByAttribute();
+        if (ViewBag.select == null)
+        {
+        if (User.IsInRole("Administrators"))
+        {
+        columns.AddListOptionsUnmodifyable(Html);
+        }
+        else
+        {
+        columns.AddListOptions(Html);
+        }
+        }
+        }).Selectable(false)

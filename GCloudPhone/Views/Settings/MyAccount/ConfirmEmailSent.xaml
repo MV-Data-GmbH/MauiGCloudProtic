@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             x:Class="GCloudPhone.Views.Settings.MyAccount.ConfirmEmailSent"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False">
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="White" />
+    </ContentPage.Behaviors>
+    <Grid RowSpacing="0"
+          Padding="30,20"
+        RowDefinitions="*,Auto, *"
+        ColumnDefinitions="*">
+        
+
+        <Label Grid.Row="0" 
+         Style="{StaticResource Headings}"
+               FontSize="24"
+               TextColor="Green"
+         HorizontalOptions="Center" 
+         HorizontalTextAlignment="Center"
+               Text="Registrierung erfolgreich"/>
+        <Label Grid.Row="1" Grid.Column="1"
+           FontSize="20" 
+           HorizontalOptions="Start" 
+           HorizontalTextAlignment="Center"
+           Text="Es wurde eine Bestätigungs-E-Mail an deine E-Mail Adresse gesendet. Bitte folge den Anweisungen in der E-Mail. Überprüfe auch deinen Spam-/Junk-E-Mail-Ordner."/>
+       
+        <Button Grid.Row="2" Grid.Column="1"
+            Style="{StaticResource PrimaryBtn}"
+            Text="Zurück zum Login"
+            Clicked="GoToLoginPageClicked"/>
+    </Grid>
+</ContentPage>

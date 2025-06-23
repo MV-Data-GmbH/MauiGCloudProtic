@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+    x:Class="GCloudPhone.Views.Shop.OrderProccess.CategoriesPage"
+    NavigationPage.HasNavigationBar="False"
+    
+    Loaded="OnLoaded"
+    BackgroundColor="{StaticResource White}"
+>
+
+    <!-- Glavni Grid: četiri reda (Auto, Auto, *, Auto) -->
+    <Grid
+        Style="{StaticResource BasicGrid}"
+        RowDefinitions="Auto, Auto, *, Auto"
+        RowSpacing="5"
+        >
+
+        <!-- ROW 0: BackButtonView i CartTemplate u istom redu -->
+        <Grid
+           
+            Grid.Row="0"
+            ColumnDefinitions="*, Auto"
+            VerticalOptions="Center"
+            >
+
+            <!-- Back dugme (levo) -->
+            <templates:BackButtonView
+                Grid.Column="0"
+                VerticalOptions="Center"
+                HorizontalOptions="Start" />
+
+           
+            <!-- CartTemplate (desno) -->
+            <templates:CartTemplate
+                Grid.Column="1"
+                VerticalOptions="Center"
+                HorizontalOptions="End" />
+        </Grid>
+
+        <!-- ROW 1: CouponGrid (sakriven po defaultu) -->
+        <Grid
+            Grid.Row="1"
+            x:Name="CouponTaste"
+            IsVisible="False"
+            MaximumHeightRequest="60"
+            BackgroundColor="White"
+            ColumnDefinitions="Auto, *, Auto"
+            ColumnSpacing="5"
+            
+           >
+
+            <!-- Slika kupona -->
+            
+                <Image
+                    Grid.Column="0"
+                    x:Name="CouponImage"
+                    Source="points.png"
+                    WidthRequest="40"
+                    HeightRequest="40"
+                    Aspect="AspectFill"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
+            
+
+            <!-- Poruka -->
+            <Label
+                Grid.Column="1"
+                Text="Sie haben einlösbare Punkte!"
+                Style="{StaticResource ListNames}"
+                VerticalOptions="Center"
+                 />
+
+            <!-- Strelica -->
+            <templates:ArrowImageItem
+                Grid.Column="2"
+                VerticalOptions="Center"
+                HorizontalOptions="End"
+                 />
+
+            <!-- TapGesture za celokupan Grid -->
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer
+                    Tapped="OnCouponsTapped"
+                    CommandParameter="{Binding .}" />
+            </Grid.GestureRecognizers>
+        </Grid>
+
+        <!-- ROW 2: Kolekcija kategorija -->
+        <Grid
+            Grid.Row="2"
+            BackgroundColor="White">
+
+            <CollectionView
+                x:Name="ListViewCollection"
+                IsVisible="False"
+                SelectionMode="None"
+                VerticalScrollBarVisibility="Never"
+                BackgroundColor="Transparent"
+               >
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                    
+                            <Grid
+                                ColumnDefinitions="Auto, *, Auto"
+                                ColumnSpacing="5">
+
+                                <!-- Slika kategorije  -->
+                             
+                                    <Image
+                                        Source="{Binding Image}"
+                                        Aspect="AspectFill"
+                                        Style="{StaticResource ListPictures}"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Center"
+                                        Margin="0,0,10,0"/>
+                               
+
+                                <!-- Opis -->
+                                <Label
+                                    Grid.Column="1"
+                                    Text="{Binding Description1}"
+                                    Style="{StaticResource ListNames}"
+                                    VerticalOptions="Center"
+                                    
+                                   />
+
+                                <!-- Strelica -->
+                                <templates:ArrowImageItem
+                                    Grid.Column="2"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Center"
+                                     />
+
+                                <!-- TapGesture za pojedinačni red -->
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Tapped="OnItemTapped"
+                                        CommandParameter="{Binding .}" />
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                     
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+
+        
+    </Grid>
+</ContentPage>

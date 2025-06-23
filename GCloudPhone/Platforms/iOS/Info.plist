@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDisplayName</key>
+	<string>Schnitzel und mehr</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.mvdata.gcloudschnitzelweltV6</string>
+	<key>CFBundleIconName</key>
+	<string>AppIcon</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UIRequiresFullScreen</key>
+	<true/>
+	<key>UIDeviceFamily</key>
+	<array>
+		<integer>1</integer>
+	</array>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>arm64</string>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>yourdomain.com</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+				<false/>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>We need access to your camera to take photos.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>We need access to the photo library to save photos.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your description for requesting location access while the app is in use.</string>
+	<key>NFCReaderUsageDescription</key>
+	<string>Your app needs NFC access to read NFC tags containing NDEF data.</string>
+	<key>NSPrivacyAccessedAPITypes</key>
+	<array>
+		<dict>
+			<key>NSPrivacyAccessedAPICategoryDiskSpace</key>
+			<string>We access disk space information to ensure there is sufficient storage for app functionality and to optimize file management.</string>
+		</dict>
+		<dict>
+			<key>NSPrivacyAccessedAPICategoryFileTimestamp</key>
+			<string>Our app uses file timestamps to organize your files and ensure they are up-to-date.</string>
+		</dict>
+		<dict>
+			<key>NSPrivacyAccessedAPICategorySystemBootTime</key>
+			<string>We access system boot time to provide time-based features in the app, improving performance and user experience.</string>
+		</dict>
+		<dict>
+			<key>NSPrivacyAccessedAPICategoryUserDefaults</key>
+			<string>Access to UserDefaults is used for customizing and saving your preferences within the app to enhance your experience.</string>
+		</dict>
+	</array>
+	<key>NSAppleMerchantCapabilities</key>
+	<array>
+		<string>3DS</string>
+	</array>
+	<key>NSApplePaySupportedNetworks</key>
+	<array>
+		<string>visa</string>
+		<string>masterCard</string>
+		<string>amex</string>
+		<string>discover</string>
+	</array>
+	<key>NSApplePayMerchantIdentifier</key>
+	<string>merchant.com.companyname.gcloudshop</string>
+	<key>CFBundleShortVersionString</key>
+	<string>13</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+</dict>
+</plist>

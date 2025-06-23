@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:GCloudPhone.Views.Shop"
+             xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+             x:Class="GCloudPhone.Views.Shop.OrderProccess.OrderDetailsPage"
+             Shell.NavBarIsVisible="False"
+             NavigationPage.HasNavigationBar="False">
+
+    <ScrollView>
+        <Grid Style="{StaticResource BasicGrid}"
+              RowDefinitions="Auto,Auto,Auto,Auto,Auto,*"
+              RowSpacing="10">
+
+            <!-- Row 0: Back button -->
+            <Grid Grid.Row="0">
+                <templates:BackButtonView x:Name="CustomBackButton"/>
+            </Grid>
+
+            <!-- Row 1: Success icon i poruke -->
+            <Grid Grid.Row="1"
+                  RowDefinitions="Auto,Auto,Auto"
+                  HorizontalOptions="Center"
+                  RowSpacing="5"
+                  VerticalOptions="Center">
+                <Image Source="success.png"
+                       WidthRequest="150"
+                       HeightRequest="120" />
+                <Label Text="Bestellung bestätigt"
+                       Style="{StaticResource Headings}"
+                       Grid.Row="1"
+                       HorizontalOptions="Center"/>
+                <Label Text="Der Laden bereitet Ihre Bestellung in Kürze vor"
+                       Grid.Row="2"
+                       HorizontalOptions="Center"/>
+            </Grid>
+
+            <!-- Row 2: Frame sa adresom -->
+           
+                
+                <Grid 
+                    Grid.Row="2"
+                    ColumnDefinitions="Auto,*,*"
+                      
+                      ColumnSpacing="20">
+                    <Image Source="location_izo.png"
+                           Style="{StaticResource CheckoutImages}"
+                           HorizontalOptions="Start"
+                           Grid.Column="0"/>
+                    <Label Text="Lieferort"
+                           FontSize="16"
+                           VerticalOptions="Center"
+                           Grid.Column="1"/>
+                    <Label Text="{Binding Order.DeliveryAddress}"
+                           FontSize="16"
+                           VerticalOptions="Center"
+                           HorizontalOptions="End"
+                           Grid.Column="2"/>
+                </Grid>
+          
+
+            <!-- Row 3: Naslov sekcije -->
+            <Grid Grid.Row="3"
+                  RowDefinitions="Auto,Auto">
+                <Label 
+       Text="Bestelldetails"
+       FontAttributes="Bold"
+       Style="{StaticResource HeadingTwo}"/>
+
+                <Frame Grid.Row="1">
+                    <Grid 
+      ColumnDefinitions="Auto,*"
+      RowDefinitions="Auto,Auto"
+      ColumnSpacing="10"
+      RowSpacing="5">
+                        <Label Text="Bestellstatus"
+           FontAttributes="Bold"
+           Grid.Row="0"
+           Grid.Column="0"/>
+                        <Label Text="{Binding Order.OrderStatus}"
+           Grid.Row="0"
+           Grid.Column="1"
+           HorizontalOptions="End"/>
+                        <Label Text="Datum"
+           FontAttributes="Bold"
+           Grid.Row="1"
+           Grid.Column="0"/>
+                        <Label Text="{Binding Order.OrderDate, StringFormat='{0:dddd, dd MMM, HH:mm}'}"
+           Grid.Row="1"
+           Grid.Column="1"
+           HorizontalOptions="End"/>
+                    </Grid>
+                </Frame>
+            </Grid>
+
+
+            <Grid Grid.Row="5"
+                  RowDefinitions="Auto,Auto">
+                <Label Text="Warenkorb"
+                 Style="{StaticResource HeadingTwo}"/>
+                <Frame Grid.Row="1"
+                       Style="{StaticResource SummaryCardFrameStyle}">
+                    <CollectionView 
+                ItemsSource="{Binding OrderItems}"
+                SelectionMode="None">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Vertical"
+                         />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding ProductDescription1}"
+                       Style="{StaticResource FormLabel}"/>
+                                    <Grid ColumnDefinitions="*,Auto"
+                      VerticalOptions="Center">
+                                        <Label Text="{Binding Quantity, StringFormat='x{0}'}"
+                           VerticalOptions="Center"
+                           TextColor="{StaticResource SecondaryTextColor}"/>
+                                        <Label Text="{Binding Amount, StringFormat='€{0:F2}'}"
+                           Grid.Column="1"
+                           HorizontalOptions="End"
+                           VerticalOptions="Center"
+                           TextColor="{StaticResource PrimaryTextColor}"/>
+                                    </Grid>
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Frame>
+            </Grid>
+            
+           
+
+        </Grid>
+    </ScrollView>
+
+</ContentPage>

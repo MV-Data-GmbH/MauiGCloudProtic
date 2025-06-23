@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="GCloudPhone.Views.Templates.VersionLabelTemplate">
+    <!-- Ova labela prikazuje verziju aplikacije. Grid.Row i Grid.ColumnSpan
+       su postavljeni da se automatski pozicioniraju u roditeljskom Grid-u -->
+    <Label Text="v.16.0A"
+         TextColor="Gray"
+         FontSize="9"
+         HorizontalOptions="End"
+         Grid.Row="14"
+         Grid.ColumnSpan="3"/>
+</ContentView>

@@ -1,0 +1,12 @@
+﻿@using GCloud.Models.Domain
+@model GCloud.Models.IIdentifyable
+
+<a href="@Url.Action("Details", new {id = Model.GetId()})" class="btn btn-info">
+    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+</a>
+@if (Model is Store s)
+{
+    <a href="@Url.HttpRouteUrl("DefaultApi", new {controller = "StoresApi", id = s.GetId()})" class="btn btn-default">
+        <span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span>
+    </a>
+}

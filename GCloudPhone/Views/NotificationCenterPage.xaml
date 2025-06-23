@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+             x:Class="GCloudPhone.Views.NotificationCenterPage"
+             Shell.NavBarIsVisible="False" NavigationPage.HasNavigationBar="False">
+    <Grid Padding="{OnPlatform Android='10,30,10,30', Default='20,20,20,20'}"
+          RowDefinitions="Auto,*"
+          RowSpacing="10">
+
+        <!-- Dugme za povratak -->
+        <Grid Grid.Row="0"
+              ColumnSpacing="20"
+              ColumnDefinitions="Auto,Auto">
+            <templates:BackButtonView 
+      VerticalOptions="Start" />
+
+            <!-- Naslov stranice -->
+            <Label Text="Benachrichtigungen"
+     Style="{StaticResource Headings}"
+         Grid.Column="1"/>
+
+        </Grid>
+      
+
+        <!-- Grid koji sadrži obaveštenja ili poruku da nema obaveštenja -->
+        <Grid Grid.Row="1">
+            <Label x:Name="NoNotificationsLabel"
+             Text="Keine Benachrichtigungen vorhanden."
+             Margin="0,15,0,0"
+             FontAttributes="Bold"
+             FontSize="Medium"
+             HorizontalOptions="Center"
+             VerticalOptions="Start"
+             IsVisible="False"
+             TextColor="{StaticResource Gray200}"/>
+
+            <CollectionView x:Name="NotificationsCollectionView"
+                      SelectionMode="None"
+                      ItemsSource="{Binding Notifications}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems Mode="Execute">
+                                    <SwipeItem Text="Löschen"
+                             BackgroundColor="Red"
+                             Command="{Binding Path=BindingContext.DeleteNotificationCommand, Source={x:Reference NotificationsCollectionView}}"
+                             CommandParameter="{Binding Id}"/>
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <!-- Korišćen Frame umesto Border-a radi lepše senke -->
+                            <Frame Padding="10"
+                     Margin="0,0,0,10"
+                     BackgroundColor="White"
+                     x:Name="NotificationFrame"
+                     BorderColor="{Binding FrameBorderColor}"
+                     CornerRadius="10"
+                     >
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnNotificationTapped" CommandParameter="{Binding Id}" />
+                                </Frame.GestureRecognizers>
+                                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="20*,80*">
+                                    <Image Source="schnitzelwelt.png"
+                         Grid.RowSpan="2"
+                         HeightRequest="40"
+                         WidthRequest="40"/>
+                                    <Label Grid.Column="1"
+                         Grid.Row="0"
+                         Text="{Binding body}"
+                         FontSize="14"/>
+                                    <Label Grid.Column="1"
+                         Grid.Row="1"
+                         Text="{Binding ReceivedDateTime, StringFormat='{0:G}'}"
+                         FontSize="12"
+                         TextColor="Gray"/>
+                                </Grid>
+                            </Frame>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </Grid>
+</ContentPage>

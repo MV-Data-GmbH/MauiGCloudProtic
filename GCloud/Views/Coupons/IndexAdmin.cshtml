@@ -1,0 +1,13 @@
+﻿@using GCloud.Models.Domain
+@using GCloud.Extensions
+@model IEnumerable<GCloud.Models.Domain.Coupon>
+
+@{
+    ViewBag.Title = "Gutscheine";
+}
+
+<h2>Gutscheine</h2>
+
+@{
+    Html.RenderPartial("_IndexTable", Model);
+}

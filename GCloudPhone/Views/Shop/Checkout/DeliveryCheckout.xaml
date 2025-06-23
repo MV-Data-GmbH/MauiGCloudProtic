@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+    x:Class="GCloudPhone.Views.Shop.Checkout.DeliveryCheckout"
+    Shell.NavBarIsVisible="False"
+    NavigationPage.HasNavigationBar="False"
+    Loaded="On_PageLoaded">
+
+    <!-- Stilovi za Trinkgeld-tastere -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="UnselectedButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="TextColor" Value="{StaticResource GraySW}" />
+                <Setter Property="BorderColor" Value="Gray" />
+                <Setter Property="BorderWidth" Value="1" />
+                <Setter Property="CornerRadius" Value="20" />
+                <Setter Property="WidthRequest" Value="65" />
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="FontSize" Value="10" />
+            </Style>
+            <Style x:Key="SelectedButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="TextColor" Value="{StaticResource Tertiary}" />
+                <Setter Property="BorderColor" Value="{StaticResource Tertiary}" />
+                <Setter Property="BorderWidth" Value="1" />
+                <Setter Property="CornerRadius" Value="20" />
+                <Setter Property="WidthRequest" Value="65" />
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="FontSize" Value="10" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <Grid
+            Style="{StaticResource BasicGrid}"
+            RowSpacing="15"
+            RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*">
+
+            <!-- 0: Back + naslov -->
+            <Grid
+                Grid.Row="0"
+                ColumnDefinitions="Auto,*">
+                <templates:BackButtonView Grid.Column="0" />
+                <Label
+                    Grid.Column="1"
+                    Text="Checkout"
+                    Style="{StaticResource Headings}"
+                    HorizontalOptions="Center" />
+            </Grid>
+
+            <!-- 1: Delivery Address -->
+            <Grid
+                Grid.Row="1"
+                Style="{StaticResource CheckoutGrids}"
+                ColumnDefinitions="Auto,*,Auto">
+                <Image
+                    Grid.Column="0"
+                    Source="location_izo.png"
+                    Style="{StaticResource CheckoutImages}" />
+                <Label
+                    Grid.Column="1"
+                    x:Name="AddressLabel"
+                    Text="Delivery Address"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Start" />
+                <templates:ArrowImageItem
+                    Grid.Column="2"
+                    HorizontalOptions="End" />
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAddressTapped" />
+                </Grid.GestureRecognizers>
+            </Grid>
+
+            <!-- 2: Time Slot Picker -->
+            <Grid
+                Grid.Row="2"
+                Style="{StaticResource CheckoutGrids}"
+                ColumnDefinitions="Auto,*,Auto">
+                <Image
+                    Grid.Column="0"
+                    Source="hrs_izo.png"
+                    Style="{StaticResource CheckoutImages}" />
+                <Picker
+                    Grid.Column="1"
+                    Title="Wählen Sie eine Zeit"
+                    TitleColor="{StaticResource GraySW}"
+                    ItemsSource="{Binding AvailableTimeSlots}"
+                    SelectedItem="{Binding SelectedTimeSlot}"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Center"
+                    BackgroundColor="Transparent" />
+                <templates:ArrowImageItem
+                    Grid.Column="2"
+                    HorizontalOptions="End" />
+            </Grid>
+
+            <!-- 3: Date Picker -->
+            <Grid
+                Grid.Row="3"
+                Style="{StaticResource CheckoutGrids}"
+                ColumnDefinitions="Auto,*,Auto">
+                <Image
+                    Grid.Column="0"
+                    Source="date.png"
+                    Style="{StaticResource CheckoutImages}" />
+                <DatePicker
+                    Grid.Column="1"
+                    Date="{Binding SelectedDate, Mode=TwoWay}"
+                    MinimumDate="{Binding MinimumDate}"
+                    DateSelected="OnDateSelected"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Center"
+                    BackgroundColor="Transparent" />
+                <templates:ArrowImageItem
+                    Grid.Column="2"
+                    HorizontalOptions="End" />
+            </Grid>
+
+            <!-- 4: Dodatne informacije -->
+            <Frame Grid.Row="4" Padding="10">
+                <Grid
+                    ColumnDefinitions="Auto,*,Auto"
+                    ColumnSpacing="10">
+                    <Image
+                        Source="speechbubble.png"
+                        HeightRequest="25"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Column="1"
+                        Text="Zusätzliche Informationen"
+                        FontSize="10"
+                        VerticalOptions="Center"
+                        Margin="5,0" />
+                    <Image
+                        Grid.Column="2"
+                        Source="arrow.png"
+                        HeightRequest="30"
+                        VerticalOptions="Center"
+                        HorizontalOptions="End" />
+                </Grid>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                </Frame.GestureRecognizers>
+            </Frame>
+
+            <!-- 5: Payment Method -->
+            <Grid
+                Grid.Row="5"
+                x:Name="PaymentMethodSection"
+                RowSpacing="5"
+                RowDefinitions="Auto,*">
+                <Label
+                    Grid.Row="0"
+                    Text="Wählen Sie Ihre Zahlungsmethode"
+                    Style="{StaticResource HeadingTwo}" />
+                <Frame
+                    Grid.Row="1"
+                    CornerRadius="5"
+                    Padding="5">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Picker
+                            x:Name="PaymentMethodPicker"
+                            FontSize="12"
+                            Title="Wählen Sie Ihre Zahlungsmethode"
+                            SelectedIndexChanged="OnPaymentMethodChanged" />
+                        <Image
+                            Source="arrow.png"
+                            HeightRequest="30"
+                            VerticalOptions="Center"
+                            HorizontalOptions="End" />
+                    </Grid>
+                </Frame>
+            </Grid>
+
+            <!-- 6: Trinkgeld -->
+            <Grid
+                Grid.Row="6"
+                x:Name="TipSection"
+                RowSpacing="5"
+                RowDefinitions="Auto,*">
+                <Label
+                    Grid.Row="0"
+                    Text="Trinkgeld hinzufügen"
+                    Style="{StaticResource HeadingTwo}" />
+                <Grid
+                    Grid.Row="1"
+                    ColumnDefinitions="Auto,Auto,Auto,Auto"
+                    ColumnSpacing="3">
+                    <Button
+                        Grid.Column="0"
+                        Text="1€"
+                        Style="{StaticResource UnselectedButtonStyle}"
+                        Clicked="OnTipButtonClicked" />
+                    <Button
+                        Grid.Column="1"
+                        Text="2€"
+                        Style="{StaticResource UnselectedButtonStyle}"
+                        Clicked="OnTipButtonClicked" />
+                    <Button
+                        Grid.Column="2"
+                        Text="3€"
+                        Style="{StaticResource UnselectedButtonStyle}"
+                        Clicked="OnTipButtonClicked" />
+                    <Button
+                        Grid.Column="3"
+                        Style="{StaticResource UnselectedButtonStyle}"
+                        Clicked="OnCustomTipButtonClicked">
+                        <Button.ImageSource>
+                            <FileImageSource File="edit20.png" />
+                        </Button.ImageSource>
+                    </Button>
+                </Grid>
+            </Grid>
+
+            <!-- 7: Price summary -->
+            <Frame
+                Grid.Row="7"
+                Style="{StaticResource SummaryCardFrameStyle}">
+                <VerticalStackLayout Spacing="5">
+                    <Label
+                        Text="Preise"
+                        FontFamily="Quicksand-Bold"
+                        FontSize="18"
+                        TextColor="{StaticResource GraySW}" />
+
+                    <!-- Artikel Gesamt -->
+                    <Grid ColumnDefinitions="*,Auto" RowSpacing="5">
+                        <Label
+                            Text="Artikel Gesamt"
+                            Style="{StaticResource SummaryLabel}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Text="{Binding ItemsTotal, StringFormat='{0:C}'}"
+                            HorizontalOptions="End"
+                            TextColor="{StaticResource Gray500}"
+                            VerticalOptions="Center" />
+                    </Grid>
+                    <BoxView Style="{StaticResource SummarySeparatorStyle}" />
+
+                    <!-- Liefergebühr -->
+                    <Grid ColumnDefinitions="*,Auto" RowSpacing="5">
+                        <Label
+                            Text="Liefergebühr"
+                            Style="{StaticResource SummaryLabel}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Text="{Binding DeliveryFee, StringFormat='{0:C}'}"
+                            HorizontalOptions="End"
+                            Style="{StaticResource SummaryLabel}"
+                            VerticalOptions="Center" />
+                    </Grid>
+                    <BoxView Style="{StaticResource SummarySeparatorStyle}" />
+
+                    <!-- MwSt. -->
+                    <Grid ColumnDefinitions="*,Auto" RowSpacing="5">
+                        <Label
+                            Text="MwSt."
+                            Style="{StaticResource SummaryLabel}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Text="{Binding VAT, StringFormat='{0:C}'}"
+                            HorizontalOptions="End"
+                            Style="{StaticResource SummaryLabel}"
+                            VerticalOptions="Center" />
+                    </Grid>
+                    <BoxView Style="{StaticResource SummarySeparatorStyle}" />
+
+                    <!-- Trinkgeld -->
+                    <Grid ColumnDefinitions="*,Auto" RowSpacing="5">
+                        <Label
+                            Text="Trinkgeld"
+                            TextColor="{StaticResource Gray500}"
+                            VerticalOptions="Center" />
+                        <Label
+                            Text="{Binding Tip, StringFormat='{0:C}'}"
+                            FontFamily="Quicksand"
+                            HorizontalOptions="End"
+                            TextColor="{StaticResource Gray500}"
+                            VerticalOptions="Center" />
+                    </Grid>
+                    <BoxView Style="{StaticResource SummarySeparatorStyle}" />
+
+                    <!-- Gesamt -->
+                    <Grid ColumnDefinitions="*,Auto" RowSpacing="5">
+                        <Label
+                            Text="Gesamt"
+                            FontFamily="Quicksand-Bold"
+                            TextColor="Black"
+                            VerticalOptions="Center" />
+                        <Label
+                            Text="{Binding TotalPrice, StringFormat='Total: {0:C}'}"
+                            FontFamily="Quicksand-Bold"
+                            HorizontalOptions="End"
+                            TextColor="Black"
+                            VerticalOptions="Center" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- 8: Confirm button -->
+            <Button
+                Grid.Row="9"
+                Text="BESTÄTIGEN"
+                Style="{StaticResource PrimaryBtn}"
+                Clicked="ConfirmButtonClicked" />
+
+        </Grid>
+    </ScrollView>
+</ContentPage>

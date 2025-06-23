@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               x:Class="GCloudPhone.Views.Shop.Checkout.TipPopup">
+
+    <VerticalStackLayout Padding="20" BackgroundColor="White" Spacing="15">
+        <Label Text="Geben Sie den Trinkgeldbetrag ein"  FontSize="16" />
+
+        <Frame CornerRadius="10" BorderColor="{StaticResource AccentOrange}" Padding="5" BackgroundColor="White">
+            <Entry x:Name="TipAmountEntry" 
+                   Placeholder="0,0€" 
+                   Keyboard="Numeric" 
+                   BackgroundColor="White" 
+                   TextColor="{StaticResource GraySW}"
+                    />
+        </Frame>
+
+        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+           
+            <Button Style="{StaticResource DeclineButtonStyle}" 
+                Text="Abbrechen" Clicked="OnCancelClicked" />
+            <Button Text="Bestätigen"
+                    Style="{StaticResource ConfirmButtonStyle}"
+                    Clicked="OnConfirmClicked" />
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</toolkit:Popup>

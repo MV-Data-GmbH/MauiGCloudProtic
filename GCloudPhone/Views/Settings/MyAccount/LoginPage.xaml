@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+    x:Class="GCloudPhone.Views.Settings.MyAccount.LoginPage"
+    Title=""
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="{StaticResource White}"
+    >
+
+    <!-- Glavni Grid koji zauzima ceo ekran i stavlja karticu centralno -->
+    <Grid Style="{StaticResource BasicGrid}"
+          RowDefinitions="*">
+        
+
+
+            <VerticalStackLayout Spacing="20"
+                                 Padding="0,30">
+                <!-- Zaglavlje unutar kartice -->
+                <VerticalStackLayout Spacing="5">
+                    <!-- Glavni naslov -->
+                    <Label 
+                        Text="Los geht’s"
+                        Style="{StaticResource Headings}"
+                        HorizontalOptions="Center" />
+                    <!-- Podnaslov ili link ka politici privatnosti -->
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="5">
+                        <Label 
+                            Text="Datenschutzrichtlinien"
+                            TextColor="Gray"
+                            FontSize="14">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+                <!-- Polje za unos email-a -->
+                <VerticalStackLayout Spacing="5">
+                    <Label 
+                        Text="E-Mail-Adresse"
+                        Style="{StaticResource FormLabel}"/>
+                    <Entry
+                        x:Name="usernameEntry"
+                        Placeholder="Email"
+                        Keyboard="Email"
+                        HeightRequest="40"
+                        BackgroundColor="#F5F5F5"
+                        />
+                </VerticalStackLayout>
+
+                <!-- Polje za unos lozinke -->
+                <VerticalStackLayout Spacing="5">
+                    <Label 
+                        Text="Passwort"
+                         Style="{StaticResource FormLabel}" />
+                    <Entry
+                        x:Name="passwordEntry"
+                        IsPassword="True"
+                        Placeholder="Passwort"
+                        HeightRequest="40"
+                        BackgroundColor="#F5F5F5"
+                        
+                         />
+                <!-- Link “Zaboravili ste lozinku?” -->
+                <Label 
+                 Text="Passwort vergessen?"
+                    x:Name="ForgotPasswordBtn"
+                 Style="{StaticResource LinkLabel}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="forgottenPassworButtonClicked" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+            </VerticalStackLayout>
+
+                <!-- Dugme za prijavljivanje -->
+                <Button
+                    Style="{StaticResource PrimaryBtn}"
+                    Text="ANMELDEN"
+                    x:Name="LoginBtn"
+                    Clicked="OnLoginButtonClicked"
+                     />
+
+               
+               
+              
+
+                <!-- Registrovanje novog naloga -->
+                <VerticalStackLayout Spacing="10" >
+                    <Label 
+                        Text="Noch kein Konto?"
+                        Style="{StaticResource HeadingTwo}"
+                        HorizontalOptions="Start" />
+                    <Button
+                        Style="{StaticResource SecondaryBtn}"
+                        Text="JETZT REGISTRIEREN!"
+                        x:Name="btnRegister"
+                        Clicked="btnRegister_Clicked"
+                       />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        
+
+        <!-- Verzija aplikacije u donjem desnom uglu ekrana -->
+        <templates:VersionLabelTemplate 
+            Grid.Row="0"
+            HorizontalOptions="End" 
+            VerticalOptions="End" 
+            Margin="0,0,5,5"/>
+    </Grid>
+</ContentPage>

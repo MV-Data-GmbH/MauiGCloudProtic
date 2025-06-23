@@ -1,0 +1,28 @@
+﻿@using GCloud.Extensions
+@using GridMvc.Html
+@model IEnumerable<GCloud.Models.Domain.Company>
+
+@{
+    ViewBag.Title = "Unternehmen";
+}
+
+<h2>Unternehmen</h2>
+
+<div class="row" style="margin-bottom: 10px">
+    <div class="col-md-12">
+        <a href="@Url.Action("Create")" class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            Hinzufügen
+        </a>
+    </div>
+</div>
+
+@Html.Grid(Model).Columns(columns =>
+{
+    columns.Add(col => col.Name).TitledByAttribute();
+    columns.Add(col => col.User.UserName).Titled("Benutzername");
+    columns.Add(col => col.TaxNumber).TitledByAttribute();
+    columns.Add(col => col.CommercialRegisterNumber).TitledByAttribute();
+    columns.Add(col => col.IsCashbackEnabled);
+    columns.AddListOptions(Html);
+}).Sortable(true).Filterable(true).Selectable(false)

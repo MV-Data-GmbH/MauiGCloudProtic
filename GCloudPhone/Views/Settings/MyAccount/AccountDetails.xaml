@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+             x:Class="GCloudPhone.Views.Settings.MyAccount.AccountDetails"
+             Shell.NavBarIsVisible="False" NavigationPage.HasNavigationBar="False">
+    
+    <StackLayout Padding="10" Spacing="10">
+
+        <templates:BackButtonView/>
+
+        <!-- Profile Fields -->
+        <Grid Padding="10, 5" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Label Text="Ime" VerticalOptions="Center" />
+            <Image Source="arrow.png" Grid.Column="1" VerticalOptions="Center" HeightRequest="30" />
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnNameTapped" />
+            </Grid.GestureRecognizers>
+        </Grid>
+
+        <Grid Padding="10, 5" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Label Text="E-mail" VerticalOptions="Center" />
+            <Image Source="arrow.png" Grid.Column="1" VerticalOptions="Center" HeightRequest="30"/>
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnEmailTapped" />
+            </Grid.GestureRecognizers>
+        </Grid>
+
+        <Grid Padding="10, 5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Label Text="Broj telefona" VerticalOptions="Center" />
+            <Image Source="arrow.png" Grid.Column="1" VerticalOptions="Center" HeightRequest="30"/>
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnPhoneNumberTapped" />
+            </Grid.GestureRecognizers>
+        </Grid>
+
+    </StackLayout>
+</ContentPage>

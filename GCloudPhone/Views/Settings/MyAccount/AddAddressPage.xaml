@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+             x:Class="GCloudPhone.Views.Settings.MyAccount.AddAddressPage"
+             Shell.NavBarIsVisible="False" NavigationPage.HasNavigationBar="False">
+
+    
+        <Grid Style="{StaticResource BasicGrid}"
+              RowDefinitions="Auto,Auto,Auto,Auto"
+              RowSpacing="20">
+            <!-- Prva stavka: BackButtonView -->
+            <Grid Grid.Row="0"
+                  
+                  ColumnDefinitions="Auto,*">
+                <templates:BackButtonView VerticalOptions="Start"/>
+                <!-- Druga stavka: Naslov -->
+                <Label Text="Neue Adresse hinzufügen" 
+                       Style="{StaticResource Headings}"
+                       FontSize="22"
+                       VerticalOptions="Center"
+                       Grid.Column="1"/>
+            </Grid>
+            
+
+            <!-- Treci red: forma za unos adrese -->
+            <Grid Grid.Row="1"
+                  RowSpacing="10"
+                  RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                <!-- Grad -->
+                <VerticalStackLayout Grid.Row="0">
+                    <Label Text="Stadt" Style="{StaticResource FormLabel}"/>
+                    <Entry Placeholder="Geben Sie Ihre Stadt ein" Text="{Binding City}"/>
+                    <Border/>
+                </VerticalStackLayout>
+                <!-- Poštanski broj -->
+                <VerticalStackLayout Grid.Row="1">
+                <Label Text="Postleitzahl" Style="{StaticResource FormLabel}"/>
+                    <Entry Placeholder="Geben Sie Ihre Postleitzahl ein" Text="{Binding Zip}"/>
+                    <Border/>
+                </VerticalStackLayout>
+                <!-- Adresa -->
+                <VerticalStackLayout Grid.Row="2">
+                <Label Text="Straßenname und Nummer" Style="{StaticResource FormLabel}"/>
+                    <Entry Placeholder="Straßenname und Nummer" Text="{Binding AddressLine1}"/>
+                    <Border/>
+                </VerticalStackLayout>
+                <!-- Dodatna adresa -->
+                <VerticalStackLayout Grid.Row="3">
+                <Label Text="Stockwerk/Interfon" Style="{StaticResource FormLabel}"/>
+                    <Entry Placeholder="Stockwerk/Interfon" Text="{Binding AddressLine2}"/>
+                    <Border/>
+                </VerticalStackLayout>
+                <!-- Label za tip adrese -->
+            <Label Grid.Row="4" Text="Adresse Typ und Label" Style="{StaticResource FormLabel}"/>
+
+                
+                <!-- Izbor tipa adrese -->
+                <Grid Grid.Row="5" ColumnSpacing="10" ColumnDefinitions="*,*,*">
+                    <!-- Home -->
+                    <Frame
+                        Style="{StaticResource CardFrameSmall}"
+                        InputTransparent="False">
+                        <VerticalStackLayout
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center">
+                            <Image
+                                Style="{StaticResource CardImageAddress}"
+                                Source="home.png" />
+                            <Label 
+                                Style="{StaticResource FrameLabel}"
+                                Text="Zuhause" />
+                        </VerticalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelectAddressTypeCommand}" CommandParameter="Home"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                    <!-- Work -->
+                    <Frame Grid.Column="1" 
+                           Style="{StaticResource CardFrameSmall}"
+                           InputTransparent="False">
+                        <VerticalStackLayout>
+                            <Image Source="work2.png" 
+                                    Style="{StaticResource CardImageAddress}"/>
+                        <Label Text="Arbeit" 
+                               Style="{StaticResource FrameLabel}"/>
+                        </VerticalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelectAddressTypeCommand}" CommandParameter="Work"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                    <!-- Other -->
+                    <Frame Grid.Column="2" 
+                           Style="{StaticResource CardFrameSmall}"
+                           InputTransparent="False">
+                        <VerticalStackLayout>
+                        <Image Source="other.png"  Style="{StaticResource CardImageAddress}"/>
+                            <Label Text="Sonstiges" 
+                                   Style="{StaticResource FrameLabel}"/>
+                        </VerticalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelectAddressTypeCommand}" CommandParameter="Other"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </Grid>
+
+                
+            </Grid>
+
+            <!-- Dugme za snimanje adrese -->
+            <Button Grid.Row="2" Text="Adresse speichern" 
+                    VerticalOptions="End"
+                    Style="{StaticResource PrimaryBtn}"
+                    Clicked="OnSaveButtonClicked"/>
+        </Grid>
+    
+</ContentPage>

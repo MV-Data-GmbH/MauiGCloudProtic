@@ -1,0 +1,266 @@
+﻿@model GCloud.Controllers.ViewModels.Coupon.CouponEditViewModel
+@{
+    ViewBag.Title = "Gutschein Bearbeiten";
+}
+
+<h2 id="couponFormHeader">Gutschein Bearbeiten</h2>
+<hr />
+@section styles
+{
+    <style>
+        @@media screen and (max-width: 1200px) and (min-width: 768px) {
+            #couponFormHeader {
+                margin-top: 60px;
+            }
+        }
+
+        .tab-pane {
+            padding-top: 20px;
+        }
+    </style>
+}
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "couponForm" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="couponVisibilities" name="couponVisibilities" value="@(ViewBag.couponVisibilities ?? "")" />
+    <div>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a href="#general" aria-controls="home" role="tab" data-toggle="tab">Allgemein</a>
+            </li>
+            <li role="presentation">
+                <a href="#visibility" aria-controls="profile" role="tab" data-toggle="tab">Sichtbarkeiten</a>
+            </li>
+        </ul>
+    </div>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="general">
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 col-xs-12">
+                    <div class="form-horizontal">
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.Id)
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ShortDescription, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.ShortDescription, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ShortDescription, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.MaxRedeems, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.MaxRedeems, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.MaxRedeems, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CouponType, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.EnumDropDownListFor(model => model.CouponType, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CouponType, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CouponScope, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.EnumDropDownListFor(model => model.CouponScope, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CouponScope, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Enabled, new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.CheckBoxFor(x => x.Enabled, new { @class = "" })
+                                @Html.ValidationMessageFor(m => m.Enabled, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div id="ArticleNumberGroup" class="form-group">
+                            @Html.LabelFor(m => m.ArticleNumber, new { @class = "col-md-3 control-label" })
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(model => model.ArticleNumber, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.ArticleNumber, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @Html.HiddenFor(model => model.CreatedUserId)
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.AssignedStores, "Zugewiesene Filiale", htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.AssignedStores)
+                                @*@Html.ValidationMessageFor(model => model.AssignedStoreId, "", new { @class = "text-danger" })*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-xs-12">
+                    <div class="form-horizontal">
+                        @Html.Partial("_Image", new ViewDataDictionary { { "Coupon", Model } })
+                        @Html.ValidationMessageFor(model=>model.ImageData, "", new { @class = "text-danger"})
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <div class="col-md-offset-3 col-md-9">
+                        <a href="@Url.Action("Index")" class="btn btn-info">
+                            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                            Zurück
+                        </a>
+                        <button id="saveCoupon" type="submit" class="btn btn-success">
+                            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                            Speichern
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="visibility">
+            <div class="form-horizontal">
+                <div class="coupon-visibility-index">
+                    @Html.Action("Index", "CouponVisibility", new { couponId = Model.Id, toBeAdded = ViewBag.couponVisibilities ?? "" })
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-lg modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Sichtbarkeiten</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var checkScopeSelection = function () {
+            var couponScopeSelection = $("#CouponScope").val();
+            if (couponScopeSelection === "1") {
+                $("#ArticleNumberGroup").show();
+            } else {
+                $("#ArticleNumberGroup").hide();
+            }
+        }
+
+        $(document).ready(function () {
+            demoUpload();
+            $(document).on("click", "#couponVisibilityCreate", function () {
+                var delta = $("#couponVisibilities").val();
+
+                $.ajax({
+                    url: "@Url.Action("Create","CouponVisibility",new { couponId = Model.Id})&toBeAdded="+ delta,
+                    success: function (result) {
+                        $("#myModal").modal('show');
+                        $("#myModal .modal-body").html(result);
+                    }
+                });
+            });
+
+            checkScopeSelection();
+            $("#CouponScope").change(function () {
+                checkScopeSelection();
+            });
+            $(document).on("updateCouponVisibilities", function (event) {
+                $(".coupon-visibility-index").html("<div class='sk-rotating-plane' style='background-color: #337ab7'></div>");
+                var delta = $("#couponVisibilities").val();
+                $.ajax({
+                    url: "@Url.Action("Index","CouponVisibility",new { couponId = Model.Id })&toBeAdded="+ delta,
+                    success: function (result) {
+                        $(".coupon-visibility-index").html(result);
+                    }
+                });
+            });
+            $("#saveCoupon").click(function(event) {
+                event.preventDefault();
+                var visibilities = @Model.Visibilities.Count;
+                var delta = JSON.parse($("#couponVisibilities").val() ? $("#couponVisibilities").val() : "[]");
+                var toBeDeleted = delta.filter(function(x) {
+                    return x.delete;
+                });
+                var toBeAdded = delta.filter(function (x) {
+                    return !x.delete;
+                });
+                if ($(".upload-img-div.ready").length > 0) {
+                    swal({
+                        title: "Bild noch nicht gespeichert",
+                        text:
+                            "Das Bild dass Sie hochgeladen haben wurde noch nicht gespeichert, wollen Sie fortfahren ohne das Bild zu speichern?",
+                        icon: "warning",
+                        buttons: ["Nein", "Ja"],
+                        dangerMode: true
+                    }).then(function (result) {
+                        if (result) {
+                            if ((visibilities === 0 && delta.length === 0) || toBeDeleted.length !== 0 && (visibilities - toBeDeleted.length + toBeAdded.length) === 0) {
+                                swal({
+                                    title: "Keine Sichtbarkeiten",
+                                    text:
+                                        "Sie haben für diesen Gutschein keine Sichtbarkeiten angelegt, sind Sie sicher dass Sie fortfahren wollen?",
+                                    icon: "warning",
+                                    buttons: ["Nein", "Ja"],
+                                    dangerMode: true
+                                }).then(function(result) {
+                                    if (result) {
+                                        $("#couponForm").submit();
+                                    }
+                                });
+                            } else {
+                                $("#couponForm").submit();
+                            }
+                        }
+                    });
+                    return;
+                }
+                if ((visibilities === 0 && delta.length === 0) || toBeDeleted.length !== 0 && (visibilities - toBeDeleted.length + toBeAdded.length) === 0) {
+                    swal({
+                        title: "Keine Sichtbarkeiten",
+                        text:
+                            "Sie haben für diesen Gutschein keine Sichtbarkeiten angelegt, sind Sie sicher dass Sie fortfahren wollen?",
+                        icon: "warning",
+                        buttons: ["Nein", "Ja"],
+                        dangerMode: true
+                    }).then(function(result) {
+                        if (result) {
+                            $("#couponForm").submit();
+                        }
+                    });
+                } else {
+                    $("#couponForm").submit();
+                }
+            });
+        });
+    </script>
+}

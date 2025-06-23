@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+    xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+    x:Class="GCloudPhone.Views.BestellungInDerFiliale"
+    Title=""
+    NavigationPage.HasNavigationBar="False"
+    Shell.NavBarIsVisible="False">
+
+    <!-- Behavior to set the status bar color -->
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="White"/>
+    </ContentPage.Behaviors>
+
+    <Grid Padding="{OnPlatform Android='0,20,0,0', Default='0'}" RowDefinitions="70,*">
+        <!-- Header row: Contains the BackBtnText (dugme "Nazad") -->
+        <templates:BackBtnText x:Name="myBackBtnText" Grid.Row="0" BackgroundColor="{StaticResource Zuta}"
+                               />
+
+        <!-- Content row: Container for the native QR scanning preview -->
+        <Grid Grid.Row="1" x:Name="CameraPreviewContainer" BackgroundColor="Black">
+            <!-- Ovaj container će biti prosleđen servisu gde će se dinamički dodati preview layer kamere -->
+        </Grid>
+    </Grid>
+</ContentPage>

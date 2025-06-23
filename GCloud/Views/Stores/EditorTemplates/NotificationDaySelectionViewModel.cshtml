@@ -1,0 +1,21 @@
+﻿@using System.Globalization
+@using GCloud.Extensions
+@model GCloud.Controllers.ViewModels.Store.NotificationDaySelectionViewModel
+
+<div class="row">
+    <div class="col-xs-2">
+        @Html.Label(CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(Model.DayOfWeek), htmlAttributes: new { @class = "form-control" })
+    </div>
+    <div class="col-xs-2">
+        <input type="checkbox" name="@($"{Model.DayOfWeek}.Vormittag")" class="form-control" @(Model.Vormittag ? "checked" : "") style="margin-top: 0;" />
+    </div>
+    <div class="col-xs-2">
+        <input type="checkbox" name="@($"{Model.DayOfWeek}.Mittag")" class="form-control" @(Model.Mittag ? "checked" : "") style="margin-top: 0;" />
+    </div>
+    <div class="col-xs-2">
+        <input type="checkbox" name="@($"{Model.DayOfWeek}.Nachmittag")" class="form-control" @(Model.Nachmittag ? "checked" : "") style="margin-top: 0;" />
+    </div>
+    <div class="col-xs-2">
+        <input type="checkbox" name="@($"{Model.DayOfWeek}.Abend")" class="form-control" @(Model.Abend ? "checked" : "") style="margin-top: 0;" />
+    </div>
+</div>

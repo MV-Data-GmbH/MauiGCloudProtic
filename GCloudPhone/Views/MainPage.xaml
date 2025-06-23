@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+    xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+    x:Class="GCloudPhone.Views.MainPage"
+    NavigationPage.HasNavigationBar="False"
+    NavigationPage.HasBackButton="False"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="White">
+
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="White" />
+    </ContentPage.Behaviors>
+
+    <Grid
+       
+        RowDefinitions="*,Auto">
+      
+
+        <!-- 1) Scrollable content -->
+        <ScrollView Grid.Row="0">
+            <Grid
+                Style="{StaticResource BasicGrid}"
+
+                RowSpacing="20"
+                RowDefinitions="Auto,Auto,*,Auto">
+                
+
+                <!-- a) Logo + notification -->
+                <Grid Grid.Row="0" ColumnDefinitions="*, Auto">
+                    <Image
+            Source="logowhite.png"
+            WidthRequest="120"
+            HeightRequest="80"
+            Margin="-20"
+            HorizontalOptions="Start" />
+
+                    <Grid
+            Grid.Column="1"
+            x:Name="notificationCenterView"
+            WidthRequest="48"
+            HeightRequest="48"
+            HorizontalOptions="End"
+            VerticalOptions="Center">
+                        <Image
+              Source="notifications.png"
+              WidthRequest="80"
+              HeightRequest="50"
+              HorizontalOptions="Center"
+              VerticalOptions="Center"
+              BackgroundColor="Transparent" />
+
+                        <Frame
+              x:Name="notificationBadge"
+              BackgroundColor="{StaticResource Tertiary}"
+              CornerRadius="10"
+              HeightRequest="20"
+              WidthRequest="20"
+              Padding="0"
+              HasShadow="False"
+              HorizontalOptions="End"
+              VerticalOptions="Start"
+              TranslationX="5"
+              TranslationY="-5"
+              IsVisible="False">
+                            <Label
+                x:Name="UnreadCountLabel"
+                Text="0"
+                FontSize="10"
+                TextColor="White"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+                        </Frame>
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer
+                Tapped="NotificationCenterClicked"
+                NumberOfTapsRequired="1" />
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </Grid>
+
+                <!-- b) Prva slika -->
+                <Grid Grid.Row="1">
+                    <Image
+            Source="slika1.png"
+            WidthRequest="350"
+            
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+                </Grid>
+
+                <!-- c) Druga slika -->
+                <Grid Grid.Row="2">
+                    <Image
+            Source="slika2.png"
+            WidthRequest="350"
+
+HorizontalOptions="Center"
+VerticalOptions="Center"  />
+                </Grid>
+
+                <!-- d) Bestsellers sekcija -->
+                <Grid Grid.Row="3" RowSpacing="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Label
+            Grid.Row="0"
+            Text="Bestsellers"
+            Style="{StaticResource Headings}"
+            HorizontalOptions="Start" />
+
+                    <CollectionView
+            x:Name="productsCollection"
+            Grid.Row="1">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout
+                Orientation="Vertical"
+                Span="2"
+                VerticalItemSpacing="10"
+                HorizontalItemSpacing="5" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame
+                  CornerRadius="15"
+                  BackgroundColor="White"
+                  Padding="0"
+                  Margin="0"
+                  HasShadow="True"
+                  HeightRequest="150"
+                  WidthRequest="130">
+                                    <VerticalStackLayout
+                    Padding="10"
+                    Spacing="5"
+                    HorizontalOptions="Center">
+                                        <Image
+                      Source="{Binding Image}"
+                      HeightRequest="90"
+                      WidthRequest="120"
+                      HorizontalOptions="Center" />
+                                        <Label
+                      Text="{Binding Name}"
+                      FontAttributes="Bold"
+                      FontSize="14"
+                      HorizontalOptions="Center" />
+                                    </VerticalStackLayout>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+
+            </Grid>
+        </ScrollView>
+
+        <!-- 2) Fiksirana navigaciona traka na dnu -->
+        <templates:NavigationBar
+           Padding="20"
+      x:Name="navigationBar"
+      Grid.Row="1" />
+    </Grid>
+</ContentPage>

@@ -1,0 +1,14 @@
+﻿@model GCloud.Models.Domain.MinimumVisitCouponVisibility
+
+@using (Html.BeginForm("", "", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(model => model.MinimumVisits)
+        @Html.EditorFor(model => model.MinimumVisits, new { htmlAttributes = new { @class = "form-control", @type = "number", @min="0" } })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.DateRange)
+        @Html.EditorFor(model => model.DateRange, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0" } })
+    </div>
+    <input class="btn btn-primary" type="submit" value="Übernehmen" />
+}   

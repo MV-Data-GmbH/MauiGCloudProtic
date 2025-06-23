@@ -1,0 +1,76 @@
+﻿@using GCloud.Extensions
+@using GCloud.Models.Domain
+@model GCloud.Models.Domain.Coupon
+
+@{
+    ViewBag.Title = "Gutschein Löschen";
+    var unbegrenzt = "Unbegrenzt";
+}
+
+<h2>Gutschein Löschen</h2>
+
+<h3>Soll dieser Gutschein wirklich gelöscht werden?</h3>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AssignedStores)
+        </dt>
+
+        <dd>
+            @(string.Join(",",Model.AssignedStores.Select(x => x.Name)))
+
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Angelegt von")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedUser.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxRedeems)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaxRedeems)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Value)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Value)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CouponType)
+        </dt>
+
+        <dd>
+            @Html.DisplayName(Model.CouponType.GetDisplayName())
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <a href="@Url.Action("Index")" class="btn btn-info">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                Zurück
+            </a>
+            <input type="submit" value="Löschen" class="btn btn-default"/>
+        </div>
+    }
+</div>
