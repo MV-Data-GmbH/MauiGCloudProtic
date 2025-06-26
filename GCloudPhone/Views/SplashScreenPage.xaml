@@ -5,18 +5,19 @@
     x:Class="GCloudPhone.Views.SplashScreenPage"
     NavigationPage.HasNavigationBar="False"
     Shell.NavBarIsVisible="False"
-    Background="{StaticResource AccentOrange}"
+    Background="{StaticResource AccentOrangeLight}"
     >
 
     <Grid RowDefinitions="Auto,Auto"
           VerticalOptions="Center"
+          Style="{StaticResource BasicGrid}"
           RowSpacing="20">
 
         <!-- Logo: sada 100x100 px, Scale na 0.25 za još manji početak -->
         <Image
             x:Name="LogoImage"
             Grid.Row="0"
-            Source="appstore.png"
+            Source="logoimage.png"
             Opacity="1"
             Scale="0.25"                     
             WidthRequest="150"
@@ -30,9 +31,8 @@
             <Label 
             x:Name="LoadingLabel"
             Grid.Row="1"
-            Text="Wird geladen..."
             FontFamily="Quicksand-Bold"
-            FontSize="30"
+            FontSize="20"
             TextColor="White"
             Opacity="0"
             HorizontalOptions="Center"

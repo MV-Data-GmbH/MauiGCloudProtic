@@ -11,12 +11,32 @@
 
         <Grid Grid.Row="0">
             <templates:BackButtonView
-    
-     VerticalOptions="Center"
-     HorizontalOptions="Start" />
+              VerticalOptions="Center"
+              HorizontalOptions="Start" />
         </Grid>
 
-        <Label Text="No coupons" Grid.Row="1" x:Name="CouponLabel" IsVisible="false"></Label>
+        <Grid
+         x:Name="NoCoupons"
+         RowDefinitions="Auto,Auto,Auto"
+         Grid.Row="1"
+         IsVisible="False"
+     RowSpacing="20"
+     HorizontalOptions="Center"
+     VerticalOptions="Center">
+            <Image Source="sad.png"
+            Style="{StaticResource CardImage}"/>
+            <Label
+      Grid.Row="1"
+      Text="Leider sind keine aktiven Gutscheine verfügbar"
+      Style="{StaticResource Headings}"/>
+            <Label
+     Grid.Row="2"
+     Text="Bitte versuchen Sie es erneut."
+     Style="{StaticResource HeadngThree}"
+         HorizontalTextAlignment="Center"/>
+        </Grid>
+
+        
 
         <Grid Grid.Row="1"
               RowDefinitions="Auto, Auto">

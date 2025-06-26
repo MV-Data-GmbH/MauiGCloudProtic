@@ -73,7 +73,7 @@ namespace GCloudPhone.Views.Shop.OrderProccess
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            MessagingCenter.Subscribe<Warenkorb, OrderItemViewModel>(this, "CartUpdated", (sender, updatedItem) =>
+            MessagingCenter.Subscribe<GCloudPhone.Views.Shop.ShoppingCart.ShoppingCart, OrderItemViewModel>(this, "CartUpdated", (sender, updatedItem) =>
             {
                 var product = ProductsCollection.FirstOrDefault(p => p.Number == updatedItem.ProductID);
                 if (product != null)
@@ -85,7 +85,7 @@ namespace GCloudPhone.Views.Shop.OrderProccess
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            MessagingCenter.Unsubscribe<Warenkorb, OrderItemViewModel>(this, "CartUpdated");
+            MessagingCenter.Unsubscribe<GCloudPhone.Views.Shop.ShoppingCart.ShoppingCart, OrderItemViewModel>(this, "CartUpdated");
         }
 
         private async void LoadProductsAsync()

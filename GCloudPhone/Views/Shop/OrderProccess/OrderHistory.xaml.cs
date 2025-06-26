@@ -42,7 +42,7 @@ namespace GCloudPhone.Views.Shop.OrderProccess
 
             if (processedOrders.Count == 0)
             {
-                NoOrdersLabel.IsVisible = true;
+                NoOrders.IsVisible = true;
                 return;
             }
 
@@ -55,68 +55,78 @@ namespace GCloudPhone.Views.Shop.OrderProccess
 
         private async void OnOrderTapped(OrderWithItemsViewModel selectedOrder)
         {
-            var customAlert = new RepeatOrderPopup();
-            await this.ShowPopupAsync(customAlert);
-            var repeatOrder = await customAlert.TaskCompletionSource.Task;
+            // Prvo pitamo za ponavljanje narudžbine
+            var repeatPopup = new RepeatOrderPopup();
+            await this.ShowPopupAsync(repeatPopup);
+            bool repeatOrder = await repeatPopup.TaskCompletionSource.Task;
+            if (!repeatOrder)
+                return;
 
-            if (repeatOrder)
+            // Pitamo za način dostave
+            var deliveryPopup = new DeliveryQuestionPopup();
+            var deliveryMethod = await this.ShowPopupAsync(deliveryPopup) as string;
+            if (string.IsNullOrEmpty(deliveryMethod))
             {
-                // Prikaz popup-a za izbor metode dostave.
-                var deliveryPopup = new DeliveryQuestionPopup();
-                var deliveryMethod = await this.ShowPopupAsync(deliveryPopup) as string;
-                if (!string.IsNullOrEmpty(deliveryMethod))
+                await DisplayAlert("Fehler", "Es wurde keine Bestellart ausgewählt.", "OK");
+                return;
+            }
+
+            // Čistimo korpu i dodajemo stavke iz stare narudžbine...
+            Cart.Instance.ClearCart();
+            foreach (var item in selectedOrder.OrderItems)
+            {
+                if (!item.IsCoupon)
                 {
-                    Cart.Instance.ClearCart();
-
-                    // Za svaki proizvod iz stare narudžbine dohvatamo odgovarajuću cenu prema izabranoj metodi.
-                    foreach (var item in selectedOrder.OrderItems)
+                    decimal newPrice = await GetPriceForDeliveryMethodAsync(item.ProductID, deliveryMethod);
+                    var cartItem = new OrderItemViewModel
                     {
-                        if (!item.IsCoupon)
-                        {
-                            decimal newPrice = await GetPriceForDeliveryMethodAsync(item.ProductID, deliveryMethod);
-
-                            var cartItem = new OrderItemViewModel
-                            {
-                                ProductID = item.ProductID,
-                                ProductDescription1 = item.ProductDescription1,
-                                ProductDescription2 = item.ProductDescription2,
-                                Amount = newPrice,
-                                Quantity = item.Quantity,
-                                VAT = item.VAT,
-                                Reference = item.Reference,
-                                ItemNote = item.ItemNote
-                            };
-                            Cart.Instance.AddItem(cartItem);
-                        }
-                    }
-
-                    // Preusmeravanje na odgovarajuću stranicu u zavisnosti od delivery method-a.
-                    switch (deliveryMethod)
-                    {
-                        case "PickUp":
-                            await Navigation.PushAsync(new ChooseFiliale(_authService));
-                            break;
-                        case "DineIn":
-                            App.IsRepeatOrder = true;
-                            await Navigation.PushAsync(new NFCReaderPage(new NfcService()));
-                            break;
-                        case "Parking":
-                            App.IsRepeatOrder = true;
-                            var qrScannerService = ((App)Application.Current).Services.GetService(typeof(IQrScannerService)) as IQrScannerService;
-                            await Navigation.PushAsync(new BestellungInDerFiliale(_authService, qrScannerService));
-                            
-                            break;
-                        default:
-                            await DisplayAlert("Fehler", "Ungültige Bestellart.", "OK");
-                            break;
-                    }
-                }
-                else
-                {
-                    await DisplayAlert("Fehler", "Es wurde keine Bestellart ausgewählt.", "OK");
+                        ProductID = item.ProductID,
+                        ProductDescription1 = item.ProductDescription1,
+                        ProductDescription2 = item.ProductDescription2,
+                        Amount = newPrice,
+                        Quantity = item.Quantity,
+                        VAT = item.VAT,
+                        Reference = item.Reference,
+                        ItemNote = item.ItemNote
+                    };
+                    Cart.Instance.AddItem(cartItem);
                 }
             }
+
+            switch (deliveryMethod)
+            {
+                case "PickUp":
+                    // Učitaj sve filijale
+                    var stores = await SQL.GetAllStoresAsync();
+
+                    if (stores.Count == 1)
+                    {
+                        // Ako postoji samo jedna, automatski je biramo
+                        Preferences.Set("SelectedStoreId", stores[0].Id.ToString());
+                    }
+                    // Ako ih ima više, korisnik će sam da izabere u ChooseFiliale
+                    await Navigation.PushAsync(new ChooseFiliale(_authService));
+                    break;
+
+                case "DineIn":
+                    App.IsRepeatOrder = true;
+                    await Navigation.PushAsync(new NFCReaderPage(new NfcService()));
+                    break;
+
+                case "Parking":
+                    App.IsRepeatOrder = true;
+                    var qrService = ((App)Application.Current)
+                                        .Services.GetService(typeof(IQrScannerService))
+                                        as IQrScannerService;
+                    await Navigation.PushAsync(new BestellungInDerFiliale(_authService, qrService));
+                    break;
+
+                default:
+                    await DisplayAlert("Fehler", "Ungültige Bestellart.", "OK");
+                    break;
+            }
         }
+
 
         /// <summary>
         /// Asinhrona metoda koja dohvaća cenu proizvoda za datu metodu dostave.
@@ -125,7 +135,7 @@ namespace GCloudPhone.Views.Shop.OrderProccess
         ///     "PickUp"  → PricesType = 6
         ///     "DineIn"  → PricesType = 1
         ///     "Parking" → PricesType = 4
-       
+
         private async Task<decimal> GetPriceForDeliveryMethodAsync(int productId, string deliveryMethod)
         {
             int priceType = 0;

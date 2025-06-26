@@ -5,7 +5,7 @@
     xmlns:local="clr-namespace:GCloudPhone.Views.Shop.ShoppingCart"
     xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
     
-    x:Class="GCloudPhone.Views.Shop.ShoppingCart.Warenkorb"
+    x:Class="GCloudPhone.Views.Shop.ShoppingCart.ShoppingCart"
     NavigationPage.HasNavigationBar="False"
     BackgroundColor="{StaticResource White}">
     
@@ -94,7 +94,7 @@
                                     <ImageButton 
                                         Source="minus.png"
                                         Grid.RowSpan="2" Grid.Column="2"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:Warenkorb}}, Path=BindingContext.DecreaseQuantityCommand}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:ShoppingCart}}, Path=BindingContext.DecreaseQuantityCommand}"
                                         HeightRequest="30"
                                         WidthRequest="30"
                                         BackgroundColor="Transparent"
@@ -115,7 +115,7 @@
                                     <ImageButton 
                                         Source="plus.png"
                                         Grid.RowSpan="2" Grid.Column="4"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:Warenkorb}}, Path=BindingContext.IncreaseQuantityCommand}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:ShoppingCart}}, Path=BindingContext.IncreaseQuantityCommand}"
                                         HeightRequest="30"
                                         WidthRequest="30"
                                         BackgroundColor="Transparent"
@@ -127,7 +127,7 @@
                                     <ImageButton 
                                         Source="trash.png"
                                         Grid.RowSpan="2" Grid.Column="5"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:Warenkorb}}, Path=BindingContext.DeleteItemCommand}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:ShoppingCart}}, Path=BindingContext.DeleteItemCommand}"
                                         HeightRequest="30"
                                         WidthRequest="30"
                                         BackgroundColor="Transparent"
@@ -175,7 +175,7 @@
                                                 <ImageButton 
                                                     Source="minus.png"
                                                     Grid.RowSpan="2" Grid.Column="2"
-                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:Warenkorb}}, Path=BindingContext.DecreaseQuantityCommand}"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:ShoppingCart}}, Path=BindingContext.DecreaseQuantityCommand}"
                                                     HeightRequest="24"
                                                     WidthRequest="24"
                                                     BackgroundColor="Transparent"
@@ -196,7 +196,7 @@
                                                 <ImageButton 
                                                     Source="plus.png"
                                                     Grid.RowSpan="2" Grid.Column="4"
-                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:Warenkorb}}, Path=BindingContext.IncreaseQuantityCommand}"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:ShoppingCart}}, Path=BindingContext.IncreaseQuantityCommand}"
                                                     HeightRequest="24"
                                                     WidthRequest="24"
                                                     BackgroundColor="Transparent"
@@ -208,7 +208,7 @@
                                                 <ImageButton 
                                                     Source="trash.png"
                                                     Grid.RowSpan="2" Grid.Column="5"
-                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:Warenkorb}}, Path=BindingContext.DeleteItemCommand}"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:ShoppingCart}}, Path=BindingContext.DeleteItemCommand}"
                                                     HeightRequest="24"
                                                     WidthRequest="24"
                                                     BackgroundColor="Transparent"
@@ -273,7 +273,7 @@
                      HorizontalOptions="Center"/>
                             </VerticalStackLayout>
                             <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:Warenkorb}}, Path=BindingContext.ToggleRecommendationSelectionCommand}" CommandParameter="{Binding .}" />
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:ShoppingCart}}, Path=BindingContext.ToggleRecommendationSelectionCommand}" CommandParameter="{Binding .}" />
                             </Frame.GestureRecognizers>
 
                         </Frame>

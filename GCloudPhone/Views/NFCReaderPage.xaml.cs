@@ -105,7 +105,7 @@ namespace GCloudPhone.Views
                 Device.BeginInvokeOnMainThread(async () =>
                 {
                     Debug.WriteLine("▶ BEGIN InvokeOnMainThread");
-                    await Navigation.PushAsync(new Warenkorb());
+                    await Navigation.PushAsync(new ShoppingCart());
                     Debug.WriteLine("▶ PushAsync završen");
                 });
             }

@@ -1,98 +1,106 @@
-﻿using System.Collections.ObjectModel; // Omogućava upotrebu ObservableCollection koja automatski obaveštava UI o promenama u kolekciji
-using GCloudShared.Interface; // Uključuje interfejse definisane u GCloudShared projektu (npr. IAuthService)
-using System.Diagnostics; // Omogućava upotrebu Debug klase za ispis poruka tokom razvoja
+﻿using System;
+using System.Collections.ObjectModel; // Omogućava upotrebu ObservableCollection koja automatski obaveštava UI o promenama u kolekciji
+using System.Diagnostics;             // Omogućava upotrebu Debug klase za ispis poruka tokom razvoja
+using System.IO;                      // Za MemoryStream
+using System.Threading.Tasks;        // Za Task
+using GCloudShared.Interface;         // Uključuje interfejse definisane u GCloudShared projektu (npr. IAuthService)
+using Microsoft.Maui.Controls;       // Za ContentPage, ImageSource, itd.
 
 namespace GCloudPhone.Views.Shop.OrderProccess
 {
-    // CategoriesPage predstavlja stranicu koja prikazuje kategorije proizvoda u Shop delu aplikacije
     public partial class CategoriesPage : ContentPage
     {
-        // Privatni član koji čuva referencu na servis za autentifikaciju korisnika
-        private IAuthService _authService;
+        private readonly IAuthService _authService;
 
-        // Kolekcija koja sadrži podatke o kategorijama i koja se vezuje za UI (ListView, GridView, itd.)
         public ObservableCollection<CategoriesView> CategoryCollection { get; set; }
-
-        // Kolekcija prodavnica koja se koristi na stranici; inicijalizovana praznom kolekcijom
         public ObservableCollection<Stores> Stores { get; set; } = new ObservableCollection<Stores>();
 
-        // Podrazumevani konstruktor stranice
         public CategoriesPage()
         {
-            InitializeComponent(); // Inicijalizuje komponente definisane u XAML fajlu
+            Debug.WriteLine("CategoriesPage ctor start");                                   // 1
+            InitializeComponent();                                                           // 2
+            Debug.WriteLine("InitializeComponent complete");                                 // 3
 
-            // Inicijalizuje kolekciju kategorija
             CategoryCollection = new ObservableCollection<CategoriesView>();
-            // Povezuje kolekciju kategorija sa ListView-om u UI, tako da se kategorije prikazuju
             ListViewCollection.ItemsSource = CategoryCollection;
-            // Podesava način prikaza kategorija (npr. Grid ili List) na osnovu konfiguracije
+            Debug.WriteLine($"Postavljen ItemsSource, initial CategoryCollection.Count = {CategoryCollection.Count}"); // 4
+
             SetCategoryDisplay(Config.CategoryDisplay);
-            // Poziv metode za učitavanje kategorija je ovde iskomentarisano
-            //LoadCategoriesAsync();
-            // Postavlja BindingContext stranice na App.SignalR 
+            Debug.WriteLine($"Prikaz kategorija podešen na: {Config.CategoryDisplay}");      // 5
+
             this.BindingContext = App.SignalR;
-            // Postavlja tekst za label (FillialeLabel) na osnovu preferenci, sa podrazumevanom vrednošću "Unbekannte Filiale"
-            
+            Debug.WriteLine("BindingContext postavljen na App.SignalR");                      // 6
+
+            // Obavezno proveri u XAML da li imaš Loaded="OnLoaded" na <ContentPage ... />
+            Debug.WriteLine("CategoriesPage ctor end");                                     // 7
         }
 
-        // Konstruktor koji prima IAuthService; poziva podrazumevani konstruktor i dodatno učitava kategorije
         public CategoriesPage(IAuthService authService) : this()
         {
-            // Dodeljuje prosleđeni authService; baca ArgumentNullException ako je authService null
+            Debug.WriteLine("CategoriesPage(IAuthService) ctor start");                     // 8
             _authService = authService ?? throw new ArgumentNullException(nameof(authService));
-            // Poziva asinhronu metodu za učitavanje kategorija iz baze
-            //LoadCategoriesAsync();
+            Debug.WriteLine("_authService dodeljen");                                        // 9
+            Debug.WriteLine("CategoriesPage(IAuthService) ctor end");                       // 10
         }
 
-        // Metoda koja se poziva kada korisnik prevuče (swipe) desno na ekranu
-        private void OnSwipedRight(object sender, SwipedEventArgs e)
+        // Ako ti Loaded event nije pouzdan, možeš i override-ovati OnAppearing:
+        protected override void OnAppearing()
         {
-            // Vraća prethodnu stranicu u navigacionom stack-u
-            Navigation.PopAsync();
+            base.OnAppearing();
+            Debug.WriteLine("OnAppearing called");                                          // 11
         }
 
-        // Metoda koja se poziva kada se stranica potpuno učita
         private async void OnLoaded(object sender, EventArgs e)
         {
-           
+            Debug.WriteLine("OnLoaded start");                                              // 12
 
-            // Ako postoji barem jedan kupon u StartUpDataImport, prikazuje se UI element koji označava kupon
+            Debug.WriteLine($"StartUpDataImport.coupons.Count = {StartUpDataImport.coupons.Count}"); // 13
             if (StartUpDataImport.coupons.Count > 0)
             {
                 CouponTaste.IsVisible = true;
+                Debug.WriteLine("CouponTaste vidljiv");                                     // 14
             }
 
-            // Briše sve prethodno učitane kategorije iz kolekcije
+            Debug.WriteLine($"Pre Clear, CategoryCollection.Count = {CategoryCollection.Count}"); // 15
             CategoryCollection.Clear();
-            // Učitava kategorije iz baze
+            Debug.WriteLine($"Posle Clear, CategoryCollection.Count = {CategoryCollection.Count}"); // 16
+
             await LoadCategoriesAsync();
+
+            Debug.WriteLine($"Posle LoadCategoriesAsync, CategoryCollection.Count = {CategoryCollection.Count}"); // 17
+            Debug.WriteLine("OnLoaded end");                                                // 18
         }
 
-        // Asinhrona metoda za učitavanje kategorija iz baze i njihovo dodavanje u kolekciju
         private async Task LoadCategoriesAsync()
         {
+            Debug.WriteLine("LoadCategoriesAsync start");                                    // 19
             try
             {
-                // Poziva se metoda koja vraća sve vidljive kategorije iz baze
                 var categories = await SQL.GetAllCategoriesAsync();
+                Debug.WriteLine($"SQL.GetAllCategoriesAsync vratio {categories?.Count ?? 0} stavki"); // 20
 
-                // Iterira kroz svaku kategoriju
+                if (categories == null || categories.Count == 0)
+                {
+                    Debug.WriteLine("Nema kategorija za prikaz!");                          // 21
+                }
+
                 foreach (var category in categories)
                 {
+                    Debug.WriteLine($"Obrada category.Number = {category.Number}");        // 22
+
                     ImageSource imageSource;
-                    // Ako kategorija ima definisanu sliku, konvertuje Base64 string u ImageSource
                     if (!string.IsNullOrEmpty(category.Picturestring))
                     {
+                        Debug.WriteLine("Kreiranje ImageSource iz Base64");                // 23
                         byte[] imageBytes = Convert.FromBase64String(category.Picturestring);
                         imageSource = ImageSource.FromStream(() => new MemoryStream(imageBytes));
                     }
                     else
                     {
-                        // Ako nema slike, koristi se podrazumevana slika "food.png"
+                        Debug.WriteLine("Koristi default food.png");                       // 24
                         imageSource = ImageSource.FromFile("food.png");
                     }
 
-                    // Dodaje se nova instanca CategoriesView u kolekciju sa podacima o kategoriji
                     CategoryCollection.Add(new CategoriesView
                     {
                         Number = category.Number,
@@ -100,53 +108,50 @@ namespace GCloudPhone.Views.Shop.OrderProccess
                         Image = imageSource,
                         IsSelected = false
                     });
+                    Debug.WriteLine($"Dodato u kolekciju: {category.Number}");             // 25
                 }
             }
             catch (Exception ex)
             {
-                // U slučaju greške, ispisuje se poruka u debug prozoru
-                Debug.WriteLine($"LoadCategoriesAsync error: {ex.Message}");
-                // Prikazuje se dijalog o grešci korisniku
+                Debug.WriteLine($"LoadCategoriesAsync error: {ex}");                       // 26
                 await DisplayAlert("Error", "Failed to load categories. Please try again later.", "OK");
             }
+            Debug.WriteLine("LoadCategoriesAsync end");                                     // 27
         }
 
-        // Metoda koja se poziva kada korisnik dodirne stavku kategorije
         private async void OnItemTapped(object sender, EventArgs e)
         {
-            // Pretvara objekat koji je poslat (sender) u Grid
-            var grid = sender as Grid;
-            // Iz BindingContext-a Grid-a uzima se objekat kategorije (CategoriesView)
-            var category = grid?.BindingContext as CategoriesView;
-            if (category != null)
+            Debug.WriteLine("OnItemTapped start");                                          // 28
+            if (sender is Grid grid && grid.BindingContext is CategoriesView category)
             {
-                // Navigira se na stranicu sa detaljima kategorije, prosleđuje se broj kategorije
+                Debug.WriteLine($"Odabrana kategorija: {category.Number}");                // 29
                 await Navigation.PushAsync(new CategoriesDetails(category.Number));
-            }
-        }
-
-
-        // Metoda koja podešava način prikaza kategorija (npr. lista ili grid) na osnovu prosleđenog parametra
-        private void SetCategoryDisplay(string displayMode)
-        {
-            if (displayMode == "Grid")
-            {
-                // Ako je izabran grid prikaz, sakriva se ListView
-                ListViewCollection.IsVisible = false;
-               
             }
             else
             {
-                // Inače, prikazuje se ListView
+                Debug.WriteLine("OnItemTapped: sender nije Grid ili BindingContext nije CategoriesView"); // 30
+            }
+            Debug.WriteLine("OnItemTapped end");                                            // 31
+        }
+
+        private void SetCategoryDisplay(string displayMode)
+        {
+            Debug.WriteLine($"SetCategoryDisplay pozvana sa '{displayMode}'");              // 32
+            if (displayMode == "Grid")
+            {
+                ListViewCollection.IsVisible = false;
+                Debug.WriteLine("ListViewCollection.IsVisible = false");                    // 33
+            }
+            else
+            {
                 ListViewCollection.IsVisible = true;
-               
+                Debug.WriteLine("ListViewCollection.IsVisible = true");                     // 34
             }
         }
 
-        // Metoda koja se poziva kada se dodirnu kuponi
         private async void OnCouponsTapped(object sender, TappedEventArgs e)
         {
-            // Navigira se na stranicu sa detaljima kategorije sa ID-em 9999, što verovatno označava specijalnu kategoriju za kupone
+            Debug.WriteLine("OnCouponsTapped");                                             // 35
             await Navigation.PushAsync(new CategoriesDetails(9999));
         }
     }

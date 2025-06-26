@@ -55,18 +55,28 @@
              Style="{StaticResource Headings}"
              />
         </Grid>
+        <Grid
+    x:Name="NoOrders"
+    RowDefinitions="Auto,Auto,Auto"
+    Grid.Row="1"
+      IsVisible="False"
+    RowSpacing="20"
+    HorizontalOptions="Center"
+    VerticalOptions="Center">
+            <Image Source="sadheart.png"
+           Style="{StaticResource CardImage}"/>
+            <Label
+     Grid.Row="1"
+     Text="Sie haben noch keine Bestellungen"
+     Style="{StaticResource Headings}"/>
+            <Label
+    Grid.Row="2"
+    Text="Bitte versuchen Sie es erneut."
+    Style="{StaticResource HeadngThree}"
+        HorizontalTextAlignment="Center"/>
+        </Grid>
 
-        <!-- No orders label -->
-        <Label x:Name="NoOrdersLabel"
-           Grid.Row="1"
-           Text="Sie haben noch keine Bestellungen."
-           Margin="0,15,0,0"
-           FontAttributes="Bold"
-           FontSize="Medium"
-           HorizontalOptions="Center"
-           VerticalOptions="Start"
-           IsVisible="False"
-           TextColor="{StaticResource Gray200}"/>
+       
 
         <!-- CollectionView u redu koji zauzima preostalu visinu i skroluje -->
         <CollectionView x:Name="OrdersCollectionView"

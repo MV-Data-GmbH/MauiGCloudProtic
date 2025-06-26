@@ -10,7 +10,7 @@
     <ScrollView>
         <Grid Style="{StaticResource BasicGrid}"
               RowDefinitions="Auto,Auto,Auto,Auto,Auto,*"
-              RowSpacing="10">
+              RowSpacing="20">
 
             <!-- Row 0: Back button -->
             <Grid Grid.Row="0">

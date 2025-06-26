@@ -2,12 +2,14 @@
 using System.Linq;
 using GCloudShared.Service;
 using Microsoft.Maui.Controls;
-using Microsoft.Maui.Storage;  // za Preferences
-using GCloudPhone.Views.Shop;
-using GCloudPhone.Views.Shop.OrderProccess;
+using Microsoft.Maui.Storage;              // za Preferences
+using GCloudPhone.Views.Shop;               // za MainPage
+using GCloudPhone.Views.Shop.OrderProccess; // za OrderHistory, OrderTypePage
+using GCloudPhone.Views.Shop.Checkout;      // za CheckoutPage
 using GCloudPhone.Views.Settings.MyAccount;
-using GCloudPhone.Views.Shop.ShoppingCart;  // za WarenkorbPage i ostale stranice
-using GCloudPhone.Views.Points;               // da koristimo MyPointsPage
+using GCloudPhone.Views.Shop.ShoppingCart;  // za ShoppingCart
+using GCloudPhone.Views.Points;             // za MyPointsPage
+using GCloudShared.Shared;                  // za Cart.Instance
 
 namespace GCloudPhone.Views.Templates
 {
@@ -28,6 +30,18 @@ namespace GCloudPhone.Views.Templates
             if (!OverrideNavigation && Navigation != null)
             {
                 var currentPage = Navigation.NavigationStack.LastOrDefault();
+
+                // Ako je trenutna stranica CheckoutPage, očisti korpu i obriši način dostave,
+                // pa idi na MainPage
+                if (currentPage is CheckoutPage)
+                {
+                    Cart.Instance.ClearCart();
+                    Preferences.Remove("CheckoutMode");
+                    Preferences.Remove("SelectedStoreId");
+                    Preferences.Remove("UsedPoints");
+                    await Navigation.PushAsync(new MainPage());
+                    return;
+                }
 
                 // Ako je trenutna stranica OrderHistory i marker kaže da je došao sa OrderTypePage,
                 // izbriši marker i vrati korisnika na OrderTypePage.
@@ -52,12 +66,11 @@ namespace GCloudPhone.Views.Templates
                     return;
                 }
                 // Novo pravilo: ako je trenutna stranica WarenkorbPage (korpa), idi na CategoriesPage.
-                else if (currentPage is Warenkorb)
+                else if (currentPage is ShoppingCart)
                 {
                     await Navigation.PushAsync(new CategoriesPage());
                     return;
                 }
-
                 // *** DODATO ***: Ako je trenutna stranica SpecialProductListSWpts, idi na MyPointsPage
                 else if (currentPage is SpecialProductListSWpts)
                 {
@@ -86,15 +99,13 @@ namespace GCloudPhone.Views.Templates
                             Preferences.Remove("SelectedStoreName");
                             Preferences.Remove("SelectedStoreAddress");
                             Preferences.Remove("UsedPoints");
-                            Preferences.Remove("CurrentOrderId");    // brišeš sačuvan OrderId
-                            Preferences.Remove("OrderNote");          // ako ga čuvaš u Preferences
+                            Preferences.Remove("CurrentOrderId");
+                            Preferences.Remove("OrderNote");
+                            Preferences.Remove("CheckoutMode");
 
-                            // 3) Resetuj stanje na nivou aplikacije (ako koristite neke statičke varijable)
+                            // 3) Resetuj stanje na nivou aplikacije
                             App.OrderType = null;
-                                   
                             App.SignalR.OnlineUsers.Clear();
-
-                            
                         }
                     }
 
@@ -111,13 +122,9 @@ namespace GCloudPhone.Views.Templates
                 {
                     // Ostalo: ako je OrderTypePage, idi na MainPage, a inače na CategoriesPage
                     if (currentPage is OrderTypePage)
-                    {
                         await Navigation.PushAsync(new MainPage());
-                    }
                     else
-                    {
                         await Navigation.PushAsync(new CategoriesPage());
-                    }
                 }
             }
         }

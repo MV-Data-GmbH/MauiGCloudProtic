@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="GCloudPhone.Views.Shop.Checkout.CheckoutPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
+    Shell.NavBarIsVisible="False"
+    NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="UnselectedButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="TextColor" Value="{StaticResource GraySW}" />
+                <Setter Property="BorderColor" Value="Gray" />
+                <Setter Property="BorderWidth" Value="1" />
+                <Setter Property="CornerRadius" Value="20" />
+                <Setter Property="WidthRequest" Value="65" />
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="FontSize" Value="10" />
+            </Style>
+            <Style x:Key="SelectedButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="TextColor" Value="{StaticResource Tertiary}" />
+                <Setter Property="BorderColor" Value="{StaticResource Tertiary}" />
+                <Setter Property="BorderWidth" Value="1" />
+                <Setter Property="CornerRadius" Value="20" />
+                <Setter Property="WidthRequest" Value="65" />
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="FontSize" Value="10" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <Grid RowSpacing="15" Padding="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- 0: Header -->
+                <RowDefinition Height="Auto"/>
+                <!-- 1: Delivery Address -->
+                <RowDefinition Height="Auto"/>
+                <!-- 2: Store Picker -->
+                <RowDefinition Height="Auto"/>
+                <!-- 3: Time Slot -->
+                <RowDefinition Height="Auto"/>
+                <!-- 4: Date Picker -->
+                <RowDefinition Height="Auto"/>
+                <!-- 5: Additional Info -->
+                <RowDefinition Height="Auto"/>
+                <!-- 6: Payment Method -->
+                <RowDefinition Height="Auto"/>
+                <!-- 7: Tip -->
+                <RowDefinition Height="Auto"/>
+                <!-- 8: Summary -->
+                <RowDefinition Height="Auto"/>
+                <!-- 9: Confirm Button -->
+            </Grid.RowDefinitions>
+
+            <!-- 0: Back + naslov -->
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,*">
+                <templates:BackButtonView Grid.Column="0"/>
+                <Label
+                    Grid.Column="1"
+                    Text="Checkout"
+                    Style="{StaticResource Headings}"
+                    HorizontalOptions="Center"/>
+            </Grid>
+
+             <!--1: Delivery Address (samo za Delivery)--> 
+            <Grid
+                Grid.Row="1"
+                ColumnDefinitions="Auto,*,Auto"
+                Style="{StaticResource CheckoutGrids}"
+                IsVisible="{Binding IsDelivery}">
+                <Image Grid.Column="0" Source="location_izo.png" Style="{StaticResource CheckoutImages}"/>
+                <Label
+                    x:Name="AddressLabel"
+                    Grid.Column="1"
+                    Text="Adresse wählen"
+                    VerticalOptions="Center"/>
+                <templates:ArrowImageItem Grid.Column="2"/>
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAddressTapped"/>
+                </Grid.GestureRecognizers>
+            </Grid>
+
+            <!-- 2: Store Picker (InStore & Pickup) --><!--
+            <StackLayout
+                Grid.Row="2"
+                Spacing="5"
+                IsVisible="{Binding IsPickup}">
+                <Label Text="Filiale wählen" Style="{StaticResource HeadingTwo}"/>
+                <Picker
+                    x:Name="StorePicker"
+                    ItemsSource="{Binding Stores}"
+                    ItemDisplayBinding="{Binding Name}"
+                    SelectedItem="{Binding SelectedStore}" />
+            </StackLayout>
+            <StackLayout
+                Grid.Row="2"
+                Spacing="5"
+                IsVisible="{Binding IsInStore}">
+                <Label Text="Filiale im Laden" Style="{StaticResource HeadingTwo}"/>
+                <Picker
+                    ItemsSource="{Binding Stores}"
+                    ItemDisplayBinding="{Binding Name}"
+                    SelectedItem="{Binding SelectedStore}" />
+            </StackLayout>-->
+
+            <!-- 3: Time Slot (Pickup & Delivery) -->
+            <Grid
+                Grid.Row="2"
+                ColumnDefinitions="Auto,*,Auto"
+                Style="{StaticResource CheckoutGrids}"
+                IsVisible="{Binding ShowDateTimeOptions}"
+>
+                <Image Grid.Column="0" Source="hrs_izo.png" Style="{StaticResource CheckoutImages}"/>
+                <Picker
+                    x:Name="TimeSlotPicker"
+                    Grid.Column="1"
+                    Title="Wählen Sie eine Zeit"
+                    TitleColor="{StaticResource GraySW}"
+                    ItemsSource="{Binding AvailableTimeSlots}"
+                    SelectedItem="{Binding SelectedTimeSlot}"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center"/>
+                <templates:ArrowImageItem Grid.Column="2" HorizontalOptions="End"/>
+            </Grid>
+
+            <!-- 4: Date Picker (Pickup & Delivery) -->
+            <Grid
+                Grid.Row="3"
+                ColumnDefinitions="Auto,*,Auto"
+                Style="{StaticResource CheckoutGrids}"
+                IsVisible="{Binding ShowDateTimeOptions}"
+>
+                <Image Grid.Column="0" Source="date.png" Style="{StaticResource CheckoutImages}"/>
+                <DatePicker
+                    x:Name="DatePicker"
+                    Grid.Column="1"
+                    Date="{Binding SelectedDate, Mode=TwoWay}"
+                    MinimumDate="{Binding MinimumDate}"
+                    DateSelected="OnDateChanged"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Center"
+                    BackgroundColor="Transparent"/>
+                <templates:ArrowImageItem Grid.Column="2" HorizontalOptions="End"/>
+            </Grid>
+
+            <!-- 5: Additional Info (svi) -->
+            <Frame Grid.Row="4" Padding="10">
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                    <Image Source="speechbubble.png" HeightRequest="25" VerticalOptions="Center"/>
+                    <Label
+                        Grid.Column="1"
+                        Text="Zusätzliche Informationen"
+                        FontSize="10"
+                        VerticalOptions="Center"
+                        Margin="5,0"/>
+                    <Image Grid.Column="2" Source="arrow.png" HeightRequest="30" VerticalOptions="Center" HorizontalOptions="End"/>
+                </Grid>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                </Frame.GestureRecognizers>
+            </Frame>
+
+            <!-- 6: Payment Method (svi) -->
+            <Grid
+                x:Name="PaymentMethodSection"
+                Grid.Row="5"
+                RowDefinitions="Auto,*"
+                RowSpacing="5">
+                <Label Grid.Row="0" Text="Zahlungsmethode" Style="{StaticResource HeadingTwo}"/>
+                <Frame Grid.Row="1" CornerRadius="5" Padding="5">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Picker
+                            x:Name="PaymentMethodPicker"
+                            Title="Wählen Sie Ihre Zahlungsmethode"
+                            ItemsSource="{Binding PaymentMethods}"
+                            SelectedItem="{Binding PaymentMethod}"
+                            SelectedIndexChanged="OnPaymentMethodChanged"/>
+                        <Image Source="arrow.png" HeightRequest="30" VerticalOptions="Center" HorizontalOptions="End"/>
+                    </Grid>
+                </Frame>
+            </Grid>
+
+            <!-- 7: Tip (svi, ali samo ako TotalPrice > 0) -->
+            <Grid
+                x:Name="TipSection"
+                Grid.Row="6"
+                RowDefinitions="Auto,*"
+                RowSpacing="5"
+                IsVisible="True">
+                <Label Grid.Row="0" Text="Trinkgeld hinzufügen" Style="{StaticResource HeadingTwo}"/>
+                <Grid
+                    Grid.Row="1"
+                    x:Name="TipButtonsLayout"
+                    ColumnDefinitions="Auto,Auto,Auto,Auto"
+                    ColumnSpacing="3">
+                    <Button Grid.Column="0" Text="1€" Clicked="OnTipButtonClicked" Style="{StaticResource UnselectedButtonStyle}"/>
+                    <Button Grid.Column="1" Text="2€" Clicked="OnTipButtonClicked" Style="{StaticResource UnselectedButtonStyle}"/>
+                    <Button Grid.Column="2" Text="3€" Clicked="OnTipButtonClicked" Style="{StaticResource UnselectedButtonStyle}"/>
+                    <Button Grid.Column="3" Clicked="OnCustomTipButtonClicked" Style="{StaticResource UnselectedButtonStyle}" ImageSource="edit20.png"/>
+                </Grid>
+            </Grid>
+
+            <!-- 8: Summary (svi) -->
+            <templates:SummaryCardView
+                x:Name="PriceSummary"
+                Grid.Row="7"
+                ItemsTotal="{Binding ItemsTotal}"
+                DeliveryFee="{Binding DeliveryFee}"
+                VAT="{Binding VAT}"
+                Tip="{Binding Tip}"
+                TotalPrice="{Binding TotalPrice}" />
+
+            <!-- 9: Confirm Button -->
+            <Button
+                x:Name="ConfirmButton"
+                Grid.Row="8"
+                Text="BESTÄTIGEN"
+                Style="{StaticResource PrimaryBtn}"
+                Clicked="ConfirmButtonClicked"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>

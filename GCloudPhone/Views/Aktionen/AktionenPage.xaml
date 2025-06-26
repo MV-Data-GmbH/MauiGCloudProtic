@@ -20,14 +20,27 @@
         <Grid Grid.Row="0" RowDefinitions="Auto, *, Auto" RowSpacing="10">
 
             <!-- ROW 0: GLOBALNI Label kada nema akcija -->
-            <Label
-                x:Name="AktioneLabel"
-                Grid.Row="0"
-                Text="No Aktionen"
-                Style="{StaticResource Headings}"
+            <Grid
+                x:Name="NoActions"
+                RowDefinitions="Auto,Auto,Auto"
+                Grid.Row="1"
+                  IsVisible="False"
+                RowSpacing="20"
                 HorizontalOptions="Center"
-                VerticalOptions="Center"
-                IsVisible="False" />
+                VerticalOptions="Center">
+                <Image Source="sad.png"
+                       Style="{StaticResource CardImage}"/>
+                <Label
+                 Grid.Row="1"
+                 Text="Leider sind keine aktiven Gutscheine verfügbar"
+                 Style="{StaticResource Headings}"/>
+                <Label
+                Grid.Row="2"
+                Text="Bitte versuchen Sie es erneut."
+                Style="{StaticResource HeadngThree}"
+                    HorizontalTextAlignment="Center"/>
+            </Grid>
+           
 
             <!-- ROW 1: CollectionView sa stavkama (ona sama po sebi scroll-a) -->
             <CollectionView
@@ -131,6 +144,6 @@
         <templates:NavigationBar
             x:Name="navigationBar"
             Grid.Row="1"
-            Margin="0" />
+           />
     </Grid>
 </ContentPage>

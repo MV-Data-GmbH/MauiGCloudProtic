@@ -5,7 +5,6 @@
     xmlns:templates="clr-namespace:GCloudPhone.Views.Templates"
     x:Class="GCloudPhone.Views.Shop.OrderProccess.CategoriesPage"
     NavigationPage.HasNavigationBar="False"
-    
     Loaded="OnLoaded"
     BackgroundColor="{StaticResource White}"
 >
@@ -31,7 +30,7 @@
                 VerticalOptions="Center"
                 HorizontalOptions="Start" />
 
-           
+
             <!-- CartTemplate (desno) -->
             <templates:CartTemplate
                 Grid.Column="1"
@@ -52,8 +51,8 @@
            >
 
             <!-- Slika kupona -->
-            
-                <Image
+
+            <Image
                     Grid.Column="0"
                     x:Name="CouponImage"
                     Source="points.png"
@@ -62,7 +61,7 @@
                     Aspect="AspectFill"
                     HorizontalOptions="Center"
                     VerticalOptions="Center" />
-            
+
 
             <!-- Poruka -->
             <Label
@@ -102,24 +101,24 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                    
-                            <Grid
+
+                        <Grid
                                 ColumnDefinitions="Auto, *, Auto"
                                 ColumnSpacing="5">
 
-                                <!-- Slika kategorije  -->
-                             
-                                    <Image
+                            <!-- Slika kategorije  -->
+
+                            <Image
                                         Source="{Binding Image}"
                                         Aspect="AspectFill"
                                         Style="{StaticResource ListPictures}"
                                         HorizontalOptions="Start"
                                         VerticalOptions="Center"
                                         Margin="0,0,10,0"/>
-                               
 
-                                <!-- Opis -->
-                                <Label
+
+                            <!-- Opis -->
+                            <Label
                                     Grid.Column="1"
                                     Text="{Binding Description1}"
                                     Style="{StaticResource ListNames}"
@@ -127,26 +126,26 @@
                                     
                                    />
 
-                                <!-- Strelica -->
-                                <templates:ArrowImageItem
+                            <!-- Strelica -->
+                            <templates:ArrowImageItem
                                     Grid.Column="2"
                                     HorizontalOptions="End"
                                     VerticalOptions="Center"
                                      />
 
-                                <!-- TapGesture za pojedinačni red -->
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer
+                            <!-- TapGesture za pojedinačni red -->
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer
                                         Tapped="OnItemTapped"
                                         CommandParameter="{Binding .}" />
-                                </Grid.GestureRecognizers>
-                            </Grid>
-                     
+                            </Grid.GestureRecognizers>
+                        </Grid>
+
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </Grid>
 
-        
+
     </Grid>
 </ContentPage>

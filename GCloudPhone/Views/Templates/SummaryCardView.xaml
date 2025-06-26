@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="GCloudPhone.Views.Templates.SummaryCardView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="Root">
+
+    <Frame Style="{StaticResource SummaryCardFrameStyle}">
+        <VerticalStackLayout Spacing="5">
+
+            <Label
+                Text="Preise"
+                FontFamily="Quicksand-Bold"
+                FontSize="18"
+                TextColor="{StaticResource GraySW}" />
+
+            <!-- Artikel Gesamt -->
+            <Grid ColumnDefinitions="*,Auto" RowSpacing="5">
+                <Label
+                    Text="Artikel Gesamt"
+                    Style="{StaticResource SummaryLabel}"
+                    VerticalOptions="Center" />
+                <Label
+                    Text="{Binding ItemsTotal, Source={x:Reference Root}, StringFormat='{0:C}'}"
+                    HorizontalOptions="End"
+                    TextColor="{StaticResource Gray500}"
+                    VerticalOptions="Center" />
+            </Grid>
+            <BoxView Style="{StaticResource SummarySeparatorStyle}" />
+
+            <!-- Liefergebühr -->
+            <Grid ColumnDefinitions="*,Auto" RowSpacing="5">
+                <Label
+                    Text="Liefergebühr"
+                    Style="{StaticResource SummaryLabel}"
+                    VerticalOptions="Center" />
+                <Label
+                    Text="{Binding DeliveryFee, Source={x:Reference Root}, StringFormat='{0:C}'}"
+                    HorizontalOptions="End"
+                    Style="{StaticResource SummaryLabel}"
+                    VerticalOptions="Center" />
+            </Grid>
+            <BoxView Style="{StaticResource SummarySeparatorStyle}" />
+
+            <!-- MwSt. -->
+            <Grid ColumnDefinitions="*,Auto" RowSpacing="5">
+                <Label
+                    Text="MwSt."
+                    Style="{StaticResource SummaryLabel}"
+                    VerticalOptions="Center" />
+                <Label
+                    Text="{Binding VAT, Source={x:Reference Root}, StringFormat='{0:C}'}"
+                    HorizontalOptions="End"
+                    Style="{StaticResource SummaryLabel}"
+                    VerticalOptions="Center" />
+            </Grid>
+            <BoxView Style="{StaticResource SummarySeparatorStyle}" />
+
+            <!-- Trinkgeld -->
+            <Grid ColumnDefinitions="*,Auto" RowSpacing="5">
+                <Label
+                    Text="Trinkgeld"
+                    TextColor="{StaticResource Gray500}"
+                    VerticalOptions="Center" />
+                <Label
+                    Text="{Binding Tip, Source={x:Reference Root}, StringFormat='{0:C}'}"
+                    FontFamily="Quicksand"
+                    HorizontalOptions="End"
+                    TextColor="{StaticResource Gray500}"
+                    VerticalOptions="Center" />
+            </Grid>
+            <BoxView Style="{StaticResource SummarySeparatorStyle}" />
+
+            <!-- Gesamt -->
+            <Grid ColumnDefinitions="*,Auto" RowSpacing="5">
+                <Label
+                    Text="Gesamt"
+                    FontFamily="Quicksand-Bold"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+                <Label
+                    Text="{Binding TotalPrice, Source={x:Reference Root}, StringFormat='Total: {0:C}'}"
+                    FontFamily="Quicksand-Bold"
+                    HorizontalOptions="End"
+                    TextColor="Black"
+                    VerticalOptions="Center" />
+            </Grid>
+
+        </VerticalStackLayout>
+    </Frame>
+</ContentView>

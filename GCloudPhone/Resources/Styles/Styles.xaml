@@ -521,6 +521,12 @@
     
     </Style>
 
+    <Style x:Key="HeadngThree" TargetType="Label">
+        <Setter Property="FontFamily" Value="Quicksand-Regular"/>
+        <Setter Property="FontSize" Value="18"/>
+
+    </Style>
+
     <Style x:Key="Instuction" TargetType="Label">
         <Setter Property="FontAttributes" Value="None"/>
         <Setter Property="FontSize" Value="14"/>

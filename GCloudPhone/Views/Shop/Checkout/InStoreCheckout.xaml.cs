@@ -200,7 +200,7 @@ namespace GCloudPhone.Views.Shop.Checkout
                 }
                 else
                 {
-                    
+
                 }
             }
             finally

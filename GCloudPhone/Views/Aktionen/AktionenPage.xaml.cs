@@ -133,12 +133,12 @@ namespace GCloudPhone.Views.Aktionen
                         if (listAktionen.Count > 0)
                         {
                             AktionenList.IsVisible = true;
-                            AktioneLabel.IsVisible = false;
+                            NoActions.IsVisible = false;
                         }
                         else
                         {
                             AktionenList.IsVisible = false;
-                            AktioneLabel.IsVisible = true;
+                            NoActions.IsVisible = true;
                         }
                         AktionenList.ItemsSource = listAktionen;
                     });

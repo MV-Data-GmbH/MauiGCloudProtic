@@ -124,13 +124,13 @@ public partial class SpecialProductListSWpts : ContentPage
 
                 if (listOfSpecialProducts.Count() > 0)
                 {
-                    CouponLabel.IsVisible = false;
+                    NoCoupons.IsVisible = false;
                     GridCouponList.IsVisible = true;
                     CouponList.ItemsSource = listOfSpecialProducts;
                 }
                 else
                 {
-                    CouponLabel.IsVisible = true;
+                    NoCoupons.IsVisible = true;
                     GridCouponList.IsVisible = false;
                     CouponList.ItemsSource = listOfSpecialProducts;
                 }

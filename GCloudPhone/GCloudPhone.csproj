@@ -124,6 +124,21 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\GCloud.Shared\GCloud.Shared.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="Views\Shop\ShoppingCart\ShoppingCart.xaml.cs">
+	    <DependentUpon>ShoppingCart.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+	<ItemGroup>
+	  <MauiXaml Update="Views\Templates\SummaryCardView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+	<ItemGroup>
+	  <None Update="Views\Shop\Checkout\CheckoutPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </None>
+	</ItemGroup>
 
 	<!-- iOS Release konfiguracija -->
 	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios' and '$(Configuration)'=='Release'">

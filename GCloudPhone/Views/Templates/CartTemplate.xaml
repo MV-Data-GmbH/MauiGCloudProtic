@@ -7,56 +7,98 @@
 
     <!-- Glavni okvir za Cart:  sa senkom i zaobljenim ivicama -->
     <Frame
-        CornerRadius="25"
-        HasShadow="True"
-       WidthRequest="120"
-        HeightRequest="40"
-        Padding="0"
-        BorderColor="{StaticResource Tertiary}"
-        BackgroundColor="{StaticResource White}"
-        
-        VerticalOptions="Center">
+      x:Name="RootFrame"
+      CornerRadius="21"
+      HasShadow="True"
+      WidthRequest="300"
+      HeightRequest="40"
+      Padding="0"
+      BorderColor="{StaticResource Tertiary}"
+      BackgroundColor="{StaticResource White}"
+      VerticalOptions="Center">
+
+        <!-- DataTrigger za promenu pozadine kada HasMultipleItems == true -->
+        <Frame.Triggers>
+            <DataTrigger
+          TargetType="Frame"
+          Binding="{Binding HasMultipleItems}"
+          Value="True">
+                <Setter
+            Property="BackgroundColor"
+            Value="{StaticResource Tertiary}" />
+            </DataTrigger>
+        </Frame.Triggers>
+
         <Frame.GestureRecognizers>
             <TapGestureRecognizer Tapped="OnCartTapped" />
         </Frame.GestureRecognizers>
 
-        <!-- Unutrašnji raspored: troja elementa u nizu -->
         <HorizontalStackLayout
-            Spacing="5"
-            HorizontalOptions="Center"
-            VerticalOptions="Center">
+        Spacing="5"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
 
-            <!-- Broj stavki unutar kruga sa belom pozadinom -->
-          
-
-                <Label
-                    x:Name="ItemsCount"
-                    Text="{Binding ItemCount, StringFormat=' {0} '}"
-                    TextColor="{StaticResource Tertiary}"
-                    FontSize="18"
-                    FontAttributes="Bold"
-                    HorizontalTextAlignment="Center"
-                    VerticalTextAlignment="Center" />
-            
-
-            <!-- Ikona korpe -->
-            <Image
-                Source="cart_izo.png"
-                WidthRequest="30"
-                HeightRequest="30"
+            <!-- Naslov -->
+            <Label
+          Text="Warenkorb"
+                HorizontalOptions="Center"
                 VerticalOptions="Center"
-                HorizontalOptions="Center" />
+          FontFamily="Quicksand-Bold">
+                <Label.Triggers>
+                    <DataTrigger
+              TargetType="Label"
+              Binding="{Binding HasMultipleItems}"
+              Value="True">
+                        <Setter Property="TextColor" Value="White" />
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+
+            <!-- Broj stavki -->
+            <Label
+          x:Name="ItemsCount"
+          Text="{Binding ItemCount, StringFormat=' {0} '}"
+          FontSize="18"
+          HorizontalTextAlignment="Center"
+          VerticalTextAlignment="Center"
+          TextColor="{StaticResource Tertiary}">
+                <Label.Triggers>
+                    <DataTrigger
+              TargetType="Label"
+              Binding="{Binding HasMultipleItems}"
+              Value="True">
+                        <Setter Property="TextColor" Value="White" />
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+
+            <!-- Ikonica korpe -->
+            <Image
+          Source="cart_izo.png"
+          WidthRequest="30"
+          HeightRequest="30"
+          VerticalOptions="Center"
+          HorizontalOptions="Center" />
 
             <!-- Ukupna cena -->
             <Label
-                x:Name="TotalPriceLabel"
-                Text="{Binding TotalPrice, StringFormat='€{0:F2}'}"
-                TextColor="{StaticResource Tertiary}"
-                FontSize="18"
-                FontAttributes="Bold"
-                VerticalOptions="Center"
-                HorizontalOptions="Center"
-                IsVisible="{Binding IsLabelVisible}" />
+          x:Name="TotalPriceLabel"
+          Text="{Binding TotalPrice, StringFormat='€{0:F2}'}"
+          FontSize="18"
+          FontAttributes="Bold"
+          VerticalOptions="Center"
+          HorizontalOptions="Center"
+          IsVisible="{Binding IsLabelVisible}"
+          TextColor="{StaticResource Tertiary}">
+                <Label.Triggers>
+                    <DataTrigger
+              TargetType="Label"
+              Binding="{Binding HasMultipleItems}"
+              Value="True">
+                        <Setter Property="TextColor" Value="White" />
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
 
         </HorizontalStackLayout>
     </Frame>

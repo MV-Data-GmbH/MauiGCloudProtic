@@ -297,10 +297,11 @@ namespace GCloudPhone.Views.Shop.Checkout
                 orderItems.Add(orderItem);
             }
             var payload = JsonSerializer.Serialize(
-    new { order, orderItems },
-    new JsonSerializerOptions { WriteIndented = true }
-);
+        new { order, orderItems },
+        new JsonSerializerOptions { WriteIndented = true }
+    );
             Debug.WriteLine("[DEBUG PAYLOAD]\n" + payload);
+
             bool orderSent = await _orderCommunicationService.SendOrderToServerAsync(order, orderItems);
             if (!orderSent)
             {
